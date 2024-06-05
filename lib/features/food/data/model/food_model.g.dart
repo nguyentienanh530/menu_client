@@ -10,7 +10,7 @@ _$FoodModelImpl _$$FoodModelImplFromJson(Map<String, dynamic> json) =>
     _$FoodModelImpl(
       id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
-      categoryID: json['categoryID'] as String? ?? '',
+      id_category: (json['id_category'] as num?)?.toInt() ?? 0,
       count: (json['count'] as num?)?.toInt() ?? 0,
       description: json['description'] as String? ?? '',
       discount: (json['discount'] as num?)?.toInt() ?? 0,
@@ -19,14 +19,14 @@ _$FoodModelImpl _$$FoodModelImplFromJson(Map<String, dynamic> json) =>
       isShowFood: json['isShowFood'] as bool? ?? false,
       photoGallery: json['photoGallery'] as List<dynamic>? ?? const [],
       price: (json['price'] as num?)?.toDouble() ?? 0,
-      createAt: json['createAt'] as String? ?? '',
+      create_at: json['create_at'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$FoodModelImplToJson(_$FoodModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'categoryID': instance.categoryID,
+      'id_category': instance.id_category,
       'count': instance.count,
       'description': instance.description,
       'discount': instance.discount,
@@ -35,5 +35,5 @@ Map<String, dynamic> _$$FoodModelImplToJson(_$FoodModelImpl instance) =>
       'isShowFood': instance.isShowFood,
       'photoGallery': instance.photoGallery,
       'price': instance.price,
-      'createAt': instance.createAt,
+      'create_at': instance.create_at,
     };

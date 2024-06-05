@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:menu_client/core/app_colors.dart';
+import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
 
@@ -15,14 +16,13 @@ import '../widget/item_cart.dart';
 // ignore: must_be_immutable
 class CartScreen extends StatelessWidget {
   CartScreen({super.key});
-  OrderModel orderModel = OrderModel();
+
   final cartController = Get.put(CartController());
   // var table = context.watch<TableCubit>().state;
   // var isUsePrint = context.watch<IsUsePrintCubit>().state;
   // var print = context.watch<PrintCubit>().state;
   @override
   Widget build(BuildContext context) {
-    orderModel = cartController.order.value;
     return Scaffold(
         appBar: _buildAppbar(context),
         // body: cartState.foods.isEmpty
@@ -57,9 +57,9 @@ class CartScreen extends StatelessWidget {
         //                 }, desc: 'Cảm ơn quý khách!')
         //             },
         //         child: _buildBody(context, cartState))
-        body: orderModel.foods.isEmpty
+        body: Obx(() => cartController.order.value.foods.isEmpty
             ? const EmptyScreen()
-            : _buildBody(context, orderModel));
+            : _buildBody(context, cartController.order.value)));
   }
 
   void _handlePrint(BuildContext context,
@@ -90,20 +90,32 @@ class CartScreen extends StatelessWidget {
       Expanded(child: ItemCart(orderModel: orderModel)),
       Card(
           elevation: 10,
-          margin: const EdgeInsets.all(16),
+          margin: const EdgeInsets.all(defaultPadding),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(defaultPadding),
             child: Column(children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 const Text('Tổng tiền:'),
                 Text(
                     AppRes.currencyFormat(
                         double.parse(orderModel.totalPrice.toString())),
-                    style: TextStyle(
-                        // color: context.colorScheme.secondary,
-                        fontWeight: FontWeight.bold))
+                    style: kThinBlackTextStyle.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.themeColor))
               ]),
               const SizedBox(height: 8),
+              GestureDetector(
+                onTap: () => submitCreateOrder(context),
+                child: Container(
+                  height: 45,
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: AppColors.themeColor,
+                      borderRadius: BorderRadius.circular(defaultBorderRadius)),
+                  child: const Text('Lên đơn', style: kThinWhiteTextStyle),
+                ),
+              )
               // AnimatedButton(
               //     color: context.colorScheme.tertiaryContainer,
               //     text: 'Lên đơn',

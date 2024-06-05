@@ -20,9 +20,9 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OrderModel {
-  String? get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
-  String? get tableID => throw _privateConstructorUsedError;
+  int? get tableID => throw _privateConstructorUsedError;
   String get tableName => throw _privateConstructorUsedError;
   String? get orderTime => throw _privateConstructorUsedError;
   String? get payTime => throw _privateConstructorUsedError;
@@ -44,9 +44,9 @@ abstract class $OrderModelCopyWith<$Res> {
       _$OrderModelCopyWithImpl<$Res, OrderModel>;
   @useResult
   $Res call(
-      {String? id,
+      {int? id,
       String? status,
-      String? tableID,
+      int? tableID,
       String tableName,
       String? orderTime,
       String? payTime,
@@ -80,7 +80,7 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -88,7 +88,7 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
       tableID: freezed == tableID
           ? _value.tableID
           : tableID // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       tableName: null == tableName
           ? _value.tableName
           : tableName // ignore: cast_nullable_to_non_nullable
@@ -122,9 +122,9 @@ abstract class _$$OrderModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id,
+      {int? id,
       String? status,
-      String? tableID,
+      int? tableID,
       String tableName,
       String? orderTime,
       String? payTime,
@@ -156,7 +156,7 @@ class __$$OrderModelImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -164,7 +164,7 @@ class __$$OrderModelImplCopyWithImpl<$Res>
       tableID: freezed == tableID
           ? _value.tableID
           : tableID // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       tableName: null == tableName
           ? _value.tableName
           : tableName // ignore: cast_nullable_to_non_nullable
@@ -208,11 +208,11 @@ class _$OrderModelImpl implements _OrderModel {
       _$$OrderModelImplFromJson(json);
 
   @override
-  final String? id;
+  final int? id;
   @override
   final String? status;
   @override
-  final String? tableID;
+  final int? tableID;
   @override
   @JsonKey()
   final String tableName;
@@ -285,9 +285,9 @@ class _$OrderModelImpl implements _OrderModel {
 
 abstract class _OrderModel implements OrderModel {
   factory _OrderModel(
-          {final String? id,
+          {final int? id,
           final String? status,
-          final String? tableID,
+          final int? tableID,
           final String tableName,
           final String? orderTime,
           final String? payTime,
@@ -299,11 +299,11 @@ abstract class _OrderModel implements OrderModel {
       _$OrderModelImpl.fromJson;
 
   @override
-  String? get id;
+  int? get id;
   @override
   String? get status;
   @override
-  String? get tableID;
+  int? get tableID;
   @override
   String get tableName;
   @override

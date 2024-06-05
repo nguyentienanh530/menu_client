@@ -5,6 +5,8 @@ import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_res.dart';
 import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
+import 'package:menu_client/features/table/controller/table_controller.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../common/widget/common_text_field.dart';
 import '../../../../core/app_string.dart';
 import '../../../food/data/model/food_model.dart';
@@ -26,6 +28,7 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
   final _totalPrice = ValueNotifier<double>(1.0);
   double _priceFood = 0;
   final cartCtrl = Get.put(CartController());
+  final _tableCtrl = Get.put(TableController());
   OrderModel orderModel = OrderModel();
   TableModel tableModel = TableModel();
 
@@ -51,6 +54,7 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
   Widget build(BuildContext context) {
     // var order = context.watch<CartCubit>().state;
     // final table = context.watch<TableCubit>().state;
+    tableModel = _tableCtrl.table.value;
     orderModel = cartCtrl.order.value;
     return Form(
         child: Column(children: [
@@ -124,48 +128,47 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
   }
 
   void _handleOnTapAddToCart(OrderModel order, TableModel table) async {
-    // if (table.name.isEmpty) {
-    //   AppAlerts.warningDialog(context,
-    //       desc: AppString.dontSelectTable,
-    //       textOk: AppString.ok, btnOkOnPress: () {
-    //     pop(context, 1);
-    //   });
-    // } else {
-    //   if (checkExistFood(order)) {
-    //     fToast.showToast(
-    //         child: AppAlerts.errorToast(msg: 'Món ăn đã có trong giỏ hàng.'));
-    //   } else {
-    //     var newFoodOrder = FoodOrder(
-    //         foodID: _foodModel.id,
-    //         foodImage: _foodModel.image,
-    //         foodName: _foodModel.name,
-    //         quantity: _quantity.value,
-    //         totalPrice: _totalPrice.value,
-    //         note: _noteCtrl.text,
-    //         discount: _foodModel.discount,
-    //         foodPrice: _foodModel.price,
-    //         isDiscount: _foodModel.isDiscount);
-    //     var newFoods = [...order.foods, newFoodOrder];
-    //     double newTotalPrice = newFoods.fold(
-    //         0, (double total, currentFood) => total + currentFood.totalPrice);
-    //     order = order.copyWith(
-    //         tableName: table.name,
-    //         tableID: table.id,
-    //         foods: newFoods,
-    //         status: 'new',
-    //         totalPrice: newTotalPrice);
-    //     context.read<CartCubit>().onCartChanged(order);
-    //     FoodRepository(firebaseFirestore: FirebaseFirestore.instance)
-    //         .updateFood(
-    //             foodID: newFoodOrder.foodID,
-    //             data: {'count': FieldValue.increment(1)});
-    //     context.pop();
-    //     fToast
-    //       ..removeQueuedCustomToasts()
-    //       ..showToast(
-    //           child: AppAlerts.successToast(msg: AppString.addedToCart));
-    //   }
-    // }
+    if (table.name.isEmpty) {
+      AppRes.showSnackBar('Chưa chọn bàn', false);
+    } else {
+      if (checkExistFood(order)) {
+        AppRes.showSnackBar('Món ăn đã có trong giỏ hàng.', false);
+      } else {
+        var newFoodOrder = FoodOrder(
+            foodID: _foodModel.id,
+            foodImage: _foodModel.image,
+            foodName: _foodModel.name,
+            quantity: _quantity.value,
+            totalPrice: _totalPrice.value,
+            note: _noteCtrl.text,
+            discount: _foodModel.discount,
+            foodPrice: _foodModel.price,
+            isDiscount: _foodModel.isDiscount);
+        var newFoods = [...order.foods, newFoodOrder];
+        double newTotalPrice = newFoods.fold(
+            0, (double total, currentFood) => total + currentFood.totalPrice);
+        order = order.copyWith(
+            tableName: table.name,
+            tableID: table.id,
+            foods: newFoods,
+            status: 'new',
+            totalPrice: newTotalPrice);
+        // context.read<CartCubit>().onCartChanged(order);
+        cartCtrl.order.value = order;
+        print(_foodModel.id);
+        await Supabase.instance.client.rpc('increment', params: {
+          'id': _foodModel.id,
+        });
+
+        // FoodRepository(firebaseFirestore: FirebaseFirestore.instance)
+        //     .updateFood(
+        //         foodID: newFoodOrder.foodID,
+        //         data: {'count': FieldValue.increment(1)});
+        Get.back();
+
+        AppRes.showSnackBar(AppString.addedToCart, true);
+      }
+    }
   }
 
   bool checkExistFood(OrderModel orderModel) {
@@ -186,9 +189,9 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
         },
         child: Container(
             height: 45,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
                 color: AppColors.fountainBlue,
-                borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                borderRadius: BorderRadius.circular(defaultBorderRadius)),
             child: Center(
                 child: Text(AppString.addToCart, style: kThinWhiteTextStyle))));
   }

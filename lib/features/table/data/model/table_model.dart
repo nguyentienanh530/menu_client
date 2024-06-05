@@ -5,7 +5,7 @@ part 'table_model.g.dart';
 @freezed
 class TableModel with _$TableModel {
   factory TableModel(
-      {@Default('') String? id,
+      {@Default(0) int id,
       @Default('') String name,
       @Default(0) int seats,
       @Default(false) bool isUse}) = _TableModel;

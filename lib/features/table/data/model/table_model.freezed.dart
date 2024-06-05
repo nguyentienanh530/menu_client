@@ -20,7 +20,7 @@ TableModel _$TableModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TableModel {
-  String? get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get seats => throw _privateConstructorUsedError;
   bool get isUse => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $TableModelCopyWith<$Res> {
           TableModel value, $Res Function(TableModel) then) =
       _$TableModelCopyWithImpl<$Res, TableModel>;
   @useResult
-  $Res call({String? id, String name, int seats, bool isUse});
+  $Res call({int id, String name, int seats, bool isUse});
 }
 
 /// @nodoc
@@ -53,16 +53,16 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = null,
     Object? seats = null,
     Object? isUse = null,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -87,7 +87,7 @@ abstract class _$$TableModelImplCopyWith<$Res>
       __$$TableModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String name, int seats, bool isUse});
+  $Res call({int id, String name, int seats, bool isUse});
 }
 
 /// @nodoc
@@ -101,16 +101,16 @@ class __$$TableModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = null,
     Object? seats = null,
     Object? isUse = null,
   }) {
     return _then(_$TableModelImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -131,14 +131,14 @@ class __$$TableModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TableModelImpl implements _TableModel {
   _$TableModelImpl(
-      {this.id = '', this.name = '', this.seats = 0, this.isUse = false});
+      {this.id = 0, this.name = '', this.seats = 0, this.isUse = false});
 
   factory _$TableModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TableModelImplFromJson(json);
 
   @override
   @JsonKey()
-  final String? id;
+  final int id;
   @override
   @JsonKey()
   final String name;
@@ -185,7 +185,7 @@ class _$TableModelImpl implements _TableModel {
 
 abstract class _TableModel implements TableModel {
   factory _TableModel(
-      {final String? id,
+      {final int id,
       final String name,
       final int seats,
       final bool isUse}) = _$TableModelImpl;
@@ -194,7 +194,7 @@ abstract class _TableModel implements TableModel {
       _$TableModelImpl.fromJson;
 
   @override
-  String? get id;
+  int get id;
   @override
   String get name;
   @override

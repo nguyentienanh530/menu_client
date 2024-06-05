@@ -8,7 +8,7 @@ part of 'food_order.dart';
 
 _$FoodOrderImpl _$$FoodOrderImplFromJson(Map<String, dynamic> json) =>
     _$FoodOrderImpl(
-      foodID: json['foodID'] as String? ?? '',
+      foodID: (json['foodID'] as num?)?.toInt() ?? 0,
       foodName: json['foodName'] as String? ?? '',
       foodImage: json['foodImage'] as String? ?? '',
       quantity: (json['quantity'] as num?)?.toInt() ?? 1,

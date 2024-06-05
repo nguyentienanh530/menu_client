@@ -13,9 +13,9 @@ List<Map<String, dynamic>> foodDtoListToJson(List<FoodOrder> foods) {
 @freezed
 class OrderModel with _$OrderModel {
   factory OrderModel(
-      {final String? id,
+      {final int? id,
       final String? status,
-      final String? tableID,
+      final int? tableID,
       @Default('') String tableName,
       final String? orderTime,
       final String? payTime,

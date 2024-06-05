@@ -20,7 +20,7 @@ FoodOrder _$FoodOrderFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FoodOrder {
-  String get foodID => throw _privateConstructorUsedError;
+  int get foodID => throw _privateConstructorUsedError;
   String get foodName => throw _privateConstructorUsedError;
   String get foodImage => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $FoodOrderCopyWith<$Res> {
       _$FoodOrderCopyWithImpl<$Res, FoodOrder>;
   @useResult
   $Res call(
-      {String foodID,
+      {int foodID,
       String foodName,
       String foodImage,
       int quantity,
@@ -80,7 +80,7 @@ class _$FoodOrderCopyWithImpl<$Res, $Val extends FoodOrder>
       foodID: null == foodID
           ? _value.foodID
           : foodID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       foodName: null == foodName
           ? _value.foodName
           : foodName // ignore: cast_nullable_to_non_nullable
@@ -126,7 +126,7 @@ abstract class _$$FoodOrderImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String foodID,
+      {int foodID,
       String foodName,
       String foodImage,
       int quantity,
@@ -162,7 +162,7 @@ class __$$FoodOrderImplCopyWithImpl<$Res>
       foodID: null == foodID
           ? _value.foodID
           : foodID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       foodName: null == foodName
           ? _value.foodName
           : foodName // ignore: cast_nullable_to_non_nullable
@@ -203,7 +203,7 @@ class __$$FoodOrderImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FoodOrderImpl implements _FoodOrder {
   _$FoodOrderImpl(
-      {this.foodID = '',
+      {this.foodID = 0,
       this.foodName = '',
       this.foodImage = '',
       this.quantity = 1,
@@ -218,7 +218,7 @@ class _$FoodOrderImpl implements _FoodOrder {
 
   @override
   @JsonKey()
-  final String foodID;
+  final int foodID;
   @override
   @JsonKey()
   final String foodName;
@@ -293,7 +293,7 @@ class _$FoodOrderImpl implements _FoodOrder {
 
 abstract class _FoodOrder implements FoodOrder {
   factory _FoodOrder(
-      {final String foodID,
+      {final int foodID,
       final String foodName,
       final String foodImage,
       final int quantity,
@@ -307,7 +307,7 @@ abstract class _FoodOrder implements FoodOrder {
       _$FoodOrderImpl.fromJson;
 
   @override
-  String get foodID;
+  int get foodID;
   @override
   String get foodName;
   @override

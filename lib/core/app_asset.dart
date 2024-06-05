@@ -12,4 +12,8 @@ class AppAsset {
 
   static const String emptyImage = 'assets/image/empty.png';
   static const String shoppingCart = 'assets/svg/shopping_cart.svg';
+  static const String dinnertable = 'assets/image/dinner_table.png';
+  static const String utensils = 'assets/svg/utensils.svg';
+  static const String setting = 'assets/svg/settings.svg';
+  static const String handPlatter = 'assets/svg/hand-platter.svg';
 }

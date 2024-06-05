@@ -23,7 +23,7 @@ abstract class ApiBase<T> {
       T Function(Map<String, dynamic> json) getJsonCallback) async {
     try {
       final response = await apiCallback;
-      print(response);
+
       final List<T> dataList = List<T>.from(
         json.decode(json.encode(response)).map(
               (item) => getJsonCallback(item),
@@ -32,7 +32,7 @@ abstract class ApiBase<T> {
       return right(dataList);
     } catch (e) {
       final errorMessage = e.toString();
-      print(errorMessage);
+
       return left(errorMessage);
     }
   }

@@ -37,8 +37,9 @@ class AppColors {
   static const pumpkin = Color(0xffFF7A19);
   static const pumpkin15 = Color(0x25ff7a19);
   static const monaLisa = Color(0xffFF9292);
-  // static const lavender = Color(0xffE2F5FA);
+
   static const lavender = Color(0xfffde9eb);
+
   static const lavender50 = Color(0x80e2f5fa);
   static const silver = Color(0xffC3C3C3);
   static const fountainBlue = Color(0xff6DA6B2);

@@ -8,9 +8,9 @@ part of 'order_model.dart';
 
 _$OrderModelImpl _$$OrderModelImplFromJson(Map<String, dynamic> json) =>
     _$OrderModelImpl(
-      id: json['id'] as String?,
+      id: (json['id'] as num?)?.toInt(),
       status: json['status'] as String?,
-      tableID: json['tableID'] as String?,
+      tableID: (json['tableID'] as num?)?.toInt(),
       tableName: json['tableName'] as String? ?? '',
       orderTime: json['orderTime'] as String?,
       payTime: json['payTime'] as String?,

@@ -5,7 +5,7 @@ part 'food_order.g.dart';
 @freezed
 class FoodOrder with _$FoodOrder {
   factory FoodOrder(
-      {@Default('') String foodID,
+      {@Default(0) int foodID,
       @Default('') String foodName,
       @Default('') String foodImage,
       @Default(1) int quantity,
