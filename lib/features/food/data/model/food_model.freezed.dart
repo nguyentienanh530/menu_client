@@ -21,19 +21,20 @@ FoodModel _$FoodModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$FoodModel {
   int get id => throw _privateConstructorUsedError;
-  String get name =>
-      throw _privateConstructorUsedError; // ignore: non_constant_identifier_names
-  int get id_category => throw _privateConstructorUsedError;
-  int get count => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'category_id')
+  int get categoryID => throw _privateConstructorUsedError;
+  @JsonKey(name: 'order_count')
+  int get orderCount => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   int get discount => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
   bool get isDiscount => throw _privateConstructorUsedError;
-  bool get isShowFood => throw _privateConstructorUsedError;
+  bool get isShow => throw _privateConstructorUsedError;
   List<dynamic> get photoGallery => throw _privateConstructorUsedError;
-  double get price =>
-      throw _privateConstructorUsedError; // ignore: non_constant_identifier_names
-  String get create_at => throw _privateConstructorUsedError;
+  double get price => throw _privateConstructorUsedError;
+  @JsonKey(name: 'create_at')
+  String get createAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,16 +50,16 @@ abstract class $FoodModelCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      int id_category,
-      int count,
+      @JsonKey(name: 'category_id') int categoryID,
+      @JsonKey(name: 'order_count') int orderCount,
       String description,
       int discount,
       String image,
       bool isDiscount,
-      bool isShowFood,
+      bool isShow,
       List<dynamic> photoGallery,
       double price,
-      String create_at});
+      @JsonKey(name: 'create_at') String createAt});
 }
 
 /// @nodoc
@@ -76,16 +77,16 @@ class _$FoodModelCopyWithImpl<$Res, $Val extends FoodModel>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? id_category = null,
-    Object? count = null,
+    Object? categoryID = null,
+    Object? orderCount = null,
     Object? description = null,
     Object? discount = null,
     Object? image = null,
     Object? isDiscount = null,
-    Object? isShowFood = null,
+    Object? isShow = null,
     Object? photoGallery = null,
     Object? price = null,
-    Object? create_at = null,
+    Object? createAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -96,13 +97,13 @@ class _$FoodModelCopyWithImpl<$Res, $Val extends FoodModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      id_category: null == id_category
-          ? _value.id_category
-          : id_category // ignore: cast_nullable_to_non_nullable
+      categoryID: null == categoryID
+          ? _value.categoryID
+          : categoryID // ignore: cast_nullable_to_non_nullable
               as int,
-      count: null == count
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
+      orderCount: null == orderCount
+          ? _value.orderCount
+          : orderCount // ignore: cast_nullable_to_non_nullable
               as int,
       description: null == description
           ? _value.description
@@ -120,9 +121,9 @@ class _$FoodModelCopyWithImpl<$Res, $Val extends FoodModel>
           ? _value.isDiscount
           : isDiscount // ignore: cast_nullable_to_non_nullable
               as bool,
-      isShowFood: null == isShowFood
-          ? _value.isShowFood
-          : isShowFood // ignore: cast_nullable_to_non_nullable
+      isShow: null == isShow
+          ? _value.isShow
+          : isShow // ignore: cast_nullable_to_non_nullable
               as bool,
       photoGallery: null == photoGallery
           ? _value.photoGallery
@@ -132,9 +133,9 @@ class _$FoodModelCopyWithImpl<$Res, $Val extends FoodModel>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      create_at: null == create_at
-          ? _value.create_at
-          : create_at // ignore: cast_nullable_to_non_nullable
+      createAt: null == createAt
+          ? _value.createAt
+          : createAt // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -151,16 +152,16 @@ abstract class _$$FoodModelImplCopyWith<$Res>
   $Res call(
       {int id,
       String name,
-      int id_category,
-      int count,
+      @JsonKey(name: 'category_id') int categoryID,
+      @JsonKey(name: 'order_count') int orderCount,
       String description,
       int discount,
       String image,
       bool isDiscount,
-      bool isShowFood,
+      bool isShow,
       List<dynamic> photoGallery,
       double price,
-      String create_at});
+      @JsonKey(name: 'create_at') String createAt});
 }
 
 /// @nodoc
@@ -176,16 +177,16 @@ class __$$FoodModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? id_category = null,
-    Object? count = null,
+    Object? categoryID = null,
+    Object? orderCount = null,
     Object? description = null,
     Object? discount = null,
     Object? image = null,
     Object? isDiscount = null,
-    Object? isShowFood = null,
+    Object? isShow = null,
     Object? photoGallery = null,
     Object? price = null,
-    Object? create_at = null,
+    Object? createAt = null,
   }) {
     return _then(_$FoodModelImpl(
       id: null == id
@@ -196,13 +197,13 @@ class __$$FoodModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      id_category: null == id_category
-          ? _value.id_category
-          : id_category // ignore: cast_nullable_to_non_nullable
+      categoryID: null == categoryID
+          ? _value.categoryID
+          : categoryID // ignore: cast_nullable_to_non_nullable
               as int,
-      count: null == count
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
+      orderCount: null == orderCount
+          ? _value.orderCount
+          : orderCount // ignore: cast_nullable_to_non_nullable
               as int,
       description: null == description
           ? _value.description
@@ -220,9 +221,9 @@ class __$$FoodModelImplCopyWithImpl<$Res>
           ? _value.isDiscount
           : isDiscount // ignore: cast_nullable_to_non_nullable
               as bool,
-      isShowFood: null == isShowFood
-          ? _value.isShowFood
-          : isShowFood // ignore: cast_nullable_to_non_nullable
+      isShow: null == isShow
+          ? _value.isShow
+          : isShow // ignore: cast_nullable_to_non_nullable
               as bool,
       photoGallery: null == photoGallery
           ? _value._photoGallery
@@ -232,9 +233,9 @@ class __$$FoodModelImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      create_at: null == create_at
-          ? _value.create_at
-          : create_at // ignore: cast_nullable_to_non_nullable
+      createAt: null == createAt
+          ? _value.createAt
+          : createAt // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -246,16 +247,16 @@ class _$FoodModelImpl implements _FoodModel {
   _$FoodModelImpl(
       {this.id = 0,
       this.name = '',
-      this.id_category = 0,
-      this.count = 0,
+      @JsonKey(name: 'category_id') this.categoryID = 0,
+      @JsonKey(name: 'order_count') this.orderCount = 0,
       this.description = '',
       this.discount = 0,
       this.image = '',
       this.isDiscount = false,
-      this.isShowFood = false,
+      this.isShow = false,
       final List<dynamic> photoGallery = const [],
       this.price = 0,
-      this.create_at = ''})
+      @JsonKey(name: 'create_at') this.createAt = ''})
       : _photoGallery = photoGallery;
 
   factory _$FoodModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -267,13 +268,12 @@ class _$FoodModelImpl implements _FoodModel {
   @override
   @JsonKey()
   final String name;
-// ignore: non_constant_identifier_names
   @override
-  @JsonKey()
-  final int id_category;
+  @JsonKey(name: 'category_id')
+  final int categoryID;
   @override
-  @JsonKey()
-  final int count;
+  @JsonKey(name: 'order_count')
+  final int orderCount;
   @override
   @JsonKey()
   final String description;
@@ -288,7 +288,7 @@ class _$FoodModelImpl implements _FoodModel {
   final bool isDiscount;
   @override
   @JsonKey()
-  final bool isShowFood;
+  final bool isShow;
   final List<dynamic> _photoGallery;
   @override
   @JsonKey()
@@ -301,14 +301,13 @@ class _$FoodModelImpl implements _FoodModel {
   @override
   @JsonKey()
   final double price;
-// ignore: non_constant_identifier_names
   @override
-  @JsonKey()
-  final String create_at;
+  @JsonKey(name: 'create_at')
+  final String createAt;
 
   @override
   String toString() {
-    return 'FoodModel(id: $id, name: $name, id_category: $id_category, count: $count, description: $description, discount: $discount, image: $image, isDiscount: $isDiscount, isShowFood: $isShowFood, photoGallery: $photoGallery, price: $price, create_at: $create_at)';
+    return 'FoodModel(id: $id, name: $name, categoryID: $categoryID, orderCount: $orderCount, description: $description, discount: $discount, image: $image, isDiscount: $isDiscount, isShow: $isShow, photoGallery: $photoGallery, price: $price, createAt: $createAt)';
   }
 
   @override
@@ -318,9 +317,10 @@ class _$FoodModelImpl implements _FoodModel {
             other is _$FoodModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.id_category, id_category) ||
-                other.id_category == id_category) &&
-            (identical(other.count, count) || other.count == count) &&
+            (identical(other.categoryID, categoryID) ||
+                other.categoryID == categoryID) &&
+            (identical(other.orderCount, orderCount) ||
+                other.orderCount == orderCount) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.discount, discount) ||
@@ -328,13 +328,12 @@ class _$FoodModelImpl implements _FoodModel {
             (identical(other.image, image) || other.image == image) &&
             (identical(other.isDiscount, isDiscount) ||
                 other.isDiscount == isDiscount) &&
-            (identical(other.isShowFood, isShowFood) ||
-                other.isShowFood == isShowFood) &&
+            (identical(other.isShow, isShow) || other.isShow == isShow) &&
             const DeepCollectionEquality()
                 .equals(other._photoGallery, _photoGallery) &&
             (identical(other.price, price) || other.price == price) &&
-            (identical(other.create_at, create_at) ||
-                other.create_at == create_at));
+            (identical(other.createAt, createAt) ||
+                other.createAt == createAt));
   }
 
   @JsonKey(ignore: true)
@@ -343,16 +342,16 @@ class _$FoodModelImpl implements _FoodModel {
       runtimeType,
       id,
       name,
-      id_category,
-      count,
+      categoryID,
+      orderCount,
       description,
       discount,
       image,
       isDiscount,
-      isShowFood,
+      isShow,
       const DeepCollectionEquality().hash(_photoGallery),
       price,
-      create_at);
+      createAt);
 
   @JsonKey(ignore: true)
   @override
@@ -372,16 +371,16 @@ abstract class _FoodModel implements FoodModel {
   factory _FoodModel(
       {final int id,
       final String name,
-      final int id_category,
-      final int count,
+      @JsonKey(name: 'category_id') final int categoryID,
+      @JsonKey(name: 'order_count') final int orderCount,
       final String description,
       final int discount,
       final String image,
       final bool isDiscount,
-      final bool isShowFood,
+      final bool isShow,
       final List<dynamic> photoGallery,
       final double price,
-      final String create_at}) = _$FoodModelImpl;
+      @JsonKey(name: 'create_at') final String createAt}) = _$FoodModelImpl;
 
   factory _FoodModel.fromJson(Map<String, dynamic> json) =
       _$FoodModelImpl.fromJson;
@@ -390,10 +389,12 @@ abstract class _FoodModel implements FoodModel {
   int get id;
   @override
   String get name;
-  @override // ignore: non_constant_identifier_names
-  int get id_category;
   @override
-  int get count;
+  @JsonKey(name: 'category_id')
+  int get categoryID;
+  @override
+  @JsonKey(name: 'order_count')
+  int get orderCount;
   @override
   String get description;
   @override
@@ -403,13 +404,14 @@ abstract class _FoodModel implements FoodModel {
   @override
   bool get isDiscount;
   @override
-  bool get isShowFood;
+  bool get isShow;
   @override
   List<dynamic> get photoGallery;
   @override
   double get price;
-  @override // ignore: non_constant_identifier_names
-  String get create_at;
+  @override
+  @JsonKey(name: 'create_at')
+  String get createAt;
   @override
   @JsonKey(ignore: true)
   _$$FoodModelImplCopyWith<_$FoodModelImpl> get copyWith =>

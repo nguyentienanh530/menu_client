@@ -24,7 +24,7 @@ class _TableDialogState extends State<TableDialog> {
 
   @override
   void initState() {
-    tableCtrl.getTables();
+    // tableCtrl.getTables();
     super.initState();
   }
 
@@ -67,7 +67,9 @@ class _TableDialogState extends State<TableDialog> {
                       style: kBlackButtonTextStyle,
                     ),
                     Text(
-                      tableCtrl.table.value.name,
+                      ""
+                      // tableCtrl.table.value.name
+                      ,
                       style: kThinWhiteTextStyle.copyWith(
                           color: AppColors.themeColor,
                           fontWeight: FontWeight.bold),
@@ -101,7 +103,10 @@ class _TableDialogState extends State<TableDialog> {
       onLoading: const Loading(),
       onEmpty: const EmptyScreen(),
       onError: (error) => RetryDialog(
-          title: error ?? '', onRetryPressed: () => tableCtrl.getTables),
+          title: error ?? '',
+          onRetryPressed: () {
+            // tableCtrl.getTables;
+          }),
     );
   }
 
@@ -124,7 +129,7 @@ class _TableDialogState extends State<TableDialog> {
   Widget _buildItemTable(BuildContext context, TableModel table) {
     return GestureDetector(
         onTap: () {
-          tableCtrl.table.value = table;
+          // tableCtrl.table.value = table;
           Get.back(result: table);
         },
         child: LayoutBuilder(

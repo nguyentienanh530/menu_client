@@ -16,7 +16,6 @@ class CategoryController extends GetxController
     failureOrSuccess.fold((String failure) {
       change(null, status: RxStatus.error(failure));
     }, (List<CategoryModel> categories) {
-      // todosCount.value = todos.length;
       categoryList = categories.obs;
       if (categoryList.isEmpty) {
         change(null, status: RxStatus.empty());

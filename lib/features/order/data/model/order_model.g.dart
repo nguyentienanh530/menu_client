@@ -8,27 +8,27 @@ part of 'order_model.dart';
 
 _$OrderModelImpl _$$OrderModelImplFromJson(Map<String, dynamic> json) =>
     _$OrderModelImpl(
-      id: (json['id'] as num?)?.toInt(),
+      id: json['id'] as String? ?? '',
       status: json['status'] as String?,
-      tableID: (json['tableID'] as num?)?.toInt(),
+      tableID: (json['table_id'] as num?)?.toInt() ?? 0,
       tableName: json['tableName'] as String? ?? '',
-      orderTime: json['orderTime'] as String?,
-      payTime: json['payTime'] as String?,
-      totalPrice: (json['totalPrice'] as num?)?.toDouble(),
-      foods: (json['foods'] as List<dynamic>?)
-              ?.map((e) => FoodOrder.fromJson(e as Map<String, dynamic>))
+      payTime: json['pay_time'] as String? ?? '',
+      totalPrice: (json['total_price'] as num?)?.toDouble() ?? 0,
+      createdAt: json['created_at'] as String? ?? '',
+      orderDetail: (json['order_detail'] as List<dynamic>?)
+              ?.map((e) => OrderDetail.fromJson(e as Map<String, dynamic>))
               .toList() ??
-          const <FoodOrder>[],
+          const <OrderDetail>[],
     );
 
 Map<String, dynamic> _$$OrderModelImplToJson(_$OrderModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'status': instance.status,
-      'tableID': instance.tableID,
+      'table_id': instance.tableID,
       'tableName': instance.tableName,
-      'orderTime': instance.orderTime,
-      'payTime': instance.payTime,
-      'totalPrice': instance.totalPrice,
-      'foods': foodDtoListToJson(instance.foods),
+      'pay_time': instance.payTime,
+      'total_price': instance.totalPrice,
+      'created_at': instance.createdAt,
+      'order_detail': foodDtoListToJson(instance.orderDetail),
     };

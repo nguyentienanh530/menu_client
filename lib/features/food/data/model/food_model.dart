@@ -7,18 +7,16 @@ class FoodModel with _$FoodModel {
   factory FoodModel(
       {@Default(0) int id,
       @Default('') String name,
-      // ignore: non_constant_identifier_names
-      @Default(0) int id_category,
-      @Default(0) int count,
+      @Default(0) @JsonKey(name: 'category_id') int categoryID,
+      @Default(0) @JsonKey(name: 'order_count') int orderCount,
       @Default('') String description,
       @Default(0) int discount,
       @Default('') String image,
       @Default(false) bool isDiscount,
-      @Default(false) bool isShowFood,
+      @Default(false) bool isShow,
       @Default([]) List photoGallery,
       @Default(0) double price,
-      // ignore: non_constant_identifier_names
-      @Default('') String create_at}) = _FoodModel;
+      @Default('') @JsonKey(name: 'create_at') String createAt}) = _FoodModel;
 
   factory FoodModel.fromJson(Map<String, dynamic> json) =>
       _$FoodModelFromJson(json);

@@ -5,7 +5,7 @@ import 'package:menu_client/core/app_res.dart';
 import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
 import '../../../../core/app_const.dart';
-import '../../../order/data/model/food_order.dart';
+import '../../../order/data/model/order_detail_model.dart';
 import '../../../order/data/model/order_model.dart';
 
 // ignore: must_be_immutable
@@ -19,12 +19,12 @@ class ItemCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: orderModel.foods.length,
+        itemCount: orderModel.orderDetail.length,
         itemBuilder: (context, index) =>
-            _buildItem(context, orderModel.foods[index], index + 1));
+            _buildItem(context, orderModel.orderDetail[index], index + 1));
   }
 
-  Widget _buildItem(BuildContext context, FoodOrder foodOrder, int index) {
+  Widget _buildItem(BuildContext context, OrderDetail orderDetail, int index) {
     return Card(
         margin: const EdgeInsets.all(defaultPadding),
         // color: AppColors.lavender,
@@ -35,34 +35,36 @@ class ItemCart extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildHeader(context, index, foodOrder),
+                  _buildHeader(context, index, orderDetail),
                   Row(children: [
-                    Expanded(child: _buildImage(foodOrder)),
+                    Expanded(child: _buildImage(orderDetail)),
                     Expanded(
                         flex: 3,
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(),
-                              FittedBox(
-                                  child: Text(foodOrder.foodName,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold))),
+                              // FittedBox(
+                              //     child: Text(orderDetail.foodName,
+                              //         style: const TextStyle(
+                              //             fontWeight: FontWeight.bold))),
                               const SizedBox(height: defaultPadding),
                               Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    _buildQuality(context, foodOrder),
+                                    _buildQuality(context, orderDetail),
                                     Padding(
                                         padding: const EdgeInsets.only(
                                             right: defaultPadding),
-                                        child: _buildPriceFood(context,
-                                            (foodOrder.totalPrice).toString()))
+                                        child: _buildPriceFood(
+                                            context,
+                                            (orderDetail.totalPrice)
+                                                .toString()))
                                   ])
                             ]))
                   ]),
-                  foodOrder.note.isNotEmpty
+                  orderDetail.note.isNotEmpty
                       ? Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -72,7 +74,8 @@ class ItemCart extends StatelessWidget {
                                 const Text("Ghi chú: ",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
-                                Text(foodOrder.note, style: kThinBlackTextStyle)
+                                Text(orderDetail.note,
+                                    style: kThinBlackTextStyle)
                               ]))
                       : const SizedBox()
                 ])));
@@ -84,7 +87,7 @@ class ItemCart extends StatelessWidget {
             color: AppColors.themeColor, fontWeight: FontWeight.bold));
   }
 
-  Widget _buildImage(FoodOrder food) {
+  Widget _buildImage(OrderDetail food) {
     return Container(
         height: 50,
         width: 50,
@@ -96,7 +99,7 @@ class ItemCart extends StatelessWidget {
                 image: NetworkImage(food.foodImage), fit: BoxFit.cover)));
   }
 
-  Widget _buildQuality(BuildContext context, FoodOrder foodOrder) {
+  Widget _buildQuality(BuildContext context, OrderDetail foodOrder) {
     var quantity = ValueNotifier(foodOrder.quantity);
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       // LineText(title: "Số lượng: ", value: food.quantity.toString()),
@@ -142,12 +145,12 @@ class ItemCart extends StatelessWidget {
   }
 
   void _handleUpdateFood(
-      BuildContext context, int quantity, FoodOrder foodOrder) {
-    int index = orderModel.foods
+      BuildContext context, int quantity, OrderDetail foodOrder) {
+    int index = orderModel.orderDetail
         .indexWhere((element) => element.foodID == foodOrder.foodID);
 
     if (index != -1) {
-      var existingFoodOrder = orderModel.foods[index];
+      var existingFoodOrder = orderModel.orderDetail[index];
       var updatedFoodOrder = existingFoodOrder.copyWith(
           quantity: quantity,
           totalPrice: quantity *
@@ -156,19 +159,19 @@ class ItemCart extends StatelessWidget {
                   foodPrice: existingFoodOrder.foodPrice,
                   discount: int.parse(existingFoodOrder.discount.toString())));
 
-      List<FoodOrder> updatedFoods = List.from(orderModel.foods);
+      List<OrderDetail> updatedFoods = List.from(orderModel.orderDetail);
       updatedFoods[index] = updatedFoodOrder;
       double newTotalPrice = updatedFoods.fold(
           0, (double total, currentFood) => total + currentFood.totalPrice);
-      orderModel =
-          orderModel.copyWith(foods: updatedFoods, totalPrice: newTotalPrice);
+      orderModel = orderModel.copyWith(
+          orderDetail: updatedFoods, totalPrice: newTotalPrice);
       _cartCtrl.order.value = orderModel;
     } else {
       return;
     }
   }
 
-  Widget _buildHeader(BuildContext context, int index, FoodOrder foodOrder) {
+  Widget _buildHeader(BuildContext context, int index, OrderDetail foodOrder) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
         height: 40,
@@ -184,7 +187,7 @@ class ItemCart extends StatelessWidget {
         ]));
   }
 
-  Widget _buildIconDeleteItemFood(BuildContext context, FoodOrder foodOrder) {
+  Widget _buildIconDeleteItemFood(BuildContext context, OrderDetail foodOrder) {
     return GestureDetector(
         onTap: () => _handleDeleteItem(context, orderModel, foodOrder),
         child: Container(
@@ -199,18 +202,19 @@ class ItemCart extends StatelessWidget {
   }
 
   void _handleDeleteItem(
-      BuildContext context, OrderModel orderModel, FoodOrder foo) {
+      BuildContext context, OrderModel orderModel, OrderDetail foo) {
     AppRes.showWanningDiaLog(
-        title: 'Xóa món "${foo.foodName}"?',
+        // title: 'Xóa món "${foo.foodName}"?',
+        title: 'Xóa món "?',
         content: 'Kiểm tra kĩ trước khi xóa!',
         onCancelTap: () => Get.back(),
         onConformTap: () {
-          var newListOrder = [...orderModel.foods];
+          var newListOrder = [...orderModel.orderDetail];
           newListOrder.removeWhere((element) => element.foodID == foo.foodID);
           double newTotalPrice = newListOrder.fold(
               0, (double total, currentFood) => total + currentFood.totalPrice);
           orderModel = orderModel.copyWith(
-              foods: newListOrder, totalPrice: newTotalPrice);
+              orderDetail: newListOrder, totalPrice: newTotalPrice);
           _cartCtrl.order.value = orderModel;
           Get.back();
         });

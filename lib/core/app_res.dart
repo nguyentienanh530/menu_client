@@ -27,8 +27,9 @@ class AppRes {
     return Get.showSnackbar(
       GetSnackBar(
         titleText: Container(),
-        backgroundColor:
-            positive ? AppColors.islamicGreen : AppColors.themeColor,
+        backgroundColor: positive
+            ? AppColors.islamicGreen.withOpacity(0.8)
+            : AppColors.themeColor,
         message: msg,
         messageText: Row(
           children: [
@@ -63,7 +64,52 @@ class AppRes {
                         fontWeight: FontWeight.bold)),
                 content: Text(content ?? '',
                     style: kThinBlackTextStyle, textAlign: TextAlign.center),
-                actionsAlignment: MainAxisAlignment.spaceBetween,
+                actionsAlignment: MainAxisAlignment.spaceAround,
+                actions: [
+                  GestureDetector(
+                      onTap: onCancelTap,
+                      child: Container(
+                          height: 35,
+                          width: 90,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: AppColors.white,
+                              border: Border.all(color: AppColors.themeColor),
+                              borderRadius:
+                                  BorderRadius.circular(defaultBorderRadius)),
+                          child: Text('Hủy',
+                              style: kThinWhiteTextStyle.copyWith(
+                                  color: AppColors.themeColor)))),
+                  GestureDetector(
+                      onTap: onConformTap,
+                      child: Container(
+                          height: 35,
+                          width: 90,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: AppColors.themeColor,
+                              borderRadius:
+                                  BorderRadius.circular(defaultBorderRadius)),
+                          child: const Text('Xác nhận',
+                              style: kThinWhiteTextStyle)))
+                ]));
+  }
+
+  static comfirmDiaLog(
+      {String? title,
+      String? content,
+      void Function()? onCancelTap,
+      void Function()? onConformTap}) {
+    return Get.generalDialog(
+        pageBuilder: (context, animation, secondaryAnimation) => AlertDialog(
+                backgroundColor: AppColors.white,
+                icon: const Icon(Icons.question_mark_rounded, size: 80),
+                title: Text(title ?? 'Thông báo!',
+                    style: kRegularTextStyle.copyWith(
+                        fontWeight: FontWeight.bold)),
+                content: Text(content ?? '',
+                    style: kThinBlackTextStyle, textAlign: TextAlign.center),
+                actionsAlignment: MainAxisAlignment.spaceAround,
                 actions: [
                   GestureDetector(
                       onTap: onCancelTap,

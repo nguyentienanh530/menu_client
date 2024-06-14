@@ -1,5 +1,15 @@
 class ApiConfig {
-  static const String supaBaseUrl = 'https://xskrpbkpckajkharkctf.supabase.co';
-  static const String anonKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhza3JwYmtwY2thamtoYXJrY3RmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTczODUyNzYsImV4cCI6MjAzMjk2MTI3Nn0.oADOUDyPOtMnWfOxM8l0Tfe4UNfAUdt2gafIpcmbxhU';
+  static const token =
+      "6369de3d8da8e764cc3c1cbe4121bb6741875de2c30dfd39df8fd351b6a508ea";
+  static const String baseUrl = "http://192.168.1.196:80/api/v1";
+  static const String host = "http://192.168.1.196:80/";
+  // static const header = {
+  //   'Authorization': 'Bearer $token',
+  //   'content-Type': 'application/json',
+  // };
+  static const Duration receiveTimeout = Duration(milliseconds: 15000);
+  static const Duration connectionTimeout = Duration(milliseconds: 15000);
+  static const String users = '/user';
+  static const String banners = '/banners';
+  static const String categories = '/categories';
 }

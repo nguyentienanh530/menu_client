@@ -10,6 +10,7 @@ import 'package:menu_client/features/cart/view/screen/cart_screen.dart';
 
 import '../../../../common/widget/cart_button.dart';
 import '../../../../common/widget/grid_item_food.dart';
+import '../../../cart/controller/cart_controller.dart';
 import '../../../category/data/model/category_model.dart';
 import '../../controller/food_on_category_controller.dart';
 
@@ -23,11 +24,12 @@ class FoodOnCategory extends StatefulWidget {
 
 class _FoodOnCategoryState extends State<FoodOnCategory> {
   final _foodsOnCategoryCtrl = Get.put(FoodsOnCategoryController());
+  final cartCtrl = Get.put(CartController());
   CategoryModel _category = CategoryModel();
   @override
   void initState() {
     _category = widget.category;
-    _foodsOnCategoryCtrl.getFoodsOnCategory(idCategory: _category.id);
+    // _foodsOnCategoryCtrl.getFoodsOnCategory(idCategory: _category.id);
     super.initState();
   }
 
@@ -44,14 +46,20 @@ class _FoodOnCategoryState extends State<FoodOnCategory> {
                 onLoading: const Loading(),
                 onError: (error) => RetryDialog(
                     title: error ?? "",
-                    onRetryPressed: () => _foodsOnCategoryCtrl
-                        .getFoodsOnCategory(idCategory: _category.id)))));
+                    onRetryPressed: () {
+                      // _foodsOnCategoryCtrl.getFoodsOnCategory(
+                      //     idCategory: _category.id);
+                    }))));
   }
 
   _buildAppbar(BuildContext context) => AppBar(
-      centerTitle: true,
-      backgroundColor: AppColors.themeColor,
-      foregroundColor: AppColors.white,
-      title: Text(_category.name, style: kMediumWhiteTextStyle),
-      actions: [CartButton(onPressed: () => Get.to(() => CartScreen()))]);
+          centerTitle: true,
+          backgroundColor: AppColors.themeColor,
+          foregroundColor: AppColors.white,
+          title: Text(_category.name, style: kMediumWhiteTextStyle),
+          actions: [
+            CartButton(
+                onPressed: () => Get.to(() => CartScreen()),
+                number: cartCtrl.order.value.orderDetail.length.toString())
+          ]);
 }

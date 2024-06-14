@@ -23,7 +23,7 @@ mixin _$CategoryModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
-  int get sort => throw _privateConstructorUsedError;
+  int get serial => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +37,7 @@ abstract class $CategoryModelCopyWith<$Res> {
           CategoryModel value, $Res Function(CategoryModel) then) =
       _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
   @useResult
-  $Res call({int id, String name, String image, int sort});
+  $Res call({int id, String name, String image, int serial});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
     Object? id = null,
     Object? name = null,
     Object? image = null,
-    Object? sort = null,
+    Object? serial = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -71,9 +71,9 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      sort: null == sort
-          ? _value.sort
-          : sort // ignore: cast_nullable_to_non_nullable
+      serial: null == serial
+          ? _value.serial
+          : serial // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -87,7 +87,7 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
       __$$CategoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String image, int sort});
+  $Res call({int id, String name, String image, int serial});
 }
 
 /// @nodoc
@@ -104,7 +104,7 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? image = null,
-    Object? sort = null,
+    Object? serial = null,
   }) {
     return _then(_$CategoryModelImpl(
       id: null == id
@@ -119,9 +119,9 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      sort: null == sort
-          ? _value.sort
-          : sort // ignore: cast_nullable_to_non_nullable
+      serial: null == serial
+          ? _value.serial
+          : serial // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -131,7 +131,7 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CategoryModelImpl implements _CategoryModel {
   _$CategoryModelImpl(
-      {this.id = 0, this.name = '', this.image = '', this.sort = 0});
+      {this.id = 0, this.name = '', this.image = '', this.serial = 0});
 
   factory _$CategoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CategoryModelImplFromJson(json);
@@ -147,11 +147,11 @@ class _$CategoryModelImpl implements _CategoryModel {
   final String image;
   @override
   @JsonKey()
-  final int sort;
+  final int serial;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, image: $image, sort: $sort)';
+    return 'CategoryModel(id: $id, name: $name, image: $image, serial: $serial)';
   }
 
   @override
@@ -162,12 +162,12 @@ class _$CategoryModelImpl implements _CategoryModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.sort, sort) || other.sort == sort));
+            (identical(other.serial, serial) || other.serial == serial));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, image, sort);
+  int get hashCode => Object.hash(runtimeType, id, name, image, serial);
 
   @JsonKey(ignore: true)
   @override
@@ -188,7 +188,7 @@ abstract class _CategoryModel implements CategoryModel {
       {final int id,
       final String name,
       final String image,
-      final int sort}) = _$CategoryModelImpl;
+      final int serial}) = _$CategoryModelImpl;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$CategoryModelImpl.fromJson;
@@ -200,7 +200,7 @@ abstract class _CategoryModel implements CategoryModel {
   @override
   String get image;
   @override
-  int get sort;
+  int get serial;
   @override
   @JsonKey(ignore: true)
   _$$CategoryModelImplCopyWith<_$CategoryModelImpl> get copyWith =>

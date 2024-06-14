@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:menu_client/core/api_config.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/features/home/view/screen/home_screen.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
-  await Supabase.initialize(
-      url: ApiConfig.supaBaseUrl, anonKey: ApiConfig.anonKey);
-
   runApp(const MainApp());
 }
 

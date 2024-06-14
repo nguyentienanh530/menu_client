@@ -6,11 +6,10 @@ import 'package:menu_client/core/app_res.dart';
 import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
 import 'package:menu_client/features/table/controller/table_controller.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../common/widget/common_text_field.dart';
 import '../../../../core/app_string.dart';
 import '../../../food/data/model/food_model.dart';
-import '../../../order/data/model/food_order.dart';
+import '../../../order/data/model/order_detail_model.dart';
 import '../../../order/data/model/order_model.dart';
 import '../../../table/data/model/table_model.dart';
 
@@ -54,7 +53,7 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
   Widget build(BuildContext context) {
     // var order = context.watch<CartCubit>().state;
     // final table = context.watch<TableCubit>().state;
-    tableModel = _tableCtrl.table.value;
+    // tableModel = _tableCtrl.table.value;
     orderModel = cartCtrl.order.value;
     return Form(
         child: Column(children: [
@@ -134,7 +133,7 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
       if (checkExistFood(order)) {
         AppRes.showSnackBar('Món ăn đã có trong giỏ hàng.', false);
       } else {
-        var newFoodOrder = FoodOrder(
+        var newFoodOrder = OrderDetail(
             foodID: _foodModel.id,
             foodImage: _foodModel.image,
             foodName: _foodModel.name,
@@ -144,26 +143,16 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
             discount: _foodModel.discount,
             foodPrice: _foodModel.price,
             isDiscount: _foodModel.isDiscount);
-        var newFoods = [...order.foods, newFoodOrder];
+        var newFoods = [...order.orderDetail, newFoodOrder];
         double newTotalPrice = newFoods.fold(
             0, (double total, currentFood) => total + currentFood.totalPrice);
         order = order.copyWith(
             tableName: table.name,
             tableID: table.id,
-            foods: newFoods,
+            orderDetail: newFoods,
             status: 'new',
             totalPrice: newTotalPrice);
-        // context.read<CartCubit>().onCartChanged(order);
         cartCtrl.order.value = order;
-        print(_foodModel.id);
-        await Supabase.instance.client.rpc('increment', params: {
-          'id': _foodModel.id,
-        });
-
-        // FoodRepository(firebaseFirestore: FirebaseFirestore.instance)
-        //     .updateFood(
-        //         foodID: newFoodOrder.foodID,
-        //         data: {'count': FieldValue.increment(1)});
         Get.back();
 
         AppRes.showSnackBar(AppString.addedToCart, true);
@@ -173,7 +162,7 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
 
   bool checkExistFood(OrderModel orderModel) {
     var isExist = false;
-    for (FoodOrder e in orderModel.foods) {
+    for (OrderDetail e in orderModel.orderDetail) {
       if (e.foodID == _foodModel.id) {
         isExist = true;
         break;

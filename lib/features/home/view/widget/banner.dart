@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:menu_client/common/widget/error_build_image.dart';
 import 'package:menu_client/common/widget/loading.dart';
+import 'package:menu_client/core/api_config.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../banner/data/model/banner_model.dart';
@@ -67,7 +68,7 @@ class BannerWidget extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         child: CachedNetworkImage(
-            imageUrl: item.image ?? '',
+            imageUrl: '${ApiConfig.host}${item.image}',
             placeholder: (context, url) => const Loading(),
             errorWidget: errorBuilderForImage,
             fit: BoxFit.cover));

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:menu_client/common/widget/error_build_image.dart';
 import 'package:menu_client/common/widget/loading.dart';
+import 'package:menu_client/core/api_config.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/features/food/view/screens/food_on_category.dart';
 import '../../../category/data/model/category_model.dart';
@@ -17,8 +18,8 @@ class Categories extends StatelessWidget {
   }
 
   Widget _buildBody(List<CategoryModel> categories) {
-    var modifiableList = List.from(categories);
-    modifiableList.sort((a, b) => a.sort!.compareTo(b.sort!));
+    List<CategoryModel> modifiableList = List.from(categories);
+    modifiableList.sort((a, b) => a.serial.compareTo(b.serial));
     return GridView.builder(
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -44,7 +45,8 @@ class Categories extends StatelessWidget {
                       child: Container(
                           padding: const EdgeInsets.all(8),
                           child: CachedNetworkImage(
-                              imageUrl: categoryModel.image,
+                              imageUrl:
+                                  '${ApiConfig.host}${categoryModel.image}',
                               placeholder: (context, url) => const Loading(),
                               errorWidget: errorBuilderForImage))),
                   Expanded(

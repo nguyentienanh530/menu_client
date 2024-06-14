@@ -36,7 +36,9 @@ class _MyWidgetState extends State<FoodScreen>
     super.build(context);
     return Scaffold(
         appBar: _buildAppbar(context),
-        body: Obx(() => SearchFoodView(textSearch: foodCtrl.textSearch.value)));
+        body: Obx(() => SizedBox()
+            // SearchFoodView(textSearch: foodCtrl.textSearch.value)
+            ));
   }
 
   @override
@@ -61,12 +63,13 @@ class _MyWidgetState extends State<FoodScreen>
       height: 40,
       child: CommonTextField(
           controller: _searchController,
-          onChanged: (value) => foodCtrl.textSearch.value = value,
+          onChanged: (value) => value,
+          // foodCtrl.textSearch.value = value,
           hintText: "Tìm kiếm",
           suffixIcon: IconButton(
               icon: const Icon(Icons.close),
               onPressed: () {
-                foodCtrl.textSearch.value = '';
+                // foodCtrl.textSearch.value = '';
                 _searchController.clear();
               }),
           prefixIcon: const Icon(Icons.search)),
@@ -114,7 +117,7 @@ class _AfterSearchUIState extends State<AfterSearchUI> {
 
   getData() {
     if (!mounted) return;
-    foodCtrl.fetchFoods();
+    // foodCtrl.fetchFoods();
   }
 
   @override

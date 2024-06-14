@@ -8,7 +8,7 @@ class CategoryModel with _$CategoryModel {
       {@Default(0) int id,
       @Default('') String name,
       @Default('') String image,
-      @Default(0) int sort}) = _CategoryModel;
+      @Default(0) int serial}) = _CategoryModel;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$CategoryModelFromJson(json);

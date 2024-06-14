@@ -5,7 +5,9 @@ import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
+import 'package:menu_client/features/order/controller/order_controller.dart';
 
+import '../../../../common/widget/async_widget.dart';
 import '../../../../common/widget/empty_screen.dart';
 import '../../../../core/app_res.dart';
 import '../../../order/data/model/order_model.dart';
@@ -18,6 +20,7 @@ class CartScreen extends StatelessWidget {
   CartScreen({super.key});
 
   final cartController = Get.put(CartController());
+  final orderController = Get.put(OrderController());
   // var table = context.watch<TableCubit>().state;
   // var isUsePrint = context.watch<IsUsePrintCubit>().state;
   // var print = context.watch<PrintCubit>().state;
@@ -57,7 +60,7 @@ class CartScreen extends StatelessWidget {
         //                 }, desc: 'Cảm ơn quý khách!')
         //             },
         //         child: _buildBody(context, cartState))
-        body: Obx(() => cartController.order.value.foods.isEmpty
+        body: Obx(() => cartController.order.value.orderDetail.isEmpty
             ? const EmptyScreen()
             : _buildBody(context, cartController.order.value)));
   }
@@ -69,7 +72,7 @@ class CartScreen extends StatelessWidget {
       required PrintModel print}) {
     if (isUsePrint) {
       var listPrint = [];
-      for (var element in cartState.foods) {
+      for (var element in cartState.orderDetail) {
         listPrint
             .add('${table.name} - ${element.foodName} - ${element.quantity}');
       }
@@ -107,14 +110,14 @@ class CartScreen extends StatelessWidget {
               GestureDetector(
                 onTap: () => submitCreateOrder(context),
                 child: Container(
-                  height: 45,
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: AppColors.themeColor,
-                      borderRadius: BorderRadius.circular(defaultBorderRadius)),
-                  child: const Text('Lên đơn', style: kThinWhiteTextStyle),
-                ),
+                    height: 45,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: AppColors.themeColor,
+                        borderRadius:
+                            BorderRadius.circular(defaultBorderRadius)),
+                    child: const Text('Lên đơn', style: kThinWhiteTextStyle)),
               )
               // AnimatedButton(
               //     color: context.colorScheme.tertiaryContainer,
@@ -135,27 +138,39 @@ class CartScreen extends StatelessWidget {
   }
 
   void submitCreateOrder(BuildContext context) {
-    // showCupertinoModalPopup(
-    //     context: context,
-    //     builder: (context) => CupertinoActionSheet(
-    //             cancelButton: CupertinoActionSheetAction(
-    //                 isDestructiveAction: true,
-    //                 onPressed: () => context.pop(),
-    //                 child: Text(AppString.cancel)),
-    //             title: Text('Kiểm tra kĩ trước khi lên đơn',
-    //                 style: context.titleStyleSmall),
-    //             actions: [
-    //               CupertinoActionSheetAction(
-    //                   isDefaultAction: true,
-    //                   onPressed: () => _handleCreateOrder(context),
-    //                   child: Text('${AppString.ok} lên đơn'))
-    //             ]));
+    AppRes.comfirmDiaLog(
+        content: 'Đơn đã lên sẽ không thể sửa, kiểm tra kĩ trước khi lên đơn!',
+        onCancelTap: () => Get.back(),
+        onConformTap: () => _handleCreateOrder(context));
   }
 
   void _handleCreateOrder(BuildContext context) {
-    // context.pop();
-    // cartState = cartState.copyWith(orderTime: DateTime.now().toString());
-    // context.read<OrderBloc>().add(OrderCreated(orderModel: cartState));
+    Get.back();
+    var order = cartController.order.value;
+
+    // orderController.createOrder(order);
+    showDialog(
+      context: context,
+      builder: (_) {
+        return Obx(
+          () {
+            return AsyncWidget(
+              apiState: orderController.apiStatus.value,
+              progressStatusTitle: "Đang lên đơn...",
+              failureStatusTitle: orderController.errorMessage.value,
+              successStatusTitle: "Lên đơn thành công!",
+              onSuccessPressed: () {
+                Navigator.pop(context);
+                // controller.getTodos(widget.user.id!);
+              },
+              onRetryPressed: () {
+                // orderController.createOrder(cartController.order.value);
+              },
+            );
+          },
+        );
+      },
+    );
   }
 
   // Widget _buildItemFood(

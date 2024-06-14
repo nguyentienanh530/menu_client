@@ -14,12 +14,14 @@ import '../../../../common/widget/cart_button.dart';
 import '../../../../core/app_const.dart';
 import '../../../../core/app_string.dart';
 import '../../../../core/app_style.dart';
+import '../../../cart/controller/cart_controller.dart';
 import '../../../cart/view/widget/order_food_bottomsheet.dart';
 import '../../data/model/food_model.dart';
 
 class FoodDetailScreen extends StatelessWidget {
-  const FoodDetailScreen({super.key, this.food});
+  FoodDetailScreen({super.key, this.food});
   final FoodModel? food;
+  final cartCtrl = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +34,11 @@ class FoodDetailScreen extends StatelessWidget {
         foregroundColor: AppColors.white,
         backgroundColor: AppColors.themeColor,
         centerTitle: true,
-        actions: [CartButton(onPressed: () => Get.to(() => CartScreen()))]);
+        actions: [
+          Obx(() => CartButton(
+              onPressed: () => Get.to(() => CartScreen()),
+              number: cartCtrl.order.value.orderDetail.length.toString()))
+        ]);
   }
 }
 

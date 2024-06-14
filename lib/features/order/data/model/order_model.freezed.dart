@@ -20,16 +20,19 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OrderModel {
-  int? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'table_id')
   int? get tableID => throw _privateConstructorUsedError;
   String get tableName => throw _privateConstructorUsedError;
-  String? get orderTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pay_time')
   String? get payTime => throw _privateConstructorUsedError;
-  double? get totalPrice =>
-      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
-  @JsonKey(toJson: foodDtoListToJson)
-  List<FoodOrder> get foods => throw _privateConstructorUsedError;
+  @JsonKey(name: 'total_price')
+  double? get totalPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  String get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(toJson: foodDtoListToJson, name: 'order_detail')
+  List<OrderDetail> get orderDetail => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,14 +47,15 @@ abstract class $OrderModelCopyWith<$Res> {
       _$OrderModelCopyWithImpl<$Res, OrderModel>;
   @useResult
   $Res call(
-      {int? id,
+      {String id,
       String? status,
-      int? tableID,
+      @JsonKey(name: 'table_id') int? tableID,
       String tableName,
-      String? orderTime,
-      String? payTime,
-      double? totalPrice,
-      @JsonKey(toJson: foodDtoListToJson) List<FoodOrder> foods});
+      @JsonKey(name: 'pay_time') String? payTime,
+      @JsonKey(name: 'total_price') double? totalPrice,
+      @JsonKey(name: 'created_at') String createdAt,
+      @JsonKey(toJson: foodDtoListToJson, name: 'order_detail')
+      List<OrderDetail> orderDetail});
 }
 
 /// @nodoc
@@ -67,20 +71,20 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? status = freezed,
     Object? tableID = freezed,
     Object? tableName = null,
-    Object? orderTime = freezed,
     Object? payTime = freezed,
     Object? totalPrice = freezed,
-    Object? foods = null,
+    Object? createdAt = null,
+    Object? orderDetail = null,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -93,10 +97,6 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
           ? _value.tableName
           : tableName // ignore: cast_nullable_to_non_nullable
               as String,
-      orderTime: freezed == orderTime
-          ? _value.orderTime
-          : orderTime // ignore: cast_nullable_to_non_nullable
-              as String?,
       payTime: freezed == payTime
           ? _value.payTime
           : payTime // ignore: cast_nullable_to_non_nullable
@@ -105,10 +105,14 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      foods: null == foods
-          ? _value.foods
-          : foods // ignore: cast_nullable_to_non_nullable
-              as List<FoodOrder>,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderDetail: null == orderDetail
+          ? _value.orderDetail
+          : orderDetail // ignore: cast_nullable_to_non_nullable
+              as List<OrderDetail>,
     ) as $Val);
   }
 }
@@ -122,14 +126,15 @@ abstract class _$$OrderModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? id,
+      {String id,
       String? status,
-      int? tableID,
+      @JsonKey(name: 'table_id') int? tableID,
       String tableName,
-      String? orderTime,
-      String? payTime,
-      double? totalPrice,
-      @JsonKey(toJson: foodDtoListToJson) List<FoodOrder> foods});
+      @JsonKey(name: 'pay_time') String? payTime,
+      @JsonKey(name: 'total_price') double? totalPrice,
+      @JsonKey(name: 'created_at') String createdAt,
+      @JsonKey(toJson: foodDtoListToJson, name: 'order_detail')
+      List<OrderDetail> orderDetail});
 }
 
 /// @nodoc
@@ -143,20 +148,20 @@ class __$$OrderModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? status = freezed,
     Object? tableID = freezed,
     Object? tableName = null,
-    Object? orderTime = freezed,
     Object? payTime = freezed,
     Object? totalPrice = freezed,
-    Object? foods = null,
+    Object? createdAt = null,
+    Object? orderDetail = null,
   }) {
     return _then(_$OrderModelImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -169,10 +174,6 @@ class __$$OrderModelImplCopyWithImpl<$Res>
           ? _value.tableName
           : tableName // ignore: cast_nullable_to_non_nullable
               as String,
-      orderTime: freezed == orderTime
-          ? _value.orderTime
-          : orderTime // ignore: cast_nullable_to_non_nullable
-              as String?,
       payTime: freezed == payTime
           ? _value.payTime
           : payTime // ignore: cast_nullable_to_non_nullable
@@ -181,10 +182,14 @@ class __$$OrderModelImplCopyWithImpl<$Res>
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      foods: null == foods
-          ? _value._foods
-          : foods // ignore: cast_nullable_to_non_nullable
-              as List<FoodOrder>,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderDetail: null == orderDetail
+          ? _value._orderDetail
+          : orderDetail // ignore: cast_nullable_to_non_nullable
+              as List<OrderDetail>,
     ));
   }
 }
@@ -193,49 +198,52 @@ class __$$OrderModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OrderModelImpl implements _OrderModel {
   _$OrderModelImpl(
-      {this.id,
+      {this.id = '',
       this.status,
-      this.tableID,
+      @JsonKey(name: 'table_id') this.tableID = 0,
       this.tableName = '',
-      this.orderTime,
-      this.payTime,
-      this.totalPrice,
-      @JsonKey(toJson: foodDtoListToJson)
-      final List<FoodOrder> foods = const <FoodOrder>[]})
-      : _foods = foods;
+      @JsonKey(name: 'pay_time') this.payTime = '',
+      @JsonKey(name: 'total_price') this.totalPrice = 0,
+      @JsonKey(name: 'created_at') this.createdAt = '',
+      @JsonKey(toJson: foodDtoListToJson, name: 'order_detail')
+      final List<OrderDetail> orderDetail = const <OrderDetail>[]})
+      : _orderDetail = orderDetail;
 
   factory _$OrderModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderModelImplFromJson(json);
 
   @override
-  final int? id;
+  @JsonKey()
+  final String id;
   @override
   final String? status;
   @override
+  @JsonKey(name: 'table_id')
   final int? tableID;
   @override
   @JsonKey()
   final String tableName;
   @override
-  final String? orderTime;
-  @override
+  @JsonKey(name: 'pay_time')
   final String? payTime;
   @override
+  @JsonKey(name: 'total_price')
   final double? totalPrice;
-// ignore: invalid_annotation_target
-  final List<FoodOrder> _foods;
-// ignore: invalid_annotation_target
   @override
-  @JsonKey(toJson: foodDtoListToJson)
-  List<FoodOrder> get foods {
-    if (_foods is EqualUnmodifiableListView) return _foods;
+  @JsonKey(name: 'created_at')
+  final String createdAt;
+  final List<OrderDetail> _orderDetail;
+  @override
+  @JsonKey(toJson: foodDtoListToJson, name: 'order_detail')
+  List<OrderDetail> get orderDetail {
+    if (_orderDetail is EqualUnmodifiableListView) return _orderDetail;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_foods);
+    return EqualUnmodifiableListView(_orderDetail);
   }
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, status: $status, tableID: $tableID, tableName: $tableName, orderTime: $orderTime, payTime: $payTime, totalPrice: $totalPrice, foods: $foods)';
+    return 'OrderModel(id: $id, status: $status, tableID: $tableID, tableName: $tableName, payTime: $payTime, totalPrice: $totalPrice, createdAt: $createdAt, orderDetail: $orderDetail)';
   }
 
   @override
@@ -248,12 +256,13 @@ class _$OrderModelImpl implements _OrderModel {
             (identical(other.tableID, tableID) || other.tableID == tableID) &&
             (identical(other.tableName, tableName) ||
                 other.tableName == tableName) &&
-            (identical(other.orderTime, orderTime) ||
-                other.orderTime == orderTime) &&
             (identical(other.payTime, payTime) || other.payTime == payTime) &&
             (identical(other.totalPrice, totalPrice) ||
                 other.totalPrice == totalPrice) &&
-            const DeepCollectionEquality().equals(other._foods, _foods));
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            const DeepCollectionEquality()
+                .equals(other._orderDetail, _orderDetail));
   }
 
   @JsonKey(ignore: true)
@@ -264,10 +273,10 @@ class _$OrderModelImpl implements _OrderModel {
       status,
       tableID,
       tableName,
-      orderTime,
       payTime,
       totalPrice,
-      const DeepCollectionEquality().hash(_foods));
+      createdAt,
+      const DeepCollectionEquality().hash(_orderDetail));
 
   @JsonKey(ignore: true)
   @override
@@ -285,36 +294,40 @@ class _$OrderModelImpl implements _OrderModel {
 
 abstract class _OrderModel implements OrderModel {
   factory _OrderModel(
-          {final int? id,
-          final String? status,
-          final int? tableID,
-          final String tableName,
-          final String? orderTime,
-          final String? payTime,
-          final double? totalPrice,
-          @JsonKey(toJson: foodDtoListToJson) final List<FoodOrder> foods}) =
-      _$OrderModelImpl;
+      {final String id,
+      final String? status,
+      @JsonKey(name: 'table_id') final int? tableID,
+      final String tableName,
+      @JsonKey(name: 'pay_time') final String? payTime,
+      @JsonKey(name: 'total_price') final double? totalPrice,
+      @JsonKey(name: 'created_at') final String createdAt,
+      @JsonKey(toJson: foodDtoListToJson, name: 'order_detail')
+      final List<OrderDetail> orderDetail}) = _$OrderModelImpl;
 
   factory _OrderModel.fromJson(Map<String, dynamic> json) =
       _$OrderModelImpl.fromJson;
 
   @override
-  int? get id;
+  String get id;
   @override
   String? get status;
   @override
+  @JsonKey(name: 'table_id')
   int? get tableID;
   @override
   String get tableName;
   @override
-  String? get orderTime;
-  @override
+  @JsonKey(name: 'pay_time')
   String? get payTime;
   @override
+  @JsonKey(name: 'total_price')
   double? get totalPrice;
-  @override // ignore: invalid_annotation_target
-  @JsonKey(toJson: foodDtoListToJson)
-  List<FoodOrder> get foods;
+  @override
+  @JsonKey(name: 'created_at')
+  String get createdAt;
+  @override
+  @JsonKey(toJson: foodDtoListToJson, name: 'order_detail')
+  List<OrderDetail> get orderDetail;
   @override
   @JsonKey(ignore: true)
   _$$OrderModelImplCopyWith<_$OrderModelImpl> get copyWith =>
