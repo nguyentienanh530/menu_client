@@ -53,7 +53,7 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
   Widget build(BuildContext context) {
     // var order = context.watch<CartCubit>().state;
     // final table = context.watch<TableCubit>().state;
-    // tableModel = _tableCtrl.table.value;
+    tableModel = _tableCtrl.table.value;
     orderModel = cartCtrl.order.value;
     return Form(
         child: Column(children: [

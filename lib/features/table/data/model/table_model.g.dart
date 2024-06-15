@@ -11,7 +11,7 @@ _$TableModelImpl _$$TableModelImplFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
       seats: (json['seats'] as num?)?.toInt() ?? 0,
-      isUse: json['isUse'] as bool? ?? false,
+      isUse: json['is_use'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$TableModelImplToJson(_$TableModelImpl instance) =>
@@ -19,5 +19,5 @@ Map<String, dynamic> _$$TableModelImplToJson(_$TableModelImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'seats': instance.seats,
-      'isUse': instance.isUse,
+      'is_use': instance.isUse,
     };

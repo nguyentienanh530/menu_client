@@ -7,6 +7,7 @@ import 'package:menu_client/common/widget/loading.dart';
 import 'package:menu_client/core/api_config.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+// import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../banner/data/model/banner_model.dart';
 
 class BannerWidget extends StatelessWidget {
@@ -55,12 +56,11 @@ class BannerWidget extends StatelessWidget {
     return AnimatedSmoothIndicator(
         activeIndex: indexPage.value,
         count: length,
-        effect: const SwapEffect(
+        effect: const ExpandingDotsEffect(
             activeDotColor: AppColors.themeColor,
             dotHeight: 8,
             dotWidth: 8,
-            dotColor: AppColors.white,
-            type: SwapType.zRotation));
+            dotColor: AppColors.white));
   }
 
   Widget _buildItemBanner(BannerModel item) {

@@ -8,7 +8,7 @@ class TableModel with _$TableModel {
       {@Default(0) int id,
       @Default('') String name,
       @Default(0) int seats,
-      @Default(false) bool isUse}) = _TableModel;
+      @Default(false) @JsonKey(name: 'is_use') bool isUse}) = _TableModel;
 
   factory TableModel.fromJson(Map<String, dynamic> json) =>
       _$TableModelFromJson(json);

@@ -12,4 +12,9 @@ class ApiConfig {
   static const String users = '/user';
   static const String banners = '/banners';
   static const String categories = '/categories';
+  static const String foods = '/foods';
+  static const String newFoods = '/foods/new-foods';
+  static const String popularFoods = '/foods/popular-foods';
+  static const String foodsOnCategory = '/foods/category/';
+  static const String tables = '/tables';
 }

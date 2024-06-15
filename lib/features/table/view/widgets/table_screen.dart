@@ -24,7 +24,7 @@ class _TableDialogState extends State<TableDialog> {
 
   @override
   void initState() {
-    // tableCtrl.getTables();
+    tableCtrl.getTables();
     super.initState();
   }
 
@@ -67,9 +67,7 @@ class _TableDialogState extends State<TableDialog> {
                       style: kBlackButtonTextStyle,
                     ),
                     Text(
-                      ""
-                      // tableCtrl.table.value.name
-                      ,
+                      tableCtrl.table.value.name,
                       style: kThinWhiteTextStyle.copyWith(
                           color: AppColors.themeColor,
                           fontWeight: FontWeight.bold),
@@ -103,10 +101,7 @@ class _TableDialogState extends State<TableDialog> {
       onLoading: const Loading(),
       onEmpty: const EmptyScreen(),
       onError: (error) => RetryDialog(
-          title: error ?? '',
-          onRetryPressed: () {
-            // tableCtrl.getTables;
-          }),
+          title: error ?? '', onRetryPressed: () => tableCtrl.getTables()),
     );
   }
 
@@ -129,7 +124,7 @@ class _TableDialogState extends State<TableDialog> {
   Widget _buildItemTable(BuildContext context, TableModel table) {
     return GestureDetector(
         onTap: () {
-          // tableCtrl.table.value = table;
+          tableCtrl.table.value = table;
           Get.back(result: table);
         },
         child: LayoutBuilder(
@@ -161,16 +156,17 @@ class _TableDialogState extends State<TableDialog> {
                                         Radius.circular(defaultBorderRadius),
                                     bottomRight:
                                         Radius.circular(defaultBorderRadius)),
-                                color: AppColors.black.withOpacity(0.6)),
+                                color: AppColors.black.withOpacity(0.8)),
                             child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _buildString(table.name),
-                                  _buildString('Số ghế: ${table.seats} '),
+                                  _buildString(table.name, 18),
+                                  _buildString('Số ghế: ${table.seats} ', 12),
                                   _buildString(
-                                      'Tình trạng: ${AppRes.tableStatus(table.isUse)}')
+                                      'Tình trạng: ${AppRes.tableStatus(table.isUse)}',
+                                      12)
                                 ]),
                           )
                         ],
@@ -180,12 +176,12 @@ class _TableDialogState extends State<TableDialog> {
                 )));
   }
 
-  Widget _buildString(String value) => Expanded(
+  Widget _buildString(String value, double fontSize) => Expanded(
         child: FittedBox(
           fit: BoxFit.scaleDown,
           child: Text(
             value,
-            style: kThinWhiteTextStyle,
+            style: kThinWhiteTextStyle.copyWith(fontSize: fontSize),
           ),
         ),
       );

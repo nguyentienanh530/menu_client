@@ -23,6 +23,7 @@ mixin _$TableModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get seats => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_use')
   bool get isUse => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +38,8 @@ abstract class $TableModelCopyWith<$Res> {
           TableModel value, $Res Function(TableModel) then) =
       _$TableModelCopyWithImpl<$Res, TableModel>;
   @useResult
-  $Res call({int id, String name, int seats, bool isUse});
+  $Res call(
+      {int id, String name, int seats, @JsonKey(name: 'is_use') bool isUse});
 }
 
 /// @nodoc
@@ -87,7 +89,8 @@ abstract class _$$TableModelImplCopyWith<$Res>
       __$$TableModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, int seats, bool isUse});
+  $Res call(
+      {int id, String name, int seats, @JsonKey(name: 'is_use') bool isUse});
 }
 
 /// @nodoc
@@ -131,7 +134,10 @@ class __$$TableModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TableModelImpl implements _TableModel {
   _$TableModelImpl(
-      {this.id = 0, this.name = '', this.seats = 0, this.isUse = false});
+      {this.id = 0,
+      this.name = '',
+      this.seats = 0,
+      @JsonKey(name: 'is_use') this.isUse = false});
 
   factory _$TableModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TableModelImplFromJson(json);
@@ -146,7 +152,7 @@ class _$TableModelImpl implements _TableModel {
   @JsonKey()
   final int seats;
   @override
-  @JsonKey()
+  @JsonKey(name: 'is_use')
   final bool isUse;
 
   @override
@@ -188,7 +194,7 @@ abstract class _TableModel implements TableModel {
       {final int id,
       final String name,
       final int seats,
-      final bool isUse}) = _$TableModelImpl;
+      @JsonKey(name: 'is_use') final bool isUse}) = _$TableModelImpl;
 
   factory _TableModel.fromJson(Map<String, dynamic> json) =
       _$TableModelImpl.fromJson;
@@ -200,6 +206,7 @@ abstract class _TableModel implements TableModel {
   @override
   int get seats;
   @override
+  @JsonKey(name: 'is_use')
   bool get isUse;
   @override
   @JsonKey(ignore: true)

@@ -4,6 +4,7 @@ import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_res.dart';
 import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
+import '../../../../core/api_config.dart';
 import '../../../../core/app_const.dart';
 import '../../../order/data/model/order_detail_model.dart';
 import '../../../order/data/model/order_model.dart';
@@ -27,7 +28,6 @@ class ItemCart extends StatelessWidget {
   Widget _buildItem(BuildContext context, OrderDetail orderDetail, int index) {
     return Card(
         margin: const EdgeInsets.all(defaultPadding),
-        // color: AppColors.lavender,
         child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(defaultBorderRadius)),
@@ -39,30 +39,48 @@ class ItemCart extends StatelessWidget {
                   Row(children: [
                     Expanded(child: _buildImage(orderDetail)),
                     Expanded(
-                        flex: 3,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(),
-                              // FittedBox(
-                              //     child: Text(orderDetail.foodName,
-                              //         style: const TextStyle(
-                              //             fontWeight: FontWeight.bold))),
-                              const SizedBox(height: defaultPadding),
-                              Row(
+                        flex: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: defaultPadding),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(),
+                                Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
+                                    FittedBox(
+                                        child: Text(orderDetail.foodName,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold))),
                                     _buildQuality(context, orderDetail),
-                                    Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: defaultPadding),
-                                        child: _buildPriceFood(
+                                  ],
+                                ),
+                                const SizedBox(height: defaultPadding),
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: defaultPadding),
+                                          child: _buildPriceFood(
                                             context,
-                                            (orderDetail.totalPrice)
-                                                .toString()))
-                                  ])
-                            ]))
+                                            color: AppColors.black
+                                                .withOpacity(0.6),
+                                            totalPrice: (orderDetail.foodPrice)
+                                                .toString(),
+                                          )),
+                                      _buildPriceFood(
+                                        context,
+                                        color: AppColors.themeColor,
+                                        totalPrice:
+                                            (orderDetail.totalPrice).toString(),
+                                      )
+                                    ])
+                              ]),
+                        ))
                   ]),
                   orderDetail.note.isNotEmpty
                       ? Padding(
@@ -81,22 +99,23 @@ class ItemCart extends StatelessWidget {
                 ])));
   }
 
-  Widget _buildPriceFood(BuildContext context, String totalPrice) {
+  Widget _buildPriceFood(BuildContext context,
+      {required String totalPrice, required Color color}) {
     return Text(AppRes.currencyFormat(double.parse(totalPrice)),
-        style: const TextStyle(
-            color: AppColors.themeColor, fontWeight: FontWeight.bold));
+        style: TextStyle(color: color, fontWeight: FontWeight.bold));
   }
 
   Widget _buildImage(OrderDetail food) {
     return Container(
-        height: 50,
-        width: 50,
+        height: 65,
+        width: 65,
         margin: const EdgeInsets.all(defaultPadding / 2),
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.black.withOpacity(0.3),
             image: DecorationImage(
-                image: NetworkImage(food.foodImage), fit: BoxFit.cover)));
+                image: NetworkImage('${ApiConfig.host}${food.foodImage}'),
+                fit: BoxFit.cover)));
   }
 
   Widget _buildQuality(BuildContext context, OrderDetail foodOrder) {
@@ -114,10 +133,10 @@ class ItemCart extends StatelessWidget {
               height: 20,
               width: 20,
               decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: AppColors.themeColor),
+                  shape: BoxShape.circle, color: AppColors.black),
               child: const Icon(
                 Icons.remove,
-                size: 20,
+                size: 15,
                 color: AppColors.white,
               ))),
       ValueListenableBuilder(
@@ -135,10 +154,10 @@ class ItemCart extends StatelessWidget {
               height: 20,
               width: 20,
               decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: AppColors.themeColor),
+                  shape: BoxShape.circle, color: AppColors.black),
               child: const Icon(
                 Icons.add,
-                size: 20,
+                size: 15,
                 color: AppColors.white,
               )))
     ]);

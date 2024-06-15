@@ -7,23 +7,23 @@ import '../data/provider/remote/food_api.dart';
 
 class PopularFoodController extends GetxController
     with StateMixin<List<FoodModel>>, BaseController {
-  // final FoodApi foodApi = FoodApi();
-  // List<FoodModel> popularFoods = <FoodModel>[].obs;
+  final FoodApi foodApi = FoodApi();
+  List<FoodModel> popularFoods = <FoodModel>[].obs;
 
-  // Future<void> getPopularFoodsLimit() async {
-  //   change(null, status: RxStatus.loading());
-  //   Either<String, List<FoodModel>> failureOrSuccess =
-  //       await foodApi.getPopularFoodsLimit();
-  //   failureOrSuccess.fold((String failure) {
-  //     change(null, status: RxStatus.error(failure));
-  //   }, (List<FoodModel> popularfoods) {
-  //     // todosCount.value = todos.length;
-  //     popularFoods = popularfoods.obs;
-  //     if (popularFoods.isEmpty) {
-  //       change(null, status: RxStatus.empty());
-  //     } else {
-  //       change(popularfoods, status: RxStatus.success());
-  //     }
-  //   });
-  // }
+  Future<void> getPopularFoodsLimit({required int limit}) async {
+    change(null, status: RxStatus.loading());
+    Either<String, List<FoodModel>> failureOrSuccess =
+        await foodApi.getPopularFoodsLimit(limit: limit);
+    failureOrSuccess.fold((String failure) {
+      change(null, status: RxStatus.error(failure));
+    }, (List<FoodModel> popularfoods) {
+      // todosCount.value = todos.length;
+      popularFoods = popularfoods.obs;
+      if (popularFoods.isEmpty) {
+        change(null, status: RxStatus.empty());
+      } else {
+        change(popularfoods, status: RxStatus.success());
+      }
+    });
+  }
 }

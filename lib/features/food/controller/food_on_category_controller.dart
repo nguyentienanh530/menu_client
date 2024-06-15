@@ -7,23 +7,23 @@ import '../data/provider/remote/food_api.dart';
 
 class FoodsOnCategoryController extends GetxController
     with StateMixin<List<FoodModel>>, BaseController {
-  // final FoodApi foodApi = FoodApi();
-  // List<FoodModel> foodsOnCategory = <FoodModel>[].obs;
+  final FoodApi foodApi = FoodApi();
+  List<FoodModel> foodsOnCategory = <FoodModel>[].obs;
 
-  // Future<void> getFoodsOnCategory({required int idCategory}) async {
-  //   change(null, status: RxStatus.loading());
-  //   Either<String, List<FoodModel>> failureOrSuccess =
-  //       await foodApi.getFoodsOnCategory(idCategory: idCategory);
-  //   failureOrSuccess.fold((String failure) {
-  //     change(null, status: RxStatus.error(failure));
-  //   }, (List<FoodModel> foodsOnCategory) {
-  //     // todosCount.value = todos.length;
-  //     foodsOnCategory = foodsOnCategory.obs;
-  //     if (foodsOnCategory.isEmpty) {
-  //       change(null, status: RxStatus.empty());
-  //     } else {
-  //       change(foodsOnCategory, status: RxStatus.success());
-  //     }
-  //   });
-  // }
+  Future<void> getFoodsOnCategory({required int categoryID}) async {
+    change(null, status: RxStatus.loading());
+    Either<String, List<FoodModel>> failureOrSuccess =
+        await foodApi.getFoodsOnCategory(categoryID: categoryID);
+    failureOrSuccess.fold((String failure) {
+      change(null, status: RxStatus.error(failure));
+    }, (List<FoodModel> foodsOnCategory) {
+      // todosCount.value = todos.length;
+      foodsOnCategory = foodsOnCategory.obs;
+      if (foodsOnCategory.isEmpty) {
+        change(null, status: RxStatus.empty());
+      } else {
+        change(foodsOnCategory, status: RxStatus.success());
+      }
+    });
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:menu_client/common/widget/loading.dart';
 import 'package:menu_client/common/widget/retry_dialog.dart';
+import 'package:menu_client/core/api_config.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_res.dart';
@@ -11,6 +12,7 @@ import 'package:menu_client/features/food/view/screens/food_detail_screen.dart';
 import 'package:tiengviet/tiengviet.dart';
 import '../../../../common/widget/common_text_field.dart';
 import '../../../../common/widget/empty_screen.dart';
+import '../../../../core/app_asset.dart';
 import '../../data/model/food_model.dart';
 
 class FoodScreen extends StatefulWidget {
@@ -35,10 +37,29 @@ class _MyWidgetState extends State<FoodScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-        appBar: _buildAppbar(context),
-        body: Obx(() => SizedBox()
-            // SearchFoodView(textSearch: foodCtrl.textSearch.value)
-            ));
+        backgroundColor: AppColors.themeColor,
+        body: Stack(children: [
+          Image.asset(AppAsset.background,
+              color: AppColors.black.withOpacity(0.15)),
+          _buildAppbar(context),
+          Column(children: [
+            const SizedBox(height: 100),
+            Expanded(
+                child: Container(
+                    decoration: const BoxDecoration(
+                        color: AppColors.smokeWhite,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(defaultBorderRadius * 4),
+                            topRight:
+                                Radius.circular(defaultBorderRadius * 4))),
+                    child: Obx(() =>
+                        SearchFoodView(textSearch: foodCtrl.textSearch.value))))
+          ])
+        ]));
+
+    // Scaffold(
+    //     appBar: _buildAppbar(context),
+    //     body: Obx(() => SearchFoodView(textSearch: foodCtrl.textSearch.value)));
   }
 
   @override
@@ -46,7 +67,7 @@ class _MyWidgetState extends State<FoodScreen>
 
   _buildAppbar(BuildContext context) {
     return AppBar(
-        backgroundColor: AppColors.themeColor,
+        backgroundColor: AppColors.transparent,
         foregroundColor: AppColors.white,
         title: _buildSearch(context)
             .animate()
@@ -60,30 +81,20 @@ class _MyWidgetState extends State<FoodScreen>
 
   Widget _buildSearch(BuildContext context) {
     return SizedBox(
-      height: 40,
-      child: CommonTextField(
-          controller: _searchController,
-          onChanged: (value) => value,
-          // foodCtrl.textSearch.value = value,
-          hintText: "Tìm kiếm",
-          suffixIcon: IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () {
-                // foodCtrl.textSearch.value = '';
-                _searchController.clear();
-              }),
-          prefixIcon: const Icon(Icons.search)),
-    );
+        height: 40,
+        child: CommonTextField(
+            controller: _searchController,
+            onChanged: (value) => foodCtrl.textSearch.value = value,
+            hintText: "Tìm kiếm",
+            suffixIcon: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  // foodCtrl.textSearch.value = '';
+                  _searchController.clear();
+                }),
+            prefixIcon: const Icon(Icons.search)));
   }
 }
-
-// _buildAppbar(BuildContext context) {
-//   return EasySearchBar(
-//       title: Text('Danh sách món',
-//           style:
-//               context.titleStyleMedium!.copyWith(fontWeight: FontWeight.bold)),
-//       onSearch: (value) => context.read<TextSearchCubit>().textChanged(value));
-// }
 
 class SearchFoodView extends StatelessWidget {
   const SearchFoodView({super.key, required this.textSearch});
@@ -117,7 +128,7 @@ class _AfterSearchUIState extends State<AfterSearchUI> {
 
   getData() {
     if (!mounted) return;
-    // foodCtrl.fetchFoods();
+    foodCtrl.fetchFoods();
   }
 
   @override
@@ -131,19 +142,6 @@ class _AfterSearchUIState extends State<AfterSearchUI> {
       onError: (error) =>
           RetryDialog(title: error ?? '', onRetryPressed: () => getData()),
     );
-
-    // BlocBuilder<FoodBloc, GenericBlocState<FoodModel>>(
-    //     buildWhen: (previous, current) =>
-    //         context.read<FoodBloc>().operation == ApiOperation.select,
-    //     builder: (context, state) {
-    //       return (switch (state.status) {
-    //         Status.loading => loadingOrInitState,
-    //         Status.empty => const EmptyScreen(),
-    //         Status.failure => ErrorScreen(errorMsg: state.error ?? ''),
-    //         Status.success =>
-    //           _buildBody(state.datas ?? <FoodModel>[], text ?? '')
-    //       });
-    //     });
   }
 
   _buildBody(List<FoodModel> foods, String text) => ListView.builder(
@@ -169,6 +167,7 @@ class _AfterSearchUIState extends State<AfterSearchUI> {
             padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding / 5),
             child: Card(
+                // color: AppColors.lavender,
                 borderOnForeground: false,
                 child: SizedBox(
                     height: 80,
@@ -209,12 +208,9 @@ class _AfterSearchUIState extends State<AfterSearchUI> {
             shape: BoxShape.circle,
             color: Colors.black.withOpacity(0.3),
             image: DecorationImage(
-                image: NetworkImage(food.image), fit: BoxFit.cover)));
+                image: NetworkImage('${ApiConfig.host}${food.image}'),
+                fit: BoxFit.cover)));
   }
-
-  // Widget _buildCategory(BuildContext context, FoodModel food) {
-  //   return const FittedBox(child: Text('asdasd', style: kThinBlackTextStyle));
-  // }
 
   Widget _buildTitle(BuildContext context, FoodModel food) {
     return FittedBox(

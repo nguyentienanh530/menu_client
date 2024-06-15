@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'food_model.freezed.dart';
 part 'food_model.g.dart';
+
+List<dynamic> stringToList(String photoGallery) {
+  return json.decode(photoGallery).cast<String>().toList();
+}
 
 @freezed
 class FoodModel with _$FoodModel {
@@ -14,7 +20,9 @@ class FoodModel with _$FoodModel {
       @Default('') String image,
       @Default(false) bool isDiscount,
       @Default(false) bool isShow,
-      @Default([]) List photoGallery,
+      @Default([])
+      @JsonKey(name: 'photo_gallery', fromJson: stringToList)
+      List photoGallery,
       @Default(0) double price,
       @Default('') @JsonKey(name: 'create_at') String createAt}) = _FoodModel;
 

@@ -31,6 +31,7 @@ mixin _$FoodModel {
   String get image => throw _privateConstructorUsedError;
   bool get isDiscount => throw _privateConstructorUsedError;
   bool get isShow => throw _privateConstructorUsedError;
+  @JsonKey(name: 'photo_gallery', fromJson: stringToList)
   List<dynamic> get photoGallery => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
   @JsonKey(name: 'create_at')
@@ -57,6 +58,7 @@ abstract class $FoodModelCopyWith<$Res> {
       String image,
       bool isDiscount,
       bool isShow,
+      @JsonKey(name: 'photo_gallery', fromJson: stringToList)
       List<dynamic> photoGallery,
       double price,
       @JsonKey(name: 'create_at') String createAt});
@@ -159,6 +161,7 @@ abstract class _$$FoodModelImplCopyWith<$Res>
       String image,
       bool isDiscount,
       bool isShow,
+      @JsonKey(name: 'photo_gallery', fromJson: stringToList)
       List<dynamic> photoGallery,
       double price,
       @JsonKey(name: 'create_at') String createAt});
@@ -254,6 +257,7 @@ class _$FoodModelImpl implements _FoodModel {
       this.image = '',
       this.isDiscount = false,
       this.isShow = false,
+      @JsonKey(name: 'photo_gallery', fromJson: stringToList)
       final List<dynamic> photoGallery = const [],
       this.price = 0,
       @JsonKey(name: 'create_at') this.createAt = ''})
@@ -291,7 +295,7 @@ class _$FoodModelImpl implements _FoodModel {
   final bool isShow;
   final List<dynamic> _photoGallery;
   @override
-  @JsonKey()
+  @JsonKey(name: 'photo_gallery', fromJson: stringToList)
   List<dynamic> get photoGallery {
     if (_photoGallery is EqualUnmodifiableListView) return _photoGallery;
     // ignore: implicit_dynamic_type
@@ -378,6 +382,7 @@ abstract class _FoodModel implements FoodModel {
       final String image,
       final bool isDiscount,
       final bool isShow,
+      @JsonKey(name: 'photo_gallery', fromJson: stringToList)
       final List<dynamic> photoGallery,
       final double price,
       @JsonKey(name: 'create_at') final String createAt}) = _$FoodModelImpl;
@@ -406,6 +411,7 @@ abstract class _FoodModel implements FoodModel {
   @override
   bool get isShow;
   @override
+  @JsonKey(name: 'photo_gallery', fromJson: stringToList)
   List<dynamic> get photoGallery;
   @override
   double get price;

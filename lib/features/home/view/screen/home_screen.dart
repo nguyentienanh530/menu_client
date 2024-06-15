@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // newFoodsCtrl.getNewFoodsLimit();
-    // popularFoodsCtrl.getPopularFoodsLimit();
+    newFoodsCtrl.getNewFoodsLimit(limit: 10);
+    popularFoodsCtrl.getPopularFoodsLimit(limit: 10);
     categoriesCtrl.getCategories();
     bannerCtrl.getBanners();
     super.initState();
@@ -72,18 +72,15 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: AppColors.themeColor,
               flexibleSpace: FlexibleSpaceBar(background: _buildBanner()),
               title: _buildSearch(),
-              actions: [
-                // _buildTableButton(),
-                _buildSettingButton()
-              ]),
+              actions: [_buildTableButton(), _buildSettingButton()]),
           SliverToBoxAdapter(
               child: Column(children: [
             const SizedBox(height: defaultPadding),
             _buildCategories(),
             const SizedBox(height: defaultPadding),
-            // _buildNewFoods(),
+            _buildNewFoods(),
             const SizedBox(height: defaultPadding),
-            // _buildPopularFoods(),
+            _buildPopularFoods(),
             const SizedBox(height: defaultPadding)
           ]))
         ]));
@@ -133,34 +130,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildTableButton() {
     return Obx(() {
-      // var table = tableCtrl.table.value.name;
-      return SizedBox();
-
-      // GestureDetector(
-      //     onTap: () => _showTableDialog(),
-      //     child: Container(
-      //         margin: const EdgeInsets.only(right: defaultPadding),
-      //         height: 35,
-      //         width: table.isEmpty ? 35 : null,
-      //         alignment: Alignment.center,
-      //         decoration: BoxDecoration(
-      //             shape: table.isEmpty ? BoxShape.circle : BoxShape.rectangle,
-      //             borderRadius: table.isEmpty
-      //                 ? null
-      //                 : BorderRadius.circular(defaultBorderRadius / 2),
-      //             color: AppColors.white),
-      //         child: table.isEmpty
-      //             ? SvgPicture.asset(AppAsset.handPlatter,
-      //                 height: 18,
-      //                 width: 18,
-      //                 colorFilter: const ColorFilter.mode(
-      //                     AppColors.themeColor, BlendMode.srcIn))
-      //             : Padding(
-      //                 padding: const EdgeInsets.symmetric(
-      //                     horizontal: defaultPadding),
-      //                 child: Text(tableCtrl.table.value.name,
-      //                     style: kThinWhiteTextStyle.copyWith(
-      //                         color: AppColors.themeColor)))));
+      var table = tableCtrl.table.value.name;
+      return GestureDetector(
+          onTap: () => _showTableDialog(),
+          child: Container(
+              margin: const EdgeInsets.only(right: defaultPadding),
+              height: 35,
+              width: table.isEmpty ? 35 : null,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  shape: table.isEmpty ? BoxShape.circle : BoxShape.rectangle,
+                  borderRadius: table.isEmpty
+                      ? null
+                      : BorderRadius.circular(defaultBorderRadius / 2),
+                  color: AppColors.white),
+              child: table.isEmpty
+                  ? SvgPicture.asset(AppAsset.handPlatter,
+                      height: 18,
+                      width: 18,
+                      colorFilter: const ColorFilter.mode(
+                          AppColors.themeColor, BlendMode.srcIn))
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: defaultPadding),
+                      child: Text(tableCtrl.table.value.name,
+                          style: kThinWhiteTextStyle.copyWith(
+                              color: AppColors.themeColor)))));
     });
   }
 
@@ -208,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onError: (error) => RetryDialog(
                   title: "$error",
                   onRetryPressed: () {
-                    // newFoodsCtrl.getNewFoodsLimit();
+                    newFoodsCtrl.getNewFoodsLimit(limit: 10);
                   })),
           const SizedBox(height: defaultPadding)
         ]));
@@ -227,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onError: (error) => RetryDialog(
                   title: "$error",
                   onRetryPressed: () {
-                    // popularFoodsCtrl.getPopularFoodsLimit();
+                    popularFoodsCtrl.getPopularFoodsLimit(limit: 10);
                   })),
           const SizedBox(height: defaultPadding)
         ]));

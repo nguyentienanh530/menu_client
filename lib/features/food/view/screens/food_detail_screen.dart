@@ -1,16 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:menu_client/common/widget/error_build_image.dart';
 import 'package:menu_client/common/widget/loading.dart';
+import 'package:menu_client/core/app_asset.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_res.dart';
 import 'package:menu_client/features/cart/view/screen/cart_screen.dart';
 import 'package:readmore/readmore.dart';
-
+import 'package:smooth_page_indicator/smooth_page_indicator.dart' as indicator;
 import '../../../../common/widget/cart_button.dart';
+import '../../../../core/api_config.dart';
 import '../../../../core/app_const.dart';
 import '../../../../core/app_string.dart';
 import '../../../../core/app_style.dart';
@@ -22,17 +24,34 @@ class FoodDetailScreen extends StatelessWidget {
   FoodDetailScreen({super.key, this.food});
   final FoodModel? food;
   final cartCtrl = Get.put(CartController());
+
+  final controller = PageController(viewportFraction: 0.8, keepPage: true);
+  final indexPage = ValueNotifier(0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _buildAppbar(context), body: FoodDetailView(food: food!));
+        backgroundColor: AppColors.themeColor,
+        body: Stack(children: [
+          Image.asset(AppAsset.background,
+              color: AppColors.black.withOpacity(0.15)),
+          _buildAppbar(context),
+          Column(children: [SizedBox(height: Get.height * 0.5)]),
+          Column(children: [
+            const SizedBox(height: 80),
+            Expanded(child: _buildBody(context, food!))
+          ]),
+        ]));
   }
 
   _buildAppbar(BuildContext context) {
     return AppBar(
-        title: Text(AppString.titleFoodDetail, style: kRegularWhiteTextStyle),
+        // title: Text(AppString.titleFoodDetail, style: kRegularWhiteTextStyle),
+        title: ValueListenableBuilder(
+            valueListenable: indexPage,
+            builder: (context, value, child) =>
+                _buildIndicator(context, food!.photoGallery.length)),
         foregroundColor: AppColors.white,
-        backgroundColor: AppColors.themeColor,
+        backgroundColor: AppColors.transparent,
         centerTitle: true,
         actions: [
           Obx(() => CartButton(
@@ -40,70 +59,129 @@ class FoodDetailScreen extends StatelessWidget {
               number: cartCtrl.order.value.orderDetail.length.toString()))
         ]);
   }
-}
 
-class FoodDetailView extends StatefulWidget {
-  const FoodDetailView({super.key, required this.food});
-  final FoodModel food;
+  Widget _buildImageFood(FoodModel food) {
+    return CarouselSlider.builder(
+        itemBuilder: (context, index, realIndex) =>
+            _buildItemImage(food.photoGallery[index]),
+        itemCount: food.photoGallery.length,
+        options: CarouselOptions(
+            onPageChanged: (index, reason) {
+              indexPage.value = index;
+            },
+            enlargeFactor: 0,
+            height: double.infinity,
+            viewportFraction: 1,
+            initialPage: 0,
+            enableInfiniteScroll: true,
+            reverse: false,
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 3),
+            autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+            autoPlayCurve: Curves.linearToEaseOut,
+            enlargeCenterPage: true,
+            scrollDirection: Axis.horizontal));
+  }
 
-  @override
-  State<FoodDetailView> createState() => _FoodDetailViewState();
-}
+  Widget _buildIndicator(BuildContext context, int length) {
+    return indicator.AnimatedSmoothIndicator(
+        activeIndex: indexPage.value,
+        count: length,
+        effect: const indicator.ExpandingDotsEffect(
+          activeDotColor: AppColors.islamicGreen,
+          dotHeight: 8,
+          dotWidth: 12,
+          dotColor: AppColors.white,
+          // type: indicator.SwapType.zRotation
+        ));
+  }
 
-class _FoodDetailViewState extends State<FoodDetailView> {
-  @override
-  Widget build(BuildContext context) {
-    return _buildBody(context, widget.food);
+  Widget _buildItemImage(String image) {
+    return Center(
+      child: Card(
+        elevation: 20.0,
+        shadowColor: AppColors.themeColor,
+        shape: const CircleBorder(),
+        child: Container(
+            height: Get.height * 0.4,
+            width: Get.height * 0.4,
+            clipBehavior: Clip.hardEdge,
+            decoration: const BoxDecoration(shape: BoxShape.circle),
+            child: CachedNetworkImage(
+                imageUrl: '${ApiConfig.host}$image',
+                placeholder: (context, url) => const Loading(),
+                errorWidget: errorBuilderForImage,
+                fit: BoxFit.cover)),
+      ),
+    );
   }
 
   Widget _buildBody(BuildContext context, FoodModel food) {
     return Column(children: [
       Expanded(
-          child: Stack(
+          child: SingleChildScrollView(
+              // physics: const BouncingScrollPhysics(),
+              child: Stack(
         children: [
-          SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _ImageFood(food: food),
-                    const SizedBox(height: defaultPadding),
-                    _buildTitle(context, food),
-                    Padding(
-                        padding: const EdgeInsets.all(defaultPadding),
-                        child: _buildPrice(context, food)),
-                    _buildDescription(context, food),
-                    food.photoGallery.isNotEmpty
-                        ? _Gallery(food: food)
-                        : const SizedBox()
-                  ]
-                      .animate(interval: 50.ms)
-                      .slideX(
-                          begin: -0.1,
-                          end: 0,
-                          curve: Curves.easeInOutCubic,
-                          duration: 500.ms)
-                      .fadeIn(curve: Curves.easeInOutCubic, duration: 500.ms))),
+          Column(
+            children: [
+              SizedBox(height: Get.height * 0.25),
+              Container(
+                  height: Get.height,
+                  decoration: const BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(defaultBorderRadius * 4),
+                          topRight: Radius.circular(defaultBorderRadius * 4)))),
+            ],
+          ),
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                    alignment: Alignment.topCenter,
+                    height: Get.height * 0.5,
+                    child: _buildImageFood(food)),
+                const SizedBox(height: defaultPadding),
+                _buildTitle(context, food),
+                Padding(
+                    padding: const EdgeInsets.all(defaultPadding),
+                    child: _buildPrice(context, food)),
+                _buildDescription(context, food),
+                // food.photoGallery.isNotEmpty
+                //     ? _Gallery(food: food)
+                //     : const SizedBox()
+              ]
+                  .animate(interval: 50.ms)
+                  .slideX(
+                      begin: -0.1,
+                      end: 0,
+                      curve: Curves.easeInOutCubic,
+                      duration: 500.ms)
+                  .fadeIn(curve: Curves.easeInOutCubic, duration: 500.ms)),
         ],
-      )),
-      Card(
-        margin: const EdgeInsets.all(defaultPadding),
-        shadowColor: AppColors.transparent,
-        color: AppColors.lavender,
-        child: Container(
-            padding: const EdgeInsets.all(defaultPadding),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(AppString.totalPrice, style: kThinBlackTextStyle),
-                        _buildPrice(context, food)
-                      ]),
-                  const SizedBox(height: defaultPadding),
-                  _buildAddToCart(context, food)
-                ])),
+      ))),
+      Container(
+        color: AppColors.smokeWhite,
+        child: Card(
+          margin: const EdgeInsets.all(defaultPadding),
+          child: Container(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(AppString.totalPrice,
+                              style: kThinBlackTextStyle),
+                          _buildPrice(context, food)
+                        ]),
+                    const SizedBox(height: defaultPadding),
+                    _buildAddToCart(context, food)
+                  ])),
+        ),
       )
     ]);
   }
@@ -177,33 +255,14 @@ class _FoodDetailViewState extends State<FoodDetailView> {
   }
 }
 
-class _ImageFood extends StatelessWidget {
-  const _ImageFood({required this.food});
-  final FoodModel food;
-  @override
-  Widget build(BuildContext context) {
-    return Hero(
-        tag: 'hero-tag-${food.id}-search',
-        child: Material(
-            child: Container(
-                height: Get.height * 0.4,
-                width: double.infinity,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(),
-                child: CachedNetworkImage(
-                    imageUrl: food.image,
-                    placeholder: (context, url) => const Loading(),
-                    errorWidget: errorBuilderForImage,
-                    fit: BoxFit.cover))));
-  }
-}
-
 class _Gallery extends StatelessWidget {
   const _Gallery({required this.food});
   final FoodModel food;
 
   @override
   Widget build(BuildContext context) {
+    // var gallery = json.decode(food.photoGallery).cast<String>().toList();
+
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
           padding: const EdgeInsets.symmetric(
@@ -211,27 +270,25 @@ class _Gallery extends StatelessWidget {
           child: Text('Thư viện hình ảnh',
               style: kRegularTextStyle.copyWith(fontWeight: FontWeight.bold))),
       SizedBox(
-        height: Get.height * 0.15,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.only(
-                left: defaultPadding,
-                top: defaultPadding / 2,
-                bottom: defaultPadding / 2),
-            child: _buildImage(context, food.photoGallery[index]),
-          ),
-          itemCount: food.photoGallery.length,
-        ),
-      )
+          height: Get.height * 0.15,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.only(
+                        left: defaultPadding,
+                        top: defaultPadding / 2,
+                        bottom: defaultPadding / 2),
+                    child: _buildImage(context, food.photoGallery[index]),
+                  ),
+              itemCount: food.photoGallery.length))
     ]);
   }
 
   Widget _buildImage(BuildContext context, String item) {
     return InkWell(
         onTap: () {
-          viewImage(context, item);
+          _viewImage(context, item);
         },
         child: Container(
             height: Get.height * 0.15,
@@ -249,13 +306,13 @@ class _Gallery extends StatelessWidget {
                       spreadRadius: 2.0)
                 ]),
             child: CachedNetworkImage(
-                imageUrl: item,
+                imageUrl: '${ApiConfig.host}$item',
                 placeholder: (context, url) => const Loading(),
                 errorWidget: errorBuilderForImage,
                 fit: BoxFit.cover)));
   }
 
-  viewImage(BuildContext context, String item) {
+  void _viewImage(BuildContext context, String item) {
     Navigator.of(context).push(PageRouteBuilder(
         opaque: false,
         pageBuilder: (BuildContext context, _, __) {
@@ -275,7 +332,9 @@ class _Gallery extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.circular(defaultBorderRadius),
                             image: DecorationImage(
-                                fit: BoxFit.cover, image: NetworkImage(item)))),
+                                fit: BoxFit.cover,
+                                image:
+                                    NetworkImage('${ApiConfig.host}$item')))),
                     IconButton(
                         iconSize: 30,
                         onPressed: () {

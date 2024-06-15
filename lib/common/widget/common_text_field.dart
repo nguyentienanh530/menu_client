@@ -64,7 +64,8 @@ class CommonTextField extends StatelessWidget {
             hintText: hintText,
             errorStyle:
                 kThinBlackTextStyle.copyWith(color: AppColors.themeColor),
-            hintStyle: kThinBlackTextStyle,
+            hintStyle: kThinBlackTextStyle.copyWith(
+                color: AppColors.black.withOpacity(0.6)),
             labelStyle: kThinBlackTextStyle),
         onChanged: onChanged);
   }

@@ -17,7 +17,9 @@ _$FoodModelImpl _$$FoodModelImplFromJson(Map<String, dynamic> json) =>
       image: json['image'] as String? ?? '',
       isDiscount: json['isDiscount'] as bool? ?? false,
       isShow: json['isShow'] as bool? ?? false,
-      photoGallery: json['photoGallery'] as List<dynamic>? ?? const [],
+      photoGallery: json['photo_gallery'] == null
+          ? const []
+          : stringToList(json['photo_gallery'] as String),
       price: (json['price'] as num?)?.toDouble() ?? 0,
       createAt: json['create_at'] as String? ?? '',
     );
@@ -33,7 +35,7 @@ Map<String, dynamic> _$$FoodModelImplToJson(_$FoodModelImpl instance) =>
       'image': instance.image,
       'isDiscount': instance.isDiscount,
       'isShow': instance.isShow,
-      'photoGallery': instance.photoGallery,
+      'photo_gallery': instance.photoGallery,
       'price': instance.price,
       'create_at': instance.createAt,
     };

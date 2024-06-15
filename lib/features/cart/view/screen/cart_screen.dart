@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:menu_client/core/app_asset.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_style.dart';
@@ -27,42 +28,27 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _buildAppbar(context),
-        // body: cartState.foods.isEmpty
-        //     ? const EmptyScreen()
-        //     : BlocListener<OrderBloc, GenericBlocState<OrderModel>>(
-        //         listenWhen: (previous, current) =>
-        //             previous.status != current.status ||
-        //             context.read<OrderBloc>().operation == ApiOperation.create,
-        //         listener: (context, state) => switch (state.status) {
-        //               Status.loading => AppAlerts.loadingDialog(context),
-        //               Status.empty => const SizedBox(),
-        //               Status.failure => RetryDialog(
-        //                   title: 'Xảy ra lỗi!',
-        //                   onRetryPressed: () => context
-        //                       .read<OrderBloc>()
-        //                       .add(OrderCreated(orderModel: cartState))),
-        //               Status.success =>
-        //                 AppAlerts.successDialog(context, btnOkOnPress: () {
-        //                   table = table.copyWith(isUse: true);
-        //                   context
-        //                       .read<TableBloc>()
-        //                       .add(TableUpdated(tableModel: table));
-        //                   _handlePrint(context,
-        //                       cartState: cartState,
-        //                       isUsePrint: isUsePrint,
-        //                       print: print,
-        //                       table: table);
-        //                   context.read<CartCubit>().onCartClear();
-        //                   context.read<TableCubit>().onTableClear();
-
-        //                   context.pop();
-        //                 }, desc: 'Cảm ơn quý khách!')
-        //             },
-        //         child: _buildBody(context, cartState))
-        body: Obx(() => cartController.order.value.orderDetail.isEmpty
-            ? const EmptyScreen()
-            : _buildBody(context, cartController.order.value)));
+        backgroundColor: AppColors.themeColor,
+        body: Stack(children: [
+          Image.asset(AppAsset.background,
+              color: AppColors.black.withOpacity(0.15)),
+          _buildAppbar(context),
+          Column(children: [
+            const SizedBox(height: 100),
+            Expanded(
+                child: Container(
+                    decoration: const BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(defaultBorderRadius * 4),
+                            topRight:
+                                Radius.circular(defaultBorderRadius * 4))),
+                    child: Obx(() =>
+                        cartController.order.value.orderDetail.isEmpty
+                            ? const EmptyScreen()
+                            : _buildBody(context, cartController.order.value))))
+          ])
+        ]));
   }
 
   void _handlePrint(BuildContext context,
@@ -82,7 +68,7 @@ class CartScreen extends StatelessWidget {
   }
 
   _buildAppbar(BuildContext context) => AppBar(
-      backgroundColor: AppColors.themeColor,
+      backgroundColor: AppColors.transparent,
       foregroundColor: AppColors.white,
       centerTitle: true,
       title: const Text('Giỏ hàng', style: kRegularWhiteTextStyle));
