@@ -30,4 +30,9 @@ class AppString {
   static String addedToCart = 'Đã thêm vào giỏ hàng.';
   static String addToCart = 'Thêm giỏ hàng';
   static String totalPrice = 'Tổng tiền:';
+  static String password = 'Mật khẩu';
+  static String login = 'Đăng nhập';
+  static String welcomeBack = 'Welcome!';
+  static String phoneNumber = 'Số điện thoại';
+  static String forgotPassword = 'Quên mật khẩu?';
 }

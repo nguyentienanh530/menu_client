@@ -27,6 +27,9 @@ class ItemCart extends StatelessWidget {
 
   Widget _buildItem(BuildContext context, OrderDetail orderDetail, int index) {
     return Card(
+        // shadowColor: AppColors.themeColor,
+        shadowColor: AppColors.lavender,
+        elevation: 4,
         margin: const EdgeInsets.all(defaultPadding),
         child: Container(
             decoration: BoxDecoration(

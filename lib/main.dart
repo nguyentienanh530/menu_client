@@ -1,7 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/features/home/view/screen/home_screen.dart';
+
+import 'features/auth/view/screens/login_screen.dart';
 
 Future<void> main() async {
   runApp(const MainApp());
@@ -14,6 +17,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       //  theme: AppTheme.lightAppTheme,
+      scrollBehavior: MyCustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           scaffoldBackgroundColor: AppColors.smokeWhite,
@@ -23,10 +27,10 @@ class MainApp extends StatelessWidget {
               displayLarge: TextStyle(color: AppColors.white),
               displayMedium: TextStyle(color: AppColors.white)),
           colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: MaterialColor(
-                AppColors.themeColor.value, getSwatch(AppColors.themeColor)),
-          )),
-      home: const HomeScreen(),
+              primarySwatch: MaterialColor(AppColors.themeColor.value,
+                  getSwatch(AppColors.themeColor)))),
+      // home: const HomeScreen()
+      home: LoginScreen(),
     );
   }
 
@@ -62,4 +66,13 @@ class MainApp extends StatelessWidget {
       900: (hslColor.withLightness(lightness - (highStep * 4))).toColor(),
     };
   }
+}
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }

@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:menu_client/common/controller/base_controller.dart';
 import 'package:menu_client/features/order/data/model/order_model.dart';
@@ -8,6 +7,10 @@ class OrderController extends GetxController
     with StateMixin<List<OrderModel>>, BaseController {
   final OrderApi orderApi = OrderApi();
   var orderModel = OrderModel().obs;
+
+  void createOrder(OrderModel order) async {
+    createItem(orderApi.createOrder(order: order));
+  }
 
   // void createOrder(OrderModel order) async {
   //    try {

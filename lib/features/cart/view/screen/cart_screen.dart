@@ -5,8 +5,10 @@ import 'package:menu_client/core/app_asset.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_style.dart';
+import 'package:menu_client/core/extensions.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
 import 'package:menu_client/features/order/controller/order_controller.dart';
+import 'package:menu_client/features/table/controller/table_controller.dart';
 
 import '../../../../common/widget/async_widget.dart';
 import '../../../../common/widget/empty_screen.dart';
@@ -22,7 +24,7 @@ class CartScreen extends StatelessWidget {
 
   final cartController = Get.put(CartController());
   final orderController = Get.put(OrderController());
-  // var table = context.watch<TableCubit>().state;
+  final tableController = Get.put(TableController());
   // var isUsePrint = context.watch<IsUsePrintCubit>().state;
   // var print = context.watch<PrintCubit>().state;
   @override
@@ -78,7 +80,7 @@ class CartScreen extends StatelessWidget {
         children: [
       Expanded(child: ItemCart(orderModel: orderModel)),
       Card(
-          elevation: 10,
+          color: AppColors.lavender,
           margin: const EdgeInsets.all(defaultPadding),
           child: Padding(
             padding: const EdgeInsets.all(defaultPadding),
@@ -133,8 +135,10 @@ class CartScreen extends StatelessWidget {
   void _handleCreateOrder(BuildContext context) {
     Get.back();
     var order = cartController.order.value;
+    var table = tableController.table.value;
+    order = order.copyWith(tableID: table.id, tableName: table.name);
 
-    // orderController.createOrder(order);
+    orderController.createOrder(order);
     showDialog(
       context: context,
       builder: (_) {
@@ -144,13 +148,16 @@ class CartScreen extends StatelessWidget {
               apiState: orderController.apiStatus.value,
               progressStatusTitle: "Đang lên đơn...",
               failureStatusTitle: orderController.errorMessage.value,
-              successStatusTitle: "Lên đơn thành công!",
+              successStatusTitle: "Lên đơn thành công, Cảm ơn quý khách!",
               onSuccessPressed: () {
-                Navigator.pop(context);
-                // controller.getTodos(widget.user.id!);
+                order = OrderModel();
+                table = TableModel();
+                tableController.clearTable();
+                cartController.clearCart();
+                pop(context, 2);
               },
               onRetryPressed: () {
-                // orderController.createOrder(cartController.order.value);
+                orderController.createOrder(order);
               },
             );
           },

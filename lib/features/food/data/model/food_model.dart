@@ -17,9 +17,8 @@ class FoodModel with _$FoodModel {
       @Default(0) @JsonKey(name: 'order_count') int orderCount,
       @Default('') String description,
       @Default(0) int discount,
-      @Default('') String image,
-      @Default(false) bool isDiscount,
-      @Default(false) bool isShow,
+      @Default(false) @JsonKey(name: 'is_discount') bool isDiscount,
+      @Default(false) @JsonKey(name: 'is_show') bool isShow,
       @Default([])
       @JsonKey(name: 'photo_gallery', fromJson: stringToList)
       List photoGallery,

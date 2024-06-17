@@ -12,7 +12,7 @@ _$OrderModelImpl _$$OrderModelImplFromJson(Map<String, dynamic> json) =>
       status: json['status'] as String?,
       tableID: (json['table_id'] as num?)?.toInt() ?? 0,
       tableName: json['tableName'] as String? ?? '',
-      payTime: json['pay_time'] as String? ?? '',
+      payedAt: json['payed_at'] as String? ?? '',
       totalPrice: (json['total_price'] as num?)?.toDouble() ?? 0,
       createdAt: json['created_at'] as String? ?? '',
       orderDetail: (json['order_detail'] as List<dynamic>?)
@@ -27,7 +27,7 @@ Map<String, dynamic> _$$OrderModelImplToJson(_$OrderModelImpl instance) =>
       'status': instance.status,
       'table_id': instance.tableID,
       'tableName': instance.tableName,
-      'pay_time': instance.payTime,
+      'payed_at': instance.payedAt,
       'total_price': instance.totalPrice,
       'created_at': instance.createdAt,
       'order_detail': foodDtoListToJson(instance.orderDetail),

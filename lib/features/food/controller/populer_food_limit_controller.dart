@@ -5,7 +5,7 @@ import '../../../common/controller/base_controller.dart';
 import '../data/model/food_model.dart';
 import '../data/provider/remote/food_api.dart';
 
-class PopularFoodController extends GetxController
+class PopularFoodLimitController extends GetxController
     with StateMixin<List<FoodModel>>, BaseController {
   final FoodApi foodApi = FoodApi();
   List<FoodModel> popularFoods = <FoodModel>[].obs;

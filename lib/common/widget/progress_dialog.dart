@@ -17,7 +17,11 @@ class ProgressDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Vui lòng đợi..."),
+      backgroundColor: AppColors.white,
+      title: isProgressed
+          ? const Text("Vui lòng đợi...")
+          : const Icon(Icons.check_circle_outline_rounded,
+              color: AppColors.themeColor, size: 100),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -32,8 +36,12 @@ class ProgressDialog extends StatelessWidget {
             child: isProgressed
                 ? const SizedBox()
                 : ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.themeColor,
+                      foregroundColor: AppColors.white,
+                    ),
                     onPressed: onPressed,
-                    child: const Text("Success"),
+                    child: const Text("Xac nhận"),
                   ),
           )
         ],

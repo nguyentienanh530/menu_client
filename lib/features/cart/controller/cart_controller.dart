@@ -5,4 +5,8 @@ import '../../order/data/model/order_model.dart';
 class CartController extends GetxController
     with StateMixin<OrderModel>, BaseController {
   Rx<OrderModel> order = OrderModel().obs;
+
+  void clearCart() {
+    order.value = order.value.copyWith(orderDetail: []);
+  }
 }

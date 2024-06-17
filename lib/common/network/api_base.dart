@@ -45,7 +45,7 @@ abstract class ApiBase<T> {
       T Function(Map<String, dynamic> json) getJsonCallback) async {
     try {
       final Response response = await apiCallback;
-      print(response);
+
       final List<T> dataList = List<T>.from(
         json.decode(json.encode(response.data)).map(
               (item) => getJsonCallback(item),

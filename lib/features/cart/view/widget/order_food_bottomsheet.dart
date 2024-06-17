@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:menu_client/core/app_colors.dart';
@@ -7,6 +8,9 @@ import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
 import 'package:menu_client/features/table/controller/table_controller.dart';
 import '../../../../common/widget/common_text_field.dart';
+import '../../../../common/widget/error_build_image.dart';
+import '../../../../common/widget/loading.dart';
+import '../../../../core/api_config.dart';
 import '../../../../core/app_string.dart';
 import '../../../food/data/model/food_model.dart';
 import '../../../order/data/model/order_detail_model.dart';
@@ -55,75 +59,104 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
     // final table = context.watch<TableCubit>().state;
     tableModel = _tableCtrl.table.value;
     orderModel = cartCtrl.order.value;
-    return Form(
-        child: Column(children: [
-      Container(
-        margin: const EdgeInsets.all(defaultPadding),
-        height: 50,
-        width: double.infinity,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: AppColors.themeColor,
-            borderRadius: BorderRadius.circular(defaultBorderRadius)),
-        child: Text(_foodModel.name,
-            textAlign: TextAlign.center,
-            style:
-                kRegularWhiteTextStyle.copyWith(fontWeight: FontWeight.bold)),
+
+    return Stack(children: [
+      Column(
+        children: [
+          SizedBox(height: Get.height * 0.3),
+          Container(
+              height: Get.height * 0.7,
+              decoration: const BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20))))
+        ],
       ),
-      Expanded(
-          child: SingleChildScrollView(
-              child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(AppString.priceSell, style: kRegularTextStyle),
-                        const SizedBox(height: 10),
-                        _Price(
-                            price: AppRes.foodPrice(
-                                isDiscount: _foodModel.isDiscount,
-                                foodPrice: _foodModel.price,
-                                discount:
-                                    int.parse(_foodModel.discount.toString()))),
-                        const SizedBox(height: 10),
-                        Text(AppString.quantity, style: kRegularTextStyle),
-                        const SizedBox(height: 10),
-                        _buildQuantity(),
-                        const SizedBox(height: 10),
-                        Text(AppString.note, style: kRegularTextStyle),
-                        const SizedBox(height: 10),
-                        _Note(noteCtrl: _noteCtrl),
-                        const SizedBox(height: 20)
-                      ])))),
-      Card(
-          color: AppColors.lavender,
-          margin: const EdgeInsets.all(16),
-          child: Padding(
-              padding: const EdgeInsets.all(16.0),
+      Column(children: [
+        SizedBox(height: Get.height * 0.15),
+        Center(child: _buildImage(_foodModel)),
+        Expanded(
+          child: Form(
               child: Column(children: [
-                _buildTotalPrice(),
-                const SizedBox(height: 8),
-                Row(children: [
-                  Expanded(
-                      child: _buildButtonAddToCart(orderModel, tableModel)),
-                  const SizedBox(width: defaultPadding / 2),
-                  Expanded(
-                      child: InkWell(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Container(
-                              height: 45,
-                              decoration: BoxDecoration(
-                                  color: AppColors.themeColor,
-                                  borderRadius: BorderRadius.circular(
-                                      defaultBorderRadius)),
-                              child: Center(
-                                  child: Text(AppString.cancel,
-                                      style: kThinWhiteTextStyle)))))
-                ])
-              ])))
-    ]));
+            Expanded(
+                child: SingleChildScrollView(
+                    child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 10),
+                              _buildQuantity(),
+                              const SizedBox(height: 10),
+                              Text(AppString.priceSell,
+                                  style: kRegularTextStyle),
+                              const SizedBox(height: 10),
+                              _Price(
+                                  price: AppRes.foodPrice(
+                                      isDiscount: _foodModel.isDiscount,
+                                      foodPrice: _foodModel.price,
+                                      discount: int.parse(
+                                          _foodModel.discount.toString()))),
+                              const SizedBox(height: 10),
+                              // Text(AppString.quantity,
+                              //     style: kRegularTextStyle),
+
+                              Text(AppString.note, style: kRegularTextStyle),
+                              const SizedBox(height: 10),
+                              _Note(noteCtrl: _noteCtrl),
+                              const SizedBox(height: 20)
+                            ])))),
+            Card(
+                color: AppColors.lavender,
+                margin: const EdgeInsets.all(16),
+                child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(children: [
+                      _buildTotalPrice(),
+                      const SizedBox(height: 8),
+                      Row(children: [
+                        Expanded(
+                            child:
+                                _buildButtonAddToCart(orderModel, tableModel)),
+                        const SizedBox(width: defaultPadding / 2),
+                        Expanded(
+                            child: InkWell(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Container(
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.themeColor,
+                                        borderRadius: BorderRadius.circular(
+                                            defaultBorderRadius)),
+                                    child: Center(
+                                        child: Text(AppString.cancel,
+                                            style: kThinWhiteTextStyle)))))
+                      ])
+                    ])))
+          ])),
+        )
+      ])
+    ]);
+  }
+
+  Widget _buildImage(FoodModel food) {
+    return Card(
+        shape: const CircleBorder(),
+        elevation: 30.0,
+        shadowColor: AppColors.themeColor,
+        child: Container(
+            height: Get.height * 0.3,
+            width: Get.height * 0.3,
+            decoration: const BoxDecoration(shape: BoxShape.circle),
+            clipBehavior: Clip.hardEdge,
+            child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: '${ApiConfig.host}${food.photoGallery.first}',
+                placeholder: (context, url) => const Loading(),
+                errorWidget: errorBuilderForImage)));
   }
 
   void _handleOnTapAddToCart(OrderModel order, TableModel table) async {
@@ -135,7 +168,7 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
       } else {
         var newFoodOrder = OrderDetail(
             foodID: _foodModel.id,
-            foodImage: _foodModel.image,
+            foodImage: _foodModel.photoGallery.first,
             foodName: _foodModel.name,
             quantity: _quantity.value,
             totalPrice: _totalPrice.value,
@@ -147,10 +180,10 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
         double newTotalPrice = newFoods.fold(
             0, (double total, currentFood) => total + currentFood.totalPrice);
         order = order.copyWith(
-            tableName: table.name,
-            tableID: table.id,
+            // tableName: table.name,
+            // tableID: table.id,
             orderDetail: newFoods,
-            status: 'new',
+            // status: 'new',
             totalPrice: newTotalPrice);
         cartCtrl.order.value = order;
         Get.back();
@@ -200,10 +233,14 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
   Widget _buildQuantity() {
     return ValueListenableBuilder(
         valueListenable: _quantity,
-        builder: (context, quantity, child) => Card(
-            color: AppColors.lavender,
-            child: Container(
-                padding: const EdgeInsets.all(8),
+        builder: (context, quantity, child) => Center(
+              child: Container(
+                height: 40,
+                width: 120,
+                decoration: BoxDecoration(
+                  color: AppColors.themeColor,
+                  borderRadius: BorderRadius.circular(defaultBorderRadius * 3),
+                ),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -211,11 +248,15 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
                         decrementQuaranty();
                       }),
                       Text(quantity.toString(),
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.white)),
                       _buildCounter(context, icon: Icons.add, onTap: () {
                         incrementQuaranty();
                       })
-                    ]))));
+                    ]),
+              ),
+            ));
   }
 
   void decrementQuaranty() {
@@ -235,13 +276,10 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
     return GestureDetector(
         onTap: onTap,
         child: Container(
-            decoration: const BoxDecoration(
-                color: AppColors.themeColor, shape: BoxShape.circle),
             height: 40,
             width: 40,
-            // padding: const EdgeInsets.all(12),
             alignment: Alignment.center,
-            child: Icon(icon, size: 20, color: AppColors.white)));
+            child: Icon(icon, size: 18, color: AppColors.white)));
   }
 }
 

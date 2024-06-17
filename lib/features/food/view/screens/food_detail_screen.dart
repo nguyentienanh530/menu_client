@@ -54,9 +54,12 @@ class FoodDetailScreen extends StatelessWidget {
         backgroundColor: AppColors.transparent,
         centerTitle: true,
         actions: [
-          Obx(() => CartButton(
-              onPressed: () => Get.to(() => CartScreen()),
-              number: cartCtrl.order.value.orderDetail.length.toString()))
+          Obx(() => Padding(
+                padding: const EdgeInsets.only(right: defaultPadding),
+                child: CartButton(
+                    onPressed: () => Get.to(() => CartScreen()),
+                    number: cartCtrl.order.value.orderDetail.length.toString()),
+              ))
         ]);
   }
 
@@ -88,12 +91,10 @@ class FoodDetailScreen extends StatelessWidget {
         activeIndex: indexPage.value,
         count: length,
         effect: const indicator.ExpandingDotsEffect(
-          activeDotColor: AppColors.islamicGreen,
-          dotHeight: 8,
-          dotWidth: 12,
-          dotColor: AppColors.white,
-          // type: indicator.SwapType.zRotation
-        ));
+            activeDotColor: AppColors.islamicGreen,
+            dotHeight: 5,
+            dotWidth: 10,
+            dotColor: AppColors.white));
   }
 
   Widget _buildItemImage(String image) {
@@ -165,6 +166,7 @@ class FoodDetailScreen extends StatelessWidget {
       Container(
         color: AppColors.smokeWhite,
         child: Card(
+          color: AppColors.lavender,
           margin: const EdgeInsets.all(defaultPadding),
           child: Container(
               padding: const EdgeInsets.all(defaultPadding),
@@ -188,12 +190,17 @@ class FoodDetailScreen extends StatelessWidget {
 
   Widget _buildAddToCart(BuildContext context, FoodModel food) {
     return GestureDetector(
-        onTap: () => Get.dialog(
-            barrierDismissible: false,
-            Dialog(
-                backgroundColor: AppColors.white,
-                surfaceTintColor: Colors.transparent,
-                child: PopScope(child: OrderFoodBottomSheet(foodModel: food)))),
+        onTap: () {
+          // Get.dialog(
+          //     barrierDismissible: false,
+          //     Dialog(
+          //         backgroundColor: AppColors.white,
+          //         surfaceTintColor: Colors.transparent,
+          //         child:
+          //             PopScope(child: OrderFoodBottomSheet(foodModel: food))));
+          Get.bottomSheet(OrderFoodBottomSheet(foodModel: food),
+              isScrollControlled: true);
+        },
         child: Container(
             height: 45,
             width: double.infinity,
@@ -229,7 +236,8 @@ class FoodDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
             horizontal: defaultPadding, vertical: defaultPadding / 2),
         child: Text(food.name,
-            style: kRegularTextStyle.copyWith(fontWeight: FontWeight.bold)));
+            style: kRegularTextStyle.copyWith(
+                fontWeight: FontWeight.bold, fontSize: 28.0)));
   }
 
   Widget _buildPrice(BuildContext context, FoodModel food) {

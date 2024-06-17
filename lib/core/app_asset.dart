@@ -17,4 +17,6 @@ class AppAsset {
   static const String utensils = 'assets/svg/utensils.svg';
   static const String setting = 'assets/svg/settings.svg';
   static const String handPlatter = 'assets/svg/hand-platter.svg';
+  static const String backgroundLogin = 'assets/image/background_login.jpeg';
+  static const String logo = 'assets/image/icon_splash.png';
 }

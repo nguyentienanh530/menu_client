@@ -14,15 +14,16 @@ import 'package:menu_client/core/extensions.dart';
 import 'package:menu_client/features/banner/controller/banner_controller.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
 import 'package:menu_client/features/cart/view/screen/cart_screen.dart';
-import 'package:menu_client/features/food/controller/new_food_controller.dart';
-import 'package:menu_client/features/food/view/screens/food_screen.dart';
+import 'package:menu_client/features/food/controller/new_food_limit_controller.dart';
+import 'package:menu_client/features/food/view/screens/search_food_screen.dart';
 import 'package:menu_client/features/home/view/widget/categories.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:menu_client/features/table/controller/table_controller.dart';
 import 'package:menu_client/features/table/view/widgets/table_screen.dart';
 import '../../../../common/widget/list_item_food.dart';
 import '../../../category/controller/category_controller.dart';
-import '../../../food/controller/populer_food_controller.dart';
+import '../../../food/controller/populer_food_limit_controller.dart';
+import '../../../food/view/screens/food_screen.dart';
 import '../widget/banner.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,8 +34,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final newFoodsCtrl = Get.put(NewFoodController());
-  final popularFoodsCtrl = Get.put(PopularFoodController());
+  final newFoodsCtrl = Get.put(NewFoodLimitController());
+  final popularFoodsCtrl = Get.put(PopularFoodLimitController());
   final categoriesCtrl = Get.put(CategoryController());
   final bannerCtrl = Get.put(BannerController());
   final cartCtrl = Get.put(CartController());
@@ -42,8 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    newFoodsCtrl.getNewFoodsLimit(limit: 10);
-    popularFoodsCtrl.getPopularFoodsLimit(limit: 10);
+    newFoodsCtrl.getNewFoods(limit: 10);
+    popularFoodsCtrl.getPopularFoods(limit: 10);
     categoriesCtrl.getCategories();
     bannerCtrl.getBanners();
     super.initState();
@@ -75,20 +76,20 @@ class _HomeScreenState extends State<HomeScreen> {
               actions: [_buildTableButton(), _buildSettingButton()]),
           SliverToBoxAdapter(
               child: Column(children: [
-            const SizedBox(height: defaultPadding),
+            const SizedBox(height: defaultPadding * 2),
             _buildCategories(),
-            const SizedBox(height: defaultPadding),
+            const SizedBox(height: defaultPadding * 2),
             _buildNewFoods(),
-            const SizedBox(height: defaultPadding),
+            const SizedBox(height: defaultPadding * 2),
             _buildPopularFoods(),
-            const SizedBox(height: defaultPadding)
+            const SizedBox(height: defaultPadding * 2),
           ]))
         ]));
   }
 
   Widget _buildSearch() {
     return GestureDetector(
-        onTap: () => Get.to(() => const FoodScreen()),
+        onTap: () => Get.to(() => const SearchFoodScreen()),
         child: Container(
             height: 35,
             width: double.infinity,
@@ -102,8 +103,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 20, color: AppColors.black.withOpacity(0.8)),
                 const SizedBox(width: 8),
                 Text('Tìm kiếm món ăn...',
-                    style: context.textStyleSmall!
-                        .copyWith(color: AppColors.black.withOpacity(0.8)))
+                    style: kBlackButtonTextStyle.copyWith(
+                        color: AppColors.black.withOpacity(0.8)))
               ])
             ])));
   }
@@ -193,7 +194,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
         color: AppColors.white,
         child: Column(children: [
-          _buildTitle(AppString.newFoods, () => {}),
+          _buildTitle(
+              AppString.newFoods,
+              () => Get.to(
+                  () => const FoodScreen(modeScreen: ModeScreen.newsFoods))),
           newFoodsCtrl.obx((state) {
             return SizedBox(
                 height: Get.height * 0.25, child: ListItemFood(list: state));
@@ -203,9 +207,9 @@ class _HomeScreenState extends State<HomeScreen> {
               onError: (error) => RetryDialog(
                   title: "$error",
                   onRetryPressed: () {
-                    newFoodsCtrl.getNewFoodsLimit(limit: 10);
+                    newFoodsCtrl.getNewFoods(limit: 10);
                   })),
-          const SizedBox(height: defaultPadding)
+          const SizedBox(height: defaultPadding * 2)
         ]));
   }
 
@@ -213,7 +217,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
         color: AppColors.white,
         child: Column(children: [
-          _buildTitle(AppString.popularFood, () => {}),
+          _buildTitle(
+              AppString.popularFood,
+              () => Get.to(
+                  () => const FoodScreen(modeScreen: ModeScreen.popularFoods))),
           popularFoodsCtrl.obx((state) {
             return GridItemFood(list: state);
           },
@@ -222,9 +229,9 @@ class _HomeScreenState extends State<HomeScreen> {
               onError: (error) => RetryDialog(
                   title: "$error",
                   onRetryPressed: () {
-                    popularFoodsCtrl.getPopularFoodsLimit(limit: 10);
+                    popularFoodsCtrl.getPopularFoods(limit: 10);
                   })),
-          const SizedBox(height: defaultPadding)
+          const SizedBox(height: defaultPadding * 2)
         ]));
   }
 
@@ -256,8 +263,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: kThinBlackTextStyle.copyWith(
                         fontStyle: FontStyle.italic,
                         color: AppColors.themeColor)),
-                Icon(Icons.navigate_next_rounded,
-                    size: 15, color: context.colorScheme.error)
+                const Icon(Icons.navigate_next_rounded,
+                    size: 15, color: Colors.red)
               ]))
         ]));
   }

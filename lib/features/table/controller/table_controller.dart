@@ -11,6 +11,10 @@ class TableController extends GetxController
   List<TableModel> tables = <TableModel>[].obs;
   var table = TableModel().obs;
 
+  void clearTable() {
+    table.value = TableModel();
+  }
+
   Future<void> getTables() async {
     change(null, status: RxStatus.loading());
     Either<String, List<TableModel>> failureOrSuccess =

@@ -50,7 +50,7 @@ const kBoldThemeTextStyle = TextStyle(
 );
 
 const kBlackWhiteTextStyle = TextStyle(
-  color: AppColors.white,
+  color: AppColors.neroDark,
   fontFamily: AppAsset.fnProductSansBlack,
   fontSize: 22,
 );

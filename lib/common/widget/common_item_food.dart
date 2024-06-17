@@ -29,7 +29,7 @@ class CommonItemFood extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(defaultBorderRadius)),
         child: CachedNetworkImage(
-            imageUrl: '${ApiConfig.host}${food.image}',
+            imageUrl: '${ApiConfig.host}${food.photoGallery.first}',
             placeholder: (context, url) => const Loading(),
             errorWidget: errorBuilderForImage,
             fit: BoxFit.cover));
@@ -97,12 +97,18 @@ class CommonItemFood extends StatelessWidget {
 
   Widget _buildButtonCart(BuildContext context, FoodModel food) {
     return GestureDetector(
-        onTap: () => Get.dialog(
-            barrierDismissible: false,
-            Dialog(
-                backgroundColor: AppColors.white,
-                surfaceTintColor: Colors.transparent,
-                child: PopScope(child: OrderFoodBottomSheet(foodModel: food)))),
+        onTap: () {
+          // Get.dialog(
+          //     barrierDismissible: false,
+          //     Dialog(
+          //         backgroundColor: AppColors.white,
+          //         surfaceTintColor: Colors.transparent,
+          //         child:
+          //             PopScope(child: OrderFoodBottomSheet(foodModel: food))));
+
+          Get.bottomSheet(OrderFoodBottomSheet(foodModel: food),
+              isScrollControlled: true, persistent: false);
+        },
         child: Container(
             height: double.infinity,
             width: 30,
@@ -122,9 +128,8 @@ class CommonItemFood extends StatelessWidget {
         },
         child: LayoutBuilder(
             builder: (context, constraints) => Card(
-                  shadowColor: AppColors.transparent,
-                  color: AppColors.lavender,
-                  elevation: 10,
+                  shadowColor: AppColors.lavender,
+                  elevation: 4,
                   child: SizedBox(
                       width: (Get.width / 2) - 32,
                       child: Stack(

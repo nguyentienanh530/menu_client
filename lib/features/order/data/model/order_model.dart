@@ -16,7 +16,7 @@ class OrderModel with _$OrderModel {
       final String? status,
       @Default(0) @JsonKey(name: 'table_id') int? tableID,
       @Default('') String tableName,
-      @Default('') @JsonKey(name: 'pay_time') String? payTime,
+      @Default('') @JsonKey(name: 'payed_at') String? payedAt,
       @Default(0) @JsonKey(name: 'total_price') double? totalPrice,
       @Default('') @JsonKey(name: 'created_at') String createdAt,
       @Default(<OrderDetail>[])

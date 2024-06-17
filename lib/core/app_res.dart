@@ -22,6 +22,19 @@ class AppRes {
     return isDiscount ? discountedPrice : foodPrice;
   }
 
+  static bool validatePassword(String? password) {
+    if (password == null || password.isEmpty) return false;
+    var emailRegex =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    return emailRegex.hasMatch(password);
+  }
+
+  static bool validatePhoneNumber(String? phoneNumber) {
+    if (phoneNumber == null || phoneNumber.isEmpty) return false;
+    var phoneNumberRegex = RegExp(r'^(?:[+0]9)?[0-9]{10}$');
+    return phoneNumberRegex.hasMatch(phoneNumber);
+  }
+
   static Future<SnackbarController> showSnackBar(
       String msg, bool positive) async {
     return Get.showSnackbar(
