@@ -3,8 +3,8 @@ import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_style.dart';
 
-class RetryDialog extends StatelessWidget {
-  const RetryDialog({
+class LogoutDialog extends StatelessWidget {
+  const LogoutDialog({
     super.key,
     required this.title,
     required this.onRetryPressed,
@@ -23,10 +23,10 @@ class RetryDialog extends StatelessWidget {
       ),
       title: Column(
         children: [
-          const Icon(Icons.error, color: Colors.redAccent, size: 80),
+          const Icon(Icons.warning_rounded, color: Colors.redAccent, size: 80),
           const SizedBox(height: defaultPadding),
           Text(
-            "Có lỗi xảy ra",
+            "Đăng xuất",
             style: kSemiBoldTextStyle.copyWith(
                 fontWeight: FontWeight.bold, fontSize: 20),
           )

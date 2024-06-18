@@ -1,6 +1,8 @@
 class AppString {
   AppString._();
 
+  static const accessTokenkey = "access_token";
+
   //Api call error
   static const cancelRequest = "Request to API server was cancelled";
   static const connectionTimeOut = "Connection timeout with API server";
@@ -10,6 +12,13 @@ class AppString {
   static const unexpectedError = "Unexpected error occurred";
   static const unknownError = "Something went wrong";
   static const duplicateEmail = "Email has already been taken";
+  static const newPasswordSomeAsAOldPassword =
+      "Mật khẩu mới bị trùng với mật khẩu cũ!";
+  static const wrongPassword = "Sai mật khẩu";
+  static const userNotFound = "Không tìm thấy người dùng";
+  static const connectionError = "Lỗi kết nối";
+  static const userExists = 'Người dùng đã tồn tại';
+  static const tokenExpired = 'Hết hạn đăng nhập';
 
   //status code
   static const badRequest = "Bad request";

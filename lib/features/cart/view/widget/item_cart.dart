@@ -226,8 +226,8 @@ class ItemCart extends StatelessWidget {
   void _handleDeleteItem(
       BuildContext context, OrderModel orderModel, OrderDetail foo) {
     AppRes.showWanningDiaLog(
-        // title: 'Xóa món "${foo.foodName}"?',
-        title: 'Xóa món "?',
+        title: 'Xóa món "${foo.foodName}"?',
+        // title: 'Xóa món "?',
         content: 'Kiểm tra kĩ trước khi xóa!',
         onCancelTap: () => Get.back(),
         onConformTap: () {

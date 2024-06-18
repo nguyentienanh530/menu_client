@@ -1,12 +1,12 @@
 class ApiConfig {
-  static const token =
-      "6369de3d8da8e764cc3c1cbe4121bb6741875de2c30dfd39df8fd351b6a508ea";
+  ApiConfig._();
+
   static const String baseUrl = "http://192.168.1.196:80/api/v1";
   static const String host = "http://192.168.1.196:80/";
-  // static const header = {
-  //   'Authorization': 'Bearer $token',
-  //   'content-Type': 'application/json',
-  // };
+//  static final header = {
+//     'Authorization': 'Bearer $token',
+//     'content-Type': 'application/json',
+//   };
   static const Duration receiveTimeout = Duration(milliseconds: 15000);
   static const Duration connectionTimeout = Duration(milliseconds: 15000);
   static const String users = '/user';
@@ -19,4 +19,6 @@ class ApiConfig {
   static const String tables = '/tables';
   static const String createOrder = '/orders/create-order';
   static const String login = '/auth/login';
+  static const String forgotPassword = '/auth/forgot-password';
+  static const String user = '/user';
 }

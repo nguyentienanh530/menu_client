@@ -31,7 +31,7 @@ class AppRes {
 
   static bool validatePhoneNumber(String? phoneNumber) {
     if (phoneNumber == null || phoneNumber.isEmpty) return false;
-    var phoneNumberRegex = RegExp(r'^(?:[+0]9)?[0-9]{10}$');
+    var phoneNumberRegex = RegExp(r'^(?:[+0]9)?[0-9]{10,11}$');
     return phoneNumberRegex.hasMatch(phoneNumber);
   }
 
@@ -39,6 +39,7 @@ class AppRes {
       String msg, bool positive) async {
     return Get.showSnackbar(
       GetSnackBar(
+        snackPosition: SnackPosition.TOP,
         titleText: Container(),
         backgroundColor: positive
             ? AppColors.islamicGreen.withOpacity(0.8)

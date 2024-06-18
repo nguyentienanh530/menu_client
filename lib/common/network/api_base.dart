@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart' show Response, DioException;
 import 'package:dartz/dartz.dart';
+import 'package:menu_client/common/network/api_exception.dart';
+import 'package:menu_client/common/network/data_response.dart';
 import 'dart:convert';
 
 import 'dio_client.dart';
@@ -16,7 +18,8 @@ abstract class ApiBase<T> {
       await apiCallback;
       return right(true);
     } on DioException catch (e) {
-      final errorMessage = DioExceptions.fromDioError(e).toString();
+      var dataResponse = DataResponse.fromJson(e.response!.data);
+      final errorMessage = ApiException().fromApiError(dataResponse).toString();
       return left(errorMessage);
     }
   }

@@ -41,7 +41,7 @@ class ProgressDialog extends StatelessWidget {
                       foregroundColor: AppColors.white,
                     ),
                     onPressed: onPressed,
-                    child: const Text("Xac nhận"),
+                    child: const Text("Xác nhận"),
                   ),
           )
         ],

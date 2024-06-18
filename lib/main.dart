@@ -1,17 +1,25 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:menu_client/core/app_colors.dart';
+import 'package:menu_client/core/app_datasource.dart';
+import 'package:menu_client/features/auth/controller/user_controller.dart';
 import 'package:menu_client/features/home/view/screen/home_screen.dart';
 
 import 'features/auth/view/screens/login_screen.dart';
 
 Future<void> main() async {
-  runApp(const MainApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  var accessToken = await AppDatasource().getAccessToken();
+
+  Logger().d('accessToken: $accessToken');
+  runApp(MainApp(accessToken: accessToken ?? ''));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  const MainApp({super.key, required this.accessToken});
+  final String accessToken;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +37,8 @@ class MainApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch(
               primarySwatch: MaterialColor(AppColors.themeColor.value,
                   getSwatch(AppColors.themeColor)))),
-      // home: const HomeScreen()
-      home: LoginScreen(),
+
+      home: accessToken.isEmpty ? const LoginScreen() : const HomeScreen(),
     );
   }
 

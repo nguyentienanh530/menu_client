@@ -3,8 +3,8 @@ import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_style.dart';
 
-class RetryDialog extends StatelessWidget {
-  const RetryDialog({
+class ErrorDialog extends StatelessWidget {
+  const ErrorDialog({
     super.key,
     required this.title,
     required this.onRetryPressed,
@@ -42,26 +42,13 @@ class RetryDialog extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: AppColors.themeColor),
-                ),
-                onPressed: () => Navigator.pop(context),
-                child: const Text("Hủy"),
-              ),
-              const SizedBox(width: 15),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.themeColor,
-                    foregroundColor: AppColors.white),
-                onPressed: onRetryPressed,
-                child: const Text("Thử lại"),
-              ),
-            ],
-          )
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.themeColor,
+                foregroundColor: AppColors.white),
+            onPressed: onRetryPressed,
+            child: const Text("Quay lại đăng nhập"),
+          ),
         ],
       ),
     );

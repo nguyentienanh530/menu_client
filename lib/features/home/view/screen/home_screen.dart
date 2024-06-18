@@ -10,7 +10,8 @@ import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_string.dart';
 import 'package:menu_client/core/app_style.dart';
-import 'package:menu_client/core/extensions.dart';
+import 'package:menu_client/features/auth/controller/user_controller.dart';
+import 'package:menu_client/features/auth/view/screens/login_screen.dart';
 import 'package:menu_client/features/banner/controller/banner_controller.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
 import 'package:menu_client/features/cart/view/screen/cart_screen.dart';
@@ -18,9 +19,12 @@ import 'package:menu_client/features/food/controller/new_food_limit_controller.d
 import 'package:menu_client/features/food/view/screens/search_food_screen.dart';
 import 'package:menu_client/features/home/view/widget/categories.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:menu_client/features/setting/view/screens/setting_screen.dart';
 import 'package:menu_client/features/table/controller/table_controller.dart';
 import 'package:menu_client/features/table/view/widgets/table_screen.dart';
+import '../../../../common/widget/error_dialog.dart';
 import '../../../../common/widget/list_item_food.dart';
+import '../../../../core/app_datasource.dart';
 import '../../../category/controller/category_controller.dart';
 import '../../../food/controller/populer_food_limit_controller.dart';
 import '../../../food/view/screens/food_screen.dart';
@@ -40,14 +44,22 @@ class _HomeScreenState extends State<HomeScreen> {
   final bannerCtrl = Get.put(BannerController());
   final cartCtrl = Get.put(CartController());
   final tableCtrl = Get.put(TableController());
+  final userCtrl = Get.put(UserController());
 
   @override
   void initState() {
+    getToken();
     newFoodsCtrl.getNewFoods(limit: 10);
     popularFoodsCtrl.getPopularFoods(limit: 10);
     categoriesCtrl.getCategories();
     bannerCtrl.getBanners();
     super.initState();
+  }
+
+  void getToken() async {
+    var accessToken = await AppDatasource().getAccessToken() ?? '';
+    print('toccccc $accessToken');
+    userCtrl.getUser(accessToken: accessToken);
   }
 
   @override
@@ -65,26 +77,33 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: _buildFloatingButton(),
-        body: CustomScrollView(slivers: [
-          SliverAppBar(
-              expandedHeight: Get.height * 0.3,
-              floating: false,
-              pinned: true,
-              backgroundColor: AppColors.themeColor,
-              flexibleSpace: FlexibleSpaceBar(background: _buildBanner()),
-              title: _buildSearch(),
-              actions: [_buildTableButton(), _buildSettingButton()]),
-          SliverToBoxAdapter(
-              child: Column(children: [
-            const SizedBox(height: defaultPadding * 2),
-            _buildCategories(),
-            const SizedBox(height: defaultPadding * 2),
-            _buildNewFoods(),
-            const SizedBox(height: defaultPadding * 2),
-            _buildPopularFoods(),
-            const SizedBox(height: defaultPadding * 2),
-          ]))
-        ]));
+        body: userCtrl.obx(
+            (state) => CustomScrollView(slivers: [
+                  SliverAppBar(
+                      expandedHeight: Get.height * 0.3,
+                      floating: false,
+                      pinned: true,
+                      backgroundColor: AppColors.themeColor,
+                      flexibleSpace:
+                          FlexibleSpaceBar(background: _buildBanner()),
+                      title: _buildSearch(),
+                      actions: [_buildTableButton(), _buildSettingButton()]),
+                  SliverToBoxAdapter(
+                      child: Column(children: [
+                    const SizedBox(height: defaultPadding * 2),
+                    _buildCategories(),
+                    const SizedBox(height: defaultPadding * 2),
+                    _buildNewFoods(),
+                    const SizedBox(height: defaultPadding * 2),
+                    _buildPopularFoods(),
+                    const SizedBox(height: defaultPadding * 2),
+                  ]))
+                ]),
+            onLoading: const Loading(),
+            onEmpty: const EmptyWidget(),
+            onError: (error) => ErrorDialog(
+                title: "$error",
+                onRetryPressed: () => Get.offAll(() => const LoginScreen()))));
   }
 
   Widget _buildSearch() {
@@ -162,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildSettingButton() {
     return GestureDetector(
-        onTap: () {},
+        onTap: () => Get.to(() => SettingScreen()),
         child: Container(
             margin: const EdgeInsets.only(right: defaultPadding),
             height: 35,

@@ -2,13 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:menu_client/common/widget/progress_dialog.dart';
 import 'package:menu_client/core/app_asset.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_res.dart';
 import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/auth/controller/login_controller.dart';
+import 'package:menu_client/features/auth/view/screens/forgot_password_screen.dart';
 import '../../../../common/widget/common_button.dart';
 import '../../../../common/widget/common_text_field.dart';
+import '../../../../common/widget/retry_dialog.dart';
 import '../../../../core/app_const.dart';
 import '../../../../core/app_string.dart';
 import '../../data/model/login_model.dart';
@@ -107,39 +110,42 @@ class _LoginViewState extends State<LoginView> {
             ),
             Expanded(
                 child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: defaultPadding * 5, vertical: defaultPadding),
-              child: SingleChildScrollView(
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: defaultPadding),
-                          const Center(child: _Wellcome()),
-                          const SizedBox(height: defaultPadding * 2),
-                          _PhoneNumber(emailcontroller: _emailCtrl),
-                          const SizedBox(height: defaultPadding),
-                          _buildPassword(),
-                          const SizedBox(height: defaultPadding * 2),
-                          _buildValidPassword(),
-                          const SizedBox(height: defaultPadding * 3),
-                          _ButtonLogin(onTap: () => _handleLoginSubmited()),
-                          const SizedBox(height: defaultPadding * 1),
-                          const Center(child: _ButtonForgotPassword()),
-                          const SizedBox(height: defaultPadding)
-                        ]
-                            .animate(interval: 50.ms)
-                            .slideX(
-                                begin: -0.1,
-                                end: 0,
-                                curve: Curves.easeInOutCubic,
-                                duration: 400.ms)
-                            .fadeIn(
-                                curve: Curves.easeInOutCubic,
-                                duration: 400.ms))),
-              ),
-            ))
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding * 5,
+                        vertical: defaultPadding),
+                    child: SingleChildScrollView(
+                        child: Form(
+                            key: _formKey,
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const SizedBox(height: defaultPadding),
+                                  const Center(child: _Wellcome()),
+                                  const SizedBox(height: defaultPadding * 2),
+                                  _PhoneNumber(emailcontroller: _emailCtrl),
+                                  const SizedBox(height: defaultPadding),
+                                  _buildPassword(),
+                                  const SizedBox(height: defaultPadding),
+                                  const Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [_ButtonForgotPassword()]),
+                                  const SizedBox(height: defaultPadding * 2),
+                                  _buildValidPassword(),
+                                  const SizedBox(height: defaultPadding * 3),
+                                  _ButtonLogin(
+                                      onTap: () => _handleLoginSubmited()),
+                                  const SizedBox(height: defaultPadding * 1),
+                                  const SizedBox(height: defaultPadding)
+                                ]
+                                    .animate(interval: 50.ms)
+                                    .slideX(
+                                        begin: -0.1,
+                                        end: 0,
+                                        curve: Curves.easeInOutCubic,
+                                        duration: 400.ms)
+                                    .fadeIn(
+                                        curve: Curves.easeInOutCubic,
+                                        duration: 400.ms))))))
           ])
         ]));
   }
@@ -179,11 +185,13 @@ class _LoginViewState extends State<LoginView> {
                     : _least8Characters.value = false;
               },
               obscureText: !value,
-              prefixIcon: const Icon(Icons.lock),
+              prefixIcon:
+                  Icon(Icons.lock, color: AppColors.black.withOpacity(0.5)),
               suffixIcon: GestureDetector(
                   onTap: () => isShowPassword.value = !isShowPassword.value,
                   child: Icon(
-                      !value ? Icons.visibility_off : Icons.remove_red_eye)));
+                      !value ? Icons.visibility_off : Icons.remove_red_eye,
+                      color: AppColors.black.withOpacity(0.5))));
         });
   }
 
@@ -234,24 +242,55 @@ class _LoginViewState extends State<LoginView> {
             valueListenable: valueListenable,
             builder: (context, value, child) => Row(children: [
                   Icon(Icons.check_circle_rounded,
-                      size: 15, color: value ? AppColors.islamicGreen : null),
+                      size: 15,
+                      color: value
+                          ? AppColors.islamicGreen
+                          : AppColors.black.withOpacity(0.5)),
                   const SizedBox(width: 8),
                   Text(label,
                       style: kThinBlackTextStyle.copyWith(
                           fontSize: 12,
-                          color: value ? AppColors.islamicGreen : null))
+                          color: value
+                              ? AppColors.islamicGreen
+                              : AppColors.black.withOpacity(0.5)))
                 ])));
   }
 
   void _handleLoginSubmited() {
     var isValid = _formKey.currentState?.validate() ?? false;
     if (isValid) {
-      loginController.login(LoginModel(
-          phoneNumber: _emailCtrl.text.trim(), password: 'minhlong@123'));
-      // _passwordCtrl.text.trim()
+      var loginModel = LoginModel(
+          phoneNumber: _emailCtrl.text.trim(),
+          password: _passwordCtrl.text.trim());
+
+      _login(loginModel);
       // context.read<LoginCubit>().logInWithCredentials(
       //     email: _emailCtrl.text.trim(), password: _passwordCtrl.text.trim());
     }
+  }
+
+  void _login(LoginModel login) {
+    loginController.login(login);
+    showDialog(
+        context: context,
+        builder: (context) => loginController.obx(
+              (state) {
+                return const SizedBox();
+              },
+              onLoading: const ProgressDialog(title: '', isProgressed: true),
+              onError: (error) => RetryDialog(
+                title: error ?? "",
+                onRetryPressed: () => loginController.login(login),
+              ),
+
+              // AsyncWidget(
+              //     apiState: loginController.apiStatus.value,
+              //     progressStatusTitle: 'Đăng nhập...',
+              //     failureStatusTitle: loginController.errorMessage.value,
+              //     successStatusTitle: 'Đăng nhập thành công',
+              //     onRetryPressed: () => loginController.login(login),
+              //     onSuccessPressed: () {})
+            ));
   }
 }
 
@@ -278,7 +317,8 @@ class _PhoneNumber extends StatelessWidget {
         keyboardType: TextInputType.phone,
         maxLines: 1,
         hintText: AppString.phoneNumber,
-        prefixIcon: const Icon(Icons.phone_android_rounded),
+        prefixIcon: Icon(Icons.phone_android_rounded,
+            color: AppColors.black.withOpacity(0.5)),
         validator: (value) {
           return AppRes.validatePhoneNumber(value)
               ? null
@@ -302,12 +342,11 @@ class _ButtonForgotPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {},
-      child: Text(AppString.forgotPassword,
-          style: kThinBlackTextStyle.copyWith(
-              fontSize: 12, fontStyle: FontStyle.italic)),
-    );
+    return GestureDetector(
+        onTap: () => Get.to(() => const ForgotPasswordScreen()),
+        child: Text(AppString.forgotPassword,
+            style: kThinBlackTextStyle.copyWith(
+                fontSize: 12, fontStyle: FontStyle.italic)));
 
     // GestureDetector(
     //     onTap: () {},
