@@ -20,8 +20,11 @@ AccessToken _$AccessTokenFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AccessToken {
+  int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'access_token')
   String get accessToken => throw _privateConstructorUsedError;
+  @JsonKey(name: 'refresh_token')
+  String get refreshToken => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +38,10 @@ abstract class $AccessTokenCopyWith<$Res> {
           AccessToken value, $Res Function(AccessToken) then) =
       _$AccessTokenCopyWithImpl<$Res, AccessToken>;
   @useResult
-  $Res call({@JsonKey(name: 'access_token') String accessToken});
+  $Res call(
+      {int id,
+      @JsonKey(name: 'access_token') String accessToken,
+      @JsonKey(name: 'refresh_token') String refreshToken});
 }
 
 /// @nodoc
@@ -51,12 +57,22 @@ class _$AccessTokenCopyWithImpl<$Res, $Val extends AccessToken>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? accessToken = null,
+    Object? refreshToken = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -70,7 +86,10 @@ abstract class _$$AccessTokenImplCopyWith<$Res>
       __$$AccessTokenImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'access_token') String accessToken});
+  $Res call(
+      {int id,
+      @JsonKey(name: 'access_token') String accessToken,
+      @JsonKey(name: 'refresh_token') String refreshToken});
 }
 
 /// @nodoc
@@ -84,12 +103,22 @@ class __$$AccessTokenImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? accessToken = null,
+    Object? refreshToken = null,
   }) {
     return _then(_$AccessTokenImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -98,18 +127,27 @@ class __$$AccessTokenImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$AccessTokenImpl implements _AccessToken {
-  _$AccessTokenImpl({@JsonKey(name: 'access_token') this.accessToken = ''});
+  _$AccessTokenImpl(
+      {this.id = 0,
+      @JsonKey(name: 'access_token') this.accessToken = '',
+      @JsonKey(name: 'refresh_token') this.refreshToken = ''});
 
   factory _$AccessTokenImpl.fromJson(Map<String, dynamic> json) =>
       _$$AccessTokenImplFromJson(json);
 
   @override
+  @JsonKey()
+  final int id;
+  @override
   @JsonKey(name: 'access_token')
   final String accessToken;
+  @override
+  @JsonKey(name: 'refresh_token')
+  final String refreshToken;
 
   @override
   String toString() {
-    return 'AccessToken(accessToken: $accessToken)';
+    return 'AccessToken(id: $id, accessToken: $accessToken, refreshToken: $refreshToken)';
   }
 
   @override
@@ -117,13 +155,16 @@ class _$AccessTokenImpl implements _AccessToken {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AccessTokenImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.accessToken, accessToken) ||
-                other.accessToken == accessToken));
+                other.accessToken == accessToken) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, accessToken);
+  int get hashCode => Object.hash(runtimeType, id, accessToken, refreshToken);
 
   @JsonKey(ignore: true)
   @override
@@ -141,15 +182,22 @@ class _$AccessTokenImpl implements _AccessToken {
 
 abstract class _AccessToken implements AccessToken {
   factory _AccessToken(
-          {@JsonKey(name: 'access_token') final String accessToken}) =
+          {final int id,
+          @JsonKey(name: 'access_token') final String accessToken,
+          @JsonKey(name: 'refresh_token') final String refreshToken}) =
       _$AccessTokenImpl;
 
   factory _AccessToken.fromJson(Map<String, dynamic> json) =
       _$AccessTokenImpl.fromJson;
 
   @override
+  int get id;
+  @override
   @JsonKey(name: 'access_token')
   String get accessToken;
+  @override
+  @JsonKey(name: 'refresh_token')
+  String get refreshToken;
   @override
   @JsonKey(ignore: true)
   _$$AccessTokenImplCopyWith<_$AccessTokenImpl> get copyWith =>

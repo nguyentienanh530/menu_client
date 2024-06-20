@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:menu_client/common/widget/empty_screen.dart';
+import 'package:menu_client/common/widget/error_widget.dart';
 import 'package:menu_client/common/widget/loading.dart';
-import 'package:menu_client/common/widget/retry_dialog.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_style.dart';
@@ -98,32 +98,19 @@ class _FoodScreenState extends State<FoodScreen> {
           (state) => GridItemFood(list: state, isScroll: true),
           onEmpty: const EmptyScreen(),
           onLoading: const Loading(),
-          onError: (error) => RetryDialog(
-              title: error ?? "",
-              onRetryPressed: () {
-                _foodsOnCategoryCtrl.getFoodsOnCategory(
-                    categoryID: _category.id);
-              }));
+          onError: (error) => ErrWidget(error: error));
     } else if (widget.modeScreen == ModeScreen.newsFoods) {
       return newFoodsCtrl.obx(
           (state) => GridItemFood(list: state, isScroll: true),
           onEmpty: const EmptyScreen(),
           onLoading: const Loading(),
-          onError: (error) => RetryDialog(
-              title: error ?? "",
-              onRetryPressed: () {
-                newFoodsCtrl.getNewFoods();
-              }));
+          onError: (error) => ErrWidget(error: error));
     } else {
       return popularFoodCtrl.obx(
           (state) => GridItemFood(list: state, isScroll: true),
           onEmpty: const EmptyScreen(),
           onLoading: const Loading(),
-          onError: (error) => RetryDialog(
-              title: error ?? "",
-              onRetryPressed: () {
-                popularFoodCtrl.getPopularFoods();
-              }));
+          onError: (error) => ErrWidget(error: error));
     }
   }
 

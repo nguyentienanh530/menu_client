@@ -19,4 +19,8 @@ class AppAsset {
   static const String handPlatter = 'assets/svg/hand-platter.svg';
   static const String backgroundLogin = 'assets/image/background_login.jpeg';
   static const String logo = 'assets/image/icon_splash.png';
+  static const String lock = 'assets/svg/lock.svg';
+  static const String print = 'assets/svg/print.svg';
+  static const String fileConfig = 'assets/svg/file_config.svg';
+  static const String image = 'assets/svg/image.svg';
 }

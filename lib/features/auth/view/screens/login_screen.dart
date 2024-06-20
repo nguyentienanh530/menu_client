@@ -7,7 +7,7 @@ import 'package:menu_client/core/app_asset.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_res.dart';
 import 'package:menu_client/core/app_style.dart';
-import 'package:menu_client/features/auth/controller/login_controller.dart';
+import 'package:menu_client/features/auth/controller/auth_controller.dart';
 import 'package:menu_client/features/auth/view/screens/forgot_password_screen.dart';
 import '../../../../common/widget/common_button.dart';
 import '../../../../common/widget/common_text_field.dart';
@@ -41,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
   final _oneNumericNumber = ValueNotifier(false);
   final _oneSpecialCharacter = ValueNotifier(false);
   final _least8Characters = ValueNotifier(false);
-  final loginController = Get.put(LoginController());
+  final _authController = Get.put(AuthController());
 
   @override
   void dispose() {
@@ -270,17 +270,17 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void _login(LoginModel login) {
-    loginController.login(login);
+    _authController.login(login);
     showDialog(
         context: context,
-        builder: (context) => loginController.obx(
+        builder: (context) => _authController.obx(
               (state) {
                 return const SizedBox();
               },
               onLoading: const ProgressDialog(title: '', isProgressed: true),
               onError: (error) => RetryDialog(
                 title: error ?? "",
-                onRetryPressed: () => loginController.login(login),
+                onRetryPressed: () => _authController.login(login),
               ),
 
               // AsyncWidget(

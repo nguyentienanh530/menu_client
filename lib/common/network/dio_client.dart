@@ -17,6 +17,7 @@ class DioClient {
         receiveTimeout: ApiConfig.receiveTimeout,
         responseType: ResponseType.json,
       ),
-    )..interceptors.add(DioInterceptor());
+    );
+    dio!.interceptors.add(DioInterceptor(dio!));
   }
 }

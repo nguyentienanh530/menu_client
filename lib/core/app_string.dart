@@ -2,6 +2,8 @@ class AppString {
   AppString._();
 
   static const accessTokenkey = "access_token";
+  static const refreshTokenkey = "refresh_token";
+  static const usePrinterkey = "printer_key";
 
   //Api call error
   static const cancelRequest = "Request to API server was cancelled";

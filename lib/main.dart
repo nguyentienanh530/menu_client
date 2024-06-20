@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_datasource.dart';
-import 'package:menu_client/features/auth/controller/user_controller.dart';
 import 'package:menu_client/features/home/view/screen/home_screen.dart';
 
 import 'features/auth/view/screens/login_screen.dart';
@@ -12,9 +11,8 @@ import 'features/auth/view/screens/login_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var accessToken = await AppDatasource().getAccessToken();
-
-  Logger().d('accessToken: $accessToken');
-  runApp(MainApp(accessToken: accessToken ?? ''));
+  Logger().d('accessToken: ${accessToken?.accessToken}');
+  runApp(MainApp(accessToken: accessToken?.accessToken ?? ''));
 }
 
 class MainApp extends StatelessWidget {
@@ -24,22 +22,22 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      //  theme: AppTheme.lightAppTheme,
-      scrollBehavior: MyCustomScrollBehavior(),
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.smokeWhite,
-          // scaffoldBackgroundColor: ColorRes.themeColor.withOpacity(0.6),
-          textTheme: const TextTheme(
-              displaySmall: TextStyle(color: AppColors.white),
-              displayLarge: TextStyle(color: AppColors.white),
-              displayMedium: TextStyle(color: AppColors.white)),
-          colorScheme: ColorScheme.fromSwatch(
-              primarySwatch: MaterialColor(AppColors.themeColor.value,
-                  getSwatch(AppColors.themeColor)))),
-
-      home: accessToken.isEmpty ? const LoginScreen() : const HomeScreen(),
-    );
+        //  theme: AppTheme.lightAppTheme,
+        scrollBehavior: MyCustomScrollBehavior(),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            scaffoldBackgroundColor: AppColors.smokeWhite,
+            // scaffoldBackgroundColor: ColorRes.themeColor.withOpacity(0.6),
+            textTheme: const TextTheme(
+                displaySmall: TextStyle(color: AppColors.white),
+                displayLarge: TextStyle(color: AppColors.white),
+                displayMedium: TextStyle(color: AppColors.white)),
+            colorScheme: ColorScheme.fromSwatch(
+                primarySwatch: MaterialColor(AppColors.themeColor.value,
+                    getSwatch(AppColors.themeColor)))),
+        home: accessToken.isEmpty
+            ? const LoginScreen()
+            : HomeScreen(accessToken: accessToken));
   }
 
   Map<int, Color> getSwatch(Color color) {

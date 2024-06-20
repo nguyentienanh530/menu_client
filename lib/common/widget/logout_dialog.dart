@@ -58,7 +58,7 @@ class LogoutDialog extends StatelessWidget {
                     backgroundColor: AppColors.themeColor,
                     foregroundColor: AppColors.white),
                 onPressed: onRetryPressed,
-                child: const Text("Thử lại"),
+                child: const Text("Đăng xuất"),
               ),
             ],
           )
