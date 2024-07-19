@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:menu_client/common/widget/logout_dialog.dart';
 import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/auth/controller/auth_controller.dart';
+import 'package:menu_client/features/auth/controller/user_controller.dart';
 import 'package:menu_client/features/profile/view/screens/edit_profile_screen.dart';
 import '../../../../common/widget/error_build_image.dart';
 import '../../../../common/widget/loading.dart';
@@ -18,11 +19,11 @@ import '../../../print/controller/print_controller.dart';
 
 // ignore: must_be_immutable
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen({super.key, required this.userModel});
-  final UserModel? userModel;
+  ProfileScreen({super.key});
 
   final _printCtrl = Get.put(PrintController());
   final _authCtrl = Get.put(AuthController());
+  final _userCtrl = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
@@ -47,55 +48,65 @@ class ProfileScreen extends StatelessWidget {
                               topRight:
                                   Radius.circular(defaultBorderRadius * 4)))))
             ]),
-            Column(
-              children: [
-                const SizedBox(height: 120),
-                Center(
-                  child: Card(
-                    shape: const CircleBorder(),
-                    elevation: 20.0,
-                    shadowColor: AppColors.themeColor,
-                    child: Container(
-                        height: Get.width * 0.3,
-                        width: Get.width * 0.3,
-                        clipBehavior: Clip.hardEdge,
-                        decoration: const BoxDecoration(shape: BoxShape.circle),
-                        child: userModel!.image.isEmpty
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.all(defaultPadding * 2),
-                                child: SvgPicture.asset(AppAsset.image,
-                                    colorFilter: const ColorFilter.mode(
-                                        AppColors.smokeWhite, BlendMode.srcIn)),
-                              )
-                            : CachedNetworkImage(
-                                imageUrl:
-                                    '${ApiConfig.host}${userModel!.image}',
-                                placeholder: (context, url) => const Loading(),
-                                errorWidget: errorBuilderForImage,
-                                fit: BoxFit.cover)),
+            Obx(() {
+              var userModel = _userCtrl.userModel.value;
+              return Column(
+                children: [
+                  const SizedBox(height: 120),
+                  Center(
+                    child: Card(
+                      shape: const CircleBorder(),
+                      elevation: 20.0,
+                      shadowColor: AppColors.themeColor,
+                      child: Container(
+                          height: Get.width * 0.3,
+                          width: Get.width * 0.3,
+                          clipBehavior: Clip.hardEdge,
+                          decoration:
+                              const BoxDecoration(shape: BoxShape.circle),
+                          child: userModel.image.isEmpty
+                              ? Padding(
+                                  padding:
+                                      const EdgeInsets.all(defaultPadding * 2),
+                                  child: SvgPicture.asset(AppAsset.image,
+                                      colorFilter: const ColorFilter.mode(
+                                          AppColors.smokeWhite,
+                                          BlendMode.srcIn)),
+                                )
+                              : CachedNetworkImage(
+                                  imageUrl:
+                                      '${ApiConfig.host}${userModel.image}',
+                                  placeholder: (context, url) =>
+                                      const Loading(),
+                                  errorWidget: errorBuilderForImage,
+                                  fit: BoxFit.cover)),
+                    ),
                   ),
-                ),
-                const SizedBox(height: defaultPadding * 2),
-                Text(userModel?.fullName ?? '',
-                    style: kSemiBoldTextStyle.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.black.withOpacity(0.7))),
-                // const SizedBox(height: defaultPadding),
-                // _buildItem(
-                //     context, Icons.email_rounded, user.phoneNumber.toString()),
-                const SizedBox(height: defaultPadding),
-                _buildItem(context, Icons.phone_android_rounded,
-                    '+84 ${userModel!.phoneNumber}'),
-                const SizedBox(height: defaultPadding),
-                FilledButton.icon(
-                    onPressed: () => Get.to(() =>
-                        EditProfileScreen(userModel: userModel ?? UserModel())),
-                    label: const Text('Cập nhật thông tin'),
-                    icon: const Icon(Icons.edit)),
-                _buildBody(context),
-              ],
-            )
+                  const SizedBox(height: defaultPadding * 2),
+                  Text(userModel.fullName,
+                      style: kSubHeadingStyle.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black.withOpacity(0.7))),
+                  // const SizedBox(height: defaultPadding),
+                  // _buildItem(
+                  //     context, Icons.email_rounded, user.phoneNumber.toString()),
+                  const SizedBox(height: defaultPadding),
+                  _buildItem(context, Icons.phone_android_rounded,
+                      '+84 ${userModel.phoneNumber}'),
+                  const SizedBox(height: defaultPadding),
+                  FilledButton.icon(
+                      onPressed: () => Get.bottomSheet(
+                          isScrollControlled: true,
+                          SizedBox(
+                              height: Get.height,
+                              child: EditProfileScreen(userModel: userModel))),
+                      label: const Text('Cập nhật thông tin',
+                          style: kButtonWhiteStyle),
+                      icon: const Icon(Icons.edit)),
+                  _buildBody(context, userModel),
+                ],
+              );
+            })
             // _buildBody(context),
             // Expanded(child: _buildBody(context))
           ],
@@ -107,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
       Icon(icon, size: 15, color: AppColors.black.withOpacity(0.7)),
       const SizedBox(width: 3),
       Text(title,
-          style: kThinBlackTextStyle.copyWith(
+          style: kBodyStyle.copyWith(
               color: AppColors.black.withOpacity(0.7), fontSize: 12))
     ]);
   }
@@ -116,17 +127,15 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: AppColors.transparent,
       foregroundColor: AppColors.white,
       centerTitle: true,
-      title: Text('Thông tin',
-          style: kSemiBoldTextStyle.copyWith(
-              fontWeight: FontWeight.bold, color: AppColors.white)));
+      title: const Text('Thông tin', style: kHeadingWhiteStyle));
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context, UserModel userModel) {
     // var a = context.select((UserCubit userCubit) => userCubit).state;
     // logger.d(a);
 
     return Padding(
         padding: const EdgeInsets.all(defaultPadding),
-        child: _buildListAction(context, userModel ?? UserModel()));
+        child: _buildListAction(context, userModel));
   }
 
   Widget _buildListAction(BuildContext context, UserModel user) {
@@ -144,7 +153,10 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: defaultPadding * 2),
             FilledButton.icon(
                 onPressed: () => _handleLogout(context),
-                label: const Text("Đăng xuất"),
+                label: const Text(
+                  "Đăng xuất",
+                  style: kButtonWhiteStyle,
+                ),
                 icon: const Icon(Icons.logout)),
           ])
         ]
@@ -252,7 +264,7 @@ class _ItemProfile extends StatelessWidget {
                         child: SvgPicture.asset(svgPath,
                             colorFilter: const ColorFilter.mode(
                                 Colors.red, BlendMode.srcIn))),
-                    Text(title)
+                    Text(title, style: kBodyStyle)
                   ]),
                   const Padding(
                       padding: EdgeInsets.all(defaultPadding),

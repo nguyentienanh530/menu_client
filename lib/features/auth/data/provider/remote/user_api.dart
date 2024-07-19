@@ -26,20 +26,31 @@ class UserApi extends ApiBase<UserModel> {
     }
   }
 
-  Future<Either<String, bool>> uploadAvatar(File file) async {
-    // final Response response = await dioClient.dio!
-    //     .post(ApiConfig.uploadAvatar, data: {'avatar': file});
+  Future<Either<String, String>> uploadAvatar(File file) async {
     var filePath = file.path.split('/').last;
-    print('filePath: $filePath');
+
     FormData formData = FormData.fromMap({
       "avatar": await MultipartFile.fromFile(file.path, filename: filePath),
     });
-    return makePostRequest(dioClient.dio!.post(
-      ApiConfig.uploadAvatar,
-      data: formData,
-      onSendProgress: (count, total) {
+
+    try {
+      final response = await dioClient.dio!.post(ApiConfig.uploadAvatar,
+          data: formData, onSendProgress: (count, total) {
         Logger().w('count: $count, total: $total');
-      },
-    ));
+      });
+      String image = response.data['image'];
+
+      return right(image);
+    } on DioException catch (e) {
+      var dataResponse = DataResponse.fromJson(e.response!.data);
+      final errorMessage = ApiException().fromApiError(dataResponse).toString();
+      return left(errorMessage);
+    }
+  }
+
+  Future<Either<String, bool>> updateUser(
+      {required UserModel userModel}) async {
+    return makePutRequest(dioClient.dio!
+        .put(ApiConfig.updateUser, queryParameters: userModel.toJson()));
   }
 }

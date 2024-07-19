@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 // import 'package:get/get.dart';
@@ -24,6 +25,7 @@ class DioInterceptor extends Interceptor {
     if (accessToken != null) {
       options.headers['Authorization'] = 'Bearer ${accessToken.accessToken}';
       options.headers['Content-Type'] = 'application/json';
+      options.headers['Accept'] = 'application/json';
     }
     logger.i('====================START====================');
     logger.i('HTTP method => ${options.method} ');
@@ -36,22 +38,23 @@ class DioInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     final options = err.requestOptions;
+    int? statusCode = err.response!.statusCode;
 
-    if (err.response?.statusCode == HttpStatus.unauthorized ||
-        err.response?.data['message'] == 'Token expired') {
-      try {
-        AccessToken? accessToken = await AppDatasource().getAccessToken();
-        final newAccessToken = await AuthApi().refreshToken(
-            refreshToken: accessToken?.refreshToken ?? '',
-            accessToken: accessToken?.accessToken ?? '');
+    if (statusCode == HttpStatus.unauthorized &&
+        err.response!.data['message'] == 'Token expired') {
+      AccessToken? accessToken = await AppDatasource().getAccessToken();
+      log('accessToken is Token expired: ${accessToken?.accessToken}');
+      log('refreshToken is Token expired: ${accessToken?.refreshToken}');
+      final newAccessToken = await AuthApi()
+          .refreshToken(refreshToken: accessToken?.refreshToken ?? '');
 
-        options.headers['Authorization'] =
-            'Bearer ${newAccessToken?.accessToken}';
+      logger.i('newAccessToken: ${newAccessToken?.accessToken}');
+      logger.i('newRefreshToken: ${newAccessToken?.refreshToken}');
 
-        return handler.resolve(await dio.fetch(options));
-      } catch (e) {
-        logger.e(e);
-      }
+      options.headers['Authorization'] =
+          'Bearer ${newAccessToken?.accessToken}';
+
+      return handler.resolve(await dio.fetch(options));
     } else {
       logger.e(options.method); // Debug log
       logger.e(

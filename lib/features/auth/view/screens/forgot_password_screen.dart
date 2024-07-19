@@ -50,34 +50,33 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('Quên mật khẩu',
-                  style: kSemiBoldTextStyle.copyWith(
-                      fontWeight: FontWeight.bold, fontSize: 20)),
+                  style: kHeadingStyle.copyWith(fontWeight: FontWeight.bold)),
               const SizedBox(height: defaultPadding * 2),
               Text('Nhập số điện thoại của bạn để đổi mật khẩu',
-                  style: kSemiBoldTextStyle.copyWith(
+                  style: kSubHeadingStyle.copyWith(
                       fontSize: 16, color: AppColors.black.withOpacity(0.5))),
               const SizedBox(height: defaultPadding * 4),
               Text('Số điện thoại',
-                  style: kSemiBoldTextStyle.copyWith(
+                  style: kSubHeadingStyle.copyWith(
                       fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: defaultPadding),
               _buildPhoneField(),
               const SizedBox(height: defaultPadding * 2),
               Text('Mật khẩu mới',
-                  style: kSemiBoldTextStyle.copyWith(
+                  style: kSubHeadingStyle.copyWith(
                       fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: defaultPadding),
               _buildPasswordField(),
               const SizedBox(height: defaultPadding * 2),
               Text('Xác nhận mật khẩu',
-                  style: kSemiBoldTextStyle.copyWith(
+                  style: kSubHeadingStyle.copyWith(
                       fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: defaultPadding),
               _buildComfirmPasswordField(),
               const SizedBox(height: defaultPadding),
               Text(
                   '*Mật khẩu ít nhất 8 ký tự, bao gồm(ký tự hoa, ký tự thường, ký tự số, ký tự đặc biệt)',
-                  style: kSemiBoldTextStyle.copyWith(
+                  style: kSubHeadingStyle.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.normal,
                       fontStyle: FontStyle.italic)),
@@ -98,7 +97,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         backgroundColor: AppColors.themeColor),
                     onPressed: () => _handleForgotPassword(),
                     child: Text('Đặt lại mật khẩu',
-                        style: kSemiBoldTextStyle.copyWith(
+                        style: kSubHeadingStyle.copyWith(
                             color: AppColors.white, fontSize: 14)),
                   )),
               const SizedBox(height: defaultPadding * 2),

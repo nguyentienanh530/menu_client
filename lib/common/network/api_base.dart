@@ -50,7 +50,7 @@ abstract class ApiBase<T> {
       final Response response = await apiCallback;
 
       final List<T> dataList = List<T>.from(
-        json.decode(json.encode(response.data)).map(
+        json.decode(json.encode(response.data['data'])).map(
               (item) => getJsonCallback(item),
             ),
       );

@@ -11,6 +11,6 @@ class CommonButton extends StatelessWidget {
     return FilledButton.icon(
         icon: const Icon(Icons.arrow_forward_rounded, size: 20),
         onPressed: onTap,
-        label: Text(text ?? '', style: kLightWhiteTextStyle));
+        label: Text(text ?? '', style: kBodyWhiteStyle));
   }
 }

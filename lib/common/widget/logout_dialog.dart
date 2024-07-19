@@ -27,8 +27,7 @@ class LogoutDialog extends StatelessWidget {
           const SizedBox(height: defaultPadding),
           Text(
             "Đăng xuất",
-            style: kSemiBoldTextStyle.copyWith(
-                fontWeight: FontWeight.bold, fontSize: 20),
+            style: kHeadingStyle.copyWith(fontWeight: FontWeight.bold),
           )
         ],
       ),
@@ -37,7 +36,7 @@ class LogoutDialog extends StatelessWidget {
         children: [
           Text(
             title,
-            style: kSemiBoldTextStyle.copyWith(
+            style: kSubHeadingStyle.copyWith(
                 fontSize: 14, color: AppColors.black.withOpacity(0.5)),
             textAlign: TextAlign.center,
           ),

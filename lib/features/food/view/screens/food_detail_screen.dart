@@ -176,8 +176,7 @@ class FoodDetailScreen extends StatelessWidget {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(AppString.totalPrice,
-                              style: kThinBlackTextStyle),
+                          Text(AppString.totalPrice, style: kBodyStyle),
                           _buildPrice(context, food)
                         ]),
                     const SizedBox(height: defaultPadding),
@@ -208,7 +207,7 @@ class FoodDetailScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(defaultBorderRadius),
                 color: AppColors.themeColor),
-            child: Text(AppString.addToCart, style: kLightWhiteTextStyle)));
+            child: Text(AppString.addToCart, style: kButtonWhiteStyle)));
   }
 
   Widget _buildDescription(BuildContext context, FoodModel food) {
@@ -217,17 +216,15 @@ class FoodDetailScreen extends StatelessWidget {
             horizontal: defaultPadding, vertical: defaultPadding / 2),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text('Mô tả',
-              style: kRegularTextStyle.copyWith(fontWeight: FontWeight.bold)),
+              style: kSubHeadingStyle.copyWith(fontWeight: FontWeight.bold)),
           ReadMoreText(food.description,
               trimLines: 8,
               trimMode: TrimMode.Line,
               trimCollapsedText: 'Xem thêm...',
               trimExpandedText: 'ẩn bớt',
-              style: kThinBlackTextStyle,
-              lessStyle:
-                  kThinBlackTextStyle.copyWith(color: AppColors.themeColor),
-              moreStyle:
-                  kThinBlackTextStyle.copyWith(color: AppColors.themeColor))
+              style: kBodyStyle,
+              lessStyle: kBodyStyle.copyWith(color: AppColors.themeColor),
+              moreStyle: kBodyStyle.copyWith(color: AppColors.themeColor))
         ]));
   }
 
@@ -236,8 +233,7 @@ class FoodDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
             horizontal: defaultPadding, vertical: defaultPadding / 2),
         child: Text(food.name,
-            style: kRegularTextStyle.copyWith(
-                fontWeight: FontWeight.bold, fontSize: 28.0)));
+            style: kHeadingStyle.copyWith(fontWeight: FontWeight.bold)));
   }
 
   Widget _buildPrice(BuildContext context, FoodModel food) {
@@ -245,11 +241,11 @@ class FoodDetailScreen extends StatelessWidget {
     double discountedPrice = food.price - discountAmount;
     return !food.isDiscount
         ? Text(AppRes.currencyFormat(double.parse(food.price.toString())),
-            style: kRegularTextStyle.copyWith(
+            style: kBodyStyle.copyWith(
                 fontWeight: FontWeight.bold, color: AppColors.themeColor))
         : Row(children: [
             Text(AppRes.currencyFormat(double.parse(food.price.toString())),
-                style: kRegularTextStyle.copyWith(
+                style: kBodyStyle.copyWith(
                     decoration: TextDecoration.lineThrough,
                     decorationThickness: 3.0,
                     decorationColor: Colors.red,
@@ -257,7 +253,7 @@ class FoodDetailScreen extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
                 AppRes.currencyFormat(double.parse(discountedPrice.toString())),
-                style: kRegularTextStyle.copyWith(
+                style: kBodyStyle.copyWith(
                     fontWeight: FontWeight.bold, color: AppColors.themeColor))
           ]);
   }
@@ -276,7 +272,7 @@ class _Gallery extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
               horizontal: defaultPadding, vertical: defaultPadding / 2),
           child: Text('Thư viện hình ảnh',
-              style: kRegularTextStyle.copyWith(fontWeight: FontWeight.bold))),
+              style: kSubHeadingStyle.copyWith(fontWeight: FontWeight.bold))),
       SizedBox(
           height: Get.height * 0.15,
           child: ListView.builder(

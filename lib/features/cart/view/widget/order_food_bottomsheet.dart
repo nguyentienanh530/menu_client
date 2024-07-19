@@ -90,7 +90,8 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
                               _buildQuantity(),
                               const SizedBox(height: 10),
                               Text(AppString.priceSell,
-                                  style: kRegularTextStyle),
+                                  style: kSubHeadingStyle.copyWith(
+                                      fontWeight: FontWeight.bold)),
                               const SizedBox(height: 10),
                               _Price(
                                   price: AppRes.foodPrice(
@@ -102,7 +103,9 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
                               // Text(AppString.quantity,
                               //     style: kRegularTextStyle),
 
-                              Text(AppString.note, style: kRegularTextStyle),
+                              Text(AppString.note,
+                                  style: kSubHeadingStyle.copyWith(
+                                      fontWeight: FontWeight.bold)),
                               const SizedBox(height: 10),
                               _Note(noteCtrl: _noteCtrl),
                               const SizedBox(height: 20)
@@ -133,7 +136,7 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
                                             defaultBorderRadius)),
                                     child: Center(
                                         child: Text(AppString.cancel,
-                                            style: kThinWhiteTextStyle)))))
+                                            style: kButtonWhiteStyle)))))
                       ])
                     ])))
           ])),
@@ -215,7 +218,7 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
                 color: AppColors.fountainBlue,
                 borderRadius: BorderRadius.circular(defaultBorderRadius)),
             child: Center(
-                child: Text(AppString.addToCart, style: kThinWhiteTextStyle))));
+                child: Text(AppString.addToCart, style: kButtonWhiteStyle))));
   }
 
   Widget _buildTotalPrice() {
@@ -296,9 +299,9 @@ class _Price extends StatelessWidget {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(AppString.priceSell),
+                  Text(AppString.priceSell, style: kBodyStyle),
                   Text(AppRes.currencyFormat(double.parse(price.toString())),
-                      style: const TextStyle(
+                      style: kBodyStyle.copyWith(
                           color: AppColors.themeColor,
                           fontWeight: FontWeight.bold))
                 ])));

@@ -22,13 +22,13 @@ class EmptyScreen extends StatelessWidget {
           const SizedBox(height: 16),
           Center(
               child: Text("Không có sản phẩm",
-                  style: kRegularTextStyle.copyWith(
+                  style: kSubHeadingStyle.copyWith(
                       fontWeight: FontWeight.bold, fontSize: 20))),
           const SizedBox(height: 16),
           const Center(
               child: Text(
                   "Xin lỗi, chúng tôi không thể tìm thấy bất kỳ kết quả nào cho mặt hàng của bạn.",
-                  style: kThinBlackTextStyle,
+                  style: kSubHeadingStyle,
                   textAlign: TextAlign.center))
         ]
                 .animate(interval: 50.ms)

@@ -17,7 +17,7 @@ class ErrWidget extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           error ?? "Có lỗi xảy ra",
-          style: kSemiBoldTextStyle.copyWith(
+          style: kSubHeadingStyle.copyWith(
               color: AppColors.black.withOpacity(0.5), fontSize: 14),
         )
       ]),

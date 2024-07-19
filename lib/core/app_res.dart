@@ -53,7 +53,7 @@ class AppRes {
             const SizedBox(width: defaultPadding),
             Text(
               msg,
-              style: kSemiBoldThemeTextStyle.copyWith(
+              style: kSubHeadingStyle.copyWith(
                 color: AppColors.white,
               ),
             ),
@@ -74,10 +74,10 @@ class AppRes {
                 backgroundColor: AppColors.white,
                 icon: const Icon(Icons.warning_amber_rounded, size: 80),
                 title: Text(title ?? 'Thông báo!',
-                    style: kRegularTextStyle.copyWith(
-                        fontWeight: FontWeight.bold)),
+                    style:
+                        kSubHeadingStyle.copyWith(fontWeight: FontWeight.bold)),
                 content: Text(content ?? '',
-                    style: kThinBlackTextStyle, textAlign: TextAlign.center),
+                    style: kBodyStyle, textAlign: TextAlign.center),
                 actionsAlignment: MainAxisAlignment.spaceAround,
                 actions: [
                   GestureDetector(
@@ -92,7 +92,7 @@ class AppRes {
                               borderRadius:
                                   BorderRadius.circular(defaultBorderRadius)),
                           child: Text('Hủy',
-                              style: kThinWhiteTextStyle.copyWith(
+                              style: kSubHeadingStyle.copyWith(
                                   color: AppColors.themeColor)))),
                   GestureDetector(
                       onTap: onConformTap,
@@ -104,8 +104,8 @@ class AppRes {
                               color: AppColors.themeColor,
                               borderRadius:
                                   BorderRadius.circular(defaultBorderRadius)),
-                          child: const Text('Xác nhận',
-                              style: kThinWhiteTextStyle)))
+                          child:
+                              const Text('Xác nhận', style: kButtonWhiteStyle)))
                 ]));
   }
 
@@ -119,10 +119,10 @@ class AppRes {
                 backgroundColor: AppColors.white,
                 icon: const Icon(Icons.question_mark_rounded, size: 80),
                 title: Text(title ?? 'Thông báo!',
-                    style: kRegularTextStyle.copyWith(
-                        fontWeight: FontWeight.bold)),
+                    style:
+                        kSubHeadingStyle.copyWith(fontWeight: FontWeight.bold)),
                 content: Text(content ?? '',
-                    style: kThinBlackTextStyle, textAlign: TextAlign.center),
+                    style: kSubHeadingStyle, textAlign: TextAlign.center),
                 actionsAlignment: MainAxisAlignment.spaceAround,
                 actions: [
                   GestureDetector(
@@ -137,7 +137,7 @@ class AppRes {
                               borderRadius:
                                   BorderRadius.circular(defaultBorderRadius)),
                           child: Text('Hủy',
-                              style: kThinWhiteTextStyle.copyWith(
+                              style: kSubHeadingStyle.copyWith(
                                   color: AppColors.themeColor)))),
                   GestureDetector(
                       onTap: onConformTap,
@@ -149,8 +149,8 @@ class AppRes {
                               color: AppColors.themeColor,
                               borderRadius:
                                   BorderRadius.circular(defaultBorderRadius)),
-                          child: const Text('Xác nhận',
-                              style: kThinWhiteTextStyle)))
+                          child:
+                              const Text('Xác nhận', style: kSubHeadingStyle)))
                 ]));
   }
 

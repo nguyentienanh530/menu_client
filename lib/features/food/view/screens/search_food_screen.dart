@@ -7,6 +7,7 @@ import 'package:menu_client/core/api_config.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_const.dart';
 import 'package:menu_client/core/app_res.dart';
+import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/food/controller/food_controller.dart';
 import 'package:menu_client/features/food/view/screens/food_detail_screen.dart';
 import 'package:tiengviet/tiengviet.dart';
@@ -170,7 +171,6 @@ class _AfterSearchUIState extends State<AfterSearchUI> {
             padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding / 5),
             child: Card(
-                // color: AppColors.lavender,
                 shadowColor: AppColors.lavender,
                 elevation: 4,
                 borderOnForeground: false,
@@ -221,11 +221,10 @@ class _AfterSearchUIState extends State<AfterSearchUI> {
   Widget _buildTitle(BuildContext context, FoodModel food) {
     return FittedBox(
         fit: BoxFit.scaleDown,
-        child: Text(
-          food.name,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ));
+        child: Text(food.name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: kSubHeadingStyle));
   }
 
   Widget _buildPrice(BuildContext context, FoodModel food) {
@@ -233,25 +232,23 @@ class _AfterSearchUIState extends State<AfterSearchUI> {
     double discountedPrice = food.price - discountAmount;
     return food.isDiscount == false
         ? Text(AppRes.currencyFormat(double.parse(food.price.toString())),
-            style: const TextStyle(
-                color: AppColors.themeColor, fontWeight: FontWeight.bold))
+            style: kBodyStyle.copyWith(fontWeight: FontWeight.bold))
         : Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [
               Text(AppRes.currencyFormat(double.parse(food.price.toString())),
-                  style: const TextStyle(
+                  style: kBodyStyle.copyWith(
                       decoration: TextDecoration.lineThrough,
                       decorationThickness: 3.0,
                       decorationColor: Colors.red,
                       decorationStyle: TextDecorationStyle.solid,
                       // fontSize: defaultSizeText,
-                      color: Color.fromARGB(255, 131, 128, 126),
+                      color: AppColors.neroDark.withOpacity(0.8),
                       fontWeight: FontWeight.w700)),
               const SizedBox(width: 10.0),
               Text(
                   AppRes.currencyFormat(
                       double.parse(discountedPrice.toString())),
-                  style: const TextStyle(
-                      color: AppColors.themeColor, fontWeight: FontWeight.bold))
+                  style: kBodyStyle.copyWith(fontWeight: FontWeight.bold))
             ])
           ]);
   }

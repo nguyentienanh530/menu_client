@@ -5,6 +5,7 @@ import 'package:menu_client/common/widget/error_build_image.dart';
 import 'package:menu_client/common/widget/loading.dart';
 import 'package:menu_client/core/api_config.dart';
 import 'package:menu_client/core/app_colors.dart';
+import 'package:menu_client/core/app_style.dart';
 import 'package:menu_client/features/food/view/screens/food_screen.dart';
 import '../../../category/data/model/category_model.dart';
 
@@ -57,7 +58,9 @@ class Categories extends StatelessWidget {
                           fit: BoxFit.scaleDown,
                           alignment: Alignment.center,
                           child: Text(categoryModel.name,
-                              maxLines: 1, overflow: TextOverflow.ellipsis)))
+                              style: kBodyStyle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis)))
                 ])));
   }
 }

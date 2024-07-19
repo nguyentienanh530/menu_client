@@ -15,6 +15,7 @@ class CommonTextField extends StatelessWidget {
       this.validator,
       this.controller,
       this.prefixIcon,
+      this.labelText,
       this.maxLines});
   final String? errorText;
   final TextInputType? keyboardType;
@@ -26,6 +27,7 @@ class CommonTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final int? maxLines;
+  final String? labelText;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class CommonTextField extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         key: key,
         maxLines: maxLines,
-        style: kThinBlackTextStyle,
+        style: kBodyStyle,
         textAlign: TextAlign.start,
         keyboardType: keyboardType ?? TextInputType.text,
         autocorrect: false,
@@ -62,11 +64,11 @@ class CommonTextField extends StatelessWidget {
             contentPadding: const EdgeInsets.only(left: defaultPadding),
             filled: true,
             hintText: hintText,
-            errorStyle:
-                kThinBlackTextStyle.copyWith(color: AppColors.themeColor),
-            hintStyle: kThinBlackTextStyle.copyWith(
-                color: AppColors.black.withOpacity(0.6)),
-            labelStyle: kThinBlackTextStyle),
+            labelText: labelText ?? '',
+            errorStyle: kBodyStyle.copyWith(color: AppColors.themeColor),
+            hintStyle:
+                kBodyStyle.copyWith(color: AppColors.black.withOpacity(0.6)),
+            labelStyle: kBodyStyle),
         onChanged: onChanged);
   }
 }

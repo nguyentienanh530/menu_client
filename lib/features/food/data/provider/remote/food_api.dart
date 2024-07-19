@@ -11,8 +11,7 @@ class FoodApi extends ApiBase<FoodModel> {
           dioClient.dio!.get(ApiConfig.newFoods), FoodModel.fromJson);
     } else {
       result = makeGetRequest(
-          dioClient.dio!
-              .get(ApiConfig.newFoods, queryParameters: {'limit': limit}),
+          dioClient.dio!.get(ApiConfig.newFoods, data: {'limit': limit}),
           FoodModel.fromJson);
     }
 

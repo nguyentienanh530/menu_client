@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    userCtrl.getUser();
+    // userCtrl.getUser();
     newFoodsCtrl.getNewFoods(limit: 10);
     popularFoodsCtrl.getPopularFoods(limit: 10);
     categoriesCtrl.getCategories();
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 20, color: AppColors.black.withOpacity(0.8)),
                 const SizedBox(width: 8),
                 Text('Tìm kiếm món ăn...',
-                    style: kBlackButtonTextStyle.copyWith(
+                    style: kBodyStyle.copyWith(
                         color: AppColors.black.withOpacity(0.8)))
               ])
             ])));
@@ -115,10 +115,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: badges.Badge(
                 badgeStyle:
                     const badges.BadgeStyle(badgeColor: AppColors.islamicGreen),
-                position: badges.BadgePosition.topEnd(top: -14),
+                position: badges.BadgePosition.topEnd(top: -18),
                 badgeContent: Text(
                     cartCtrl.order.value.orderDetail.length.toString(),
-                    style: kThinWhiteTextStyle),
+                    style: kSubHeadingStyle.copyWith(color: AppColors.white)),
                 child: SvgPicture.asset(AppAsset.shoppingCart,
                     height: double.infinity,
                     fit: BoxFit.cover,
@@ -152,7 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: defaultPadding),
                       child: Text(tableCtrl.table.value.name,
-                          style: kThinWhiteTextStyle.copyWith(
+                          style: kBodyStyle.copyWith(
+                              fontWeight: FontWeight.bold,
                               color: AppColors.themeColor)))));
     });
   }
@@ -160,8 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildProfileButton() {
     return Obx(() {
       return GestureDetector(
-          onTap: () =>
-              Get.to(() => ProfileScreen(userModel: userCtrl.userModel.value)),
+          onTap: () => Get.to(() => ProfileScreen()),
           child: Container(
             height: 35,
             width: 35,
@@ -190,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: AppColors.smokeWhite,
                               child: Center(
                                   child: Text(':-('.toUpperCase(),
-                                      style: kBoldThemeTextStyle.copyWith(
+                                      style: kSubHeadingStyle.copyWith(
                                           color: AppColors.smokeWhite1,
                                           fontSize: 15))));
                         },
@@ -221,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   () => const FoodScreen(modeScreen: ModeScreen.newsFoods))),
           newFoodsCtrl.obx((state) {
             return SizedBox(
-                height: Get.height * 0.25, child: ListItemFood(list: state));
+                height: Get.height * 0.3, child: ListItemFood(list: state));
           },
               onEmpty: const EmptyWidget(),
               onLoading: const Loading(),
@@ -266,12 +266,12 @@ class _HomeScreenState extends State<HomeScreen> {
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text(title,
-              style: kMediumTextStyle.copyWith(fontWeight: FontWeight.bold)),
+              style: kSubHeadingStyle.copyWith(fontWeight: FontWeight.bold)),
           GestureDetector(
               onTap: onTap,
               child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
                 Text('Xem tất cả',
-                    style: kThinBlackTextStyle.copyWith(
+                    style: kCaptionStyle.copyWith(
                         fontStyle: FontStyle.italic,
                         color: AppColors.themeColor)),
                 const Icon(Icons.navigate_next_rounded,

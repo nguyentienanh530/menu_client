@@ -55,8 +55,7 @@ class ItemCart extends StatelessWidget {
                                   children: [
                                     FittedBox(
                                         child: Text(orderDetail.foodName,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold))),
+                                            style: kBodyStyle)),
                                     _buildQuality(context, orderDetail),
                                   ],
                                 ),
@@ -92,11 +91,10 @@ class ItemCart extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Divider(),
-                                const Text("Ghi chú: ",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                                Text(orderDetail.note,
-                                    style: kThinBlackTextStyle)
+                                Text("Ghi chú: ",
+                                    style: kBodyStyle.copyWith(
+                                        fontWeight: FontWeight.bold)),
+                                Text(orderDetail.note, style: kBodyStyle)
                               ]))
                       : const SizedBox()
                 ])));
@@ -105,7 +103,7 @@ class ItemCart extends StatelessWidget {
   Widget _buildPriceFood(BuildContext context,
       {required String totalPrice, required Color color}) {
     return Text(AppRes.currencyFormat(double.parse(totalPrice)),
-        style: TextStyle(color: color, fontWeight: FontWeight.bold));
+        style: kBodyStyle.copyWith(color: color, fontWeight: FontWeight.bold));
   }
 
   Widget _buildImage(OrderDetail food) {
@@ -204,7 +202,8 @@ class ItemCart extends StatelessWidget {
                 topRight: Radius.circular(defaultBorderRadius))),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text('#$index', style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text('#$index',
+              style: kBodyStyle.copyWith(fontWeight: FontWeight.bold)),
           _buildIconDeleteItemFood(context, foodOrder)
         ]));
   }

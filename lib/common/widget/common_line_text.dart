@@ -29,12 +29,12 @@ class CommonLineText extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             text: TextSpan(
                 text: title ?? "",
-                style: titleStyle ?? kThinBlackTextStyle,
+                style: titleStyle ?? kSubHeadingStyle,
                 children: <TextSpan>[
                   TextSpan(
                       text: value ?? '',
                       style: valueStyle ??
-                          kThinBlackTextStyle.copyWith(
+                          kSubHeadingStyle.copyWith(
                               color: color ?? AppColors.white))
                 ])));
   }

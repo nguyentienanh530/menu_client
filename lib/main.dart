@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_datasource.dart';
@@ -26,6 +27,7 @@ class MainApp extends StatelessWidget {
         scrollBehavior: MyCustomScrollBehavior(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+            fontFamily: GoogleFonts.openSans().fontFamily,
             scaffoldBackgroundColor: AppColors.smokeWhite,
             // scaffoldBackgroundColor: ColorRes.themeColor.withOpacity(0.6),
             textTheme: const TextTheme(

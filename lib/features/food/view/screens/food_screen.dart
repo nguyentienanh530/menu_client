@@ -118,7 +118,7 @@ class _FoodScreenState extends State<FoodScreen> {
           centerTitle: true,
           backgroundColor: AppColors.transparent,
           foregroundColor: AppColors.white,
-          title: Text(_category.name, style: kMediumWhiteTextStyle),
+          title: Text(_category.name, style: kHeadingWhiteStyle),
           actions: [
             CartButton(
                 onPressed: () => Get.to(() => CartScreen()),

@@ -23,6 +23,7 @@ class AuthApi extends ApiBase<AccessToken> {
 
       final AccessToken accessToken =
           AccessToken.fromJson(response.data['data']);
+
       return right(accessToken);
     } on DioException catch (e) {
       var dataResponse = DataResponse.fromJson(e.response!.data);
@@ -44,12 +45,11 @@ class AuthApi extends ApiBase<AccessToken> {
     }
   }
 
-  Future<AccessToken?> refreshToken(
-      {required String refreshToken, required String accessToken}) async {
+  Future<AccessToken?> refreshToken({required String refreshToken}) async {
     try {
       AccessToken accessToken = AccessToken(accessToken: '', refreshToken: '');
-      final response = await dioClient.dio!.post(ApiConfig.refreshToken,
-          data: {'refresh_token': refreshToken, 'access_token': accessToken});
+      final response = await dioClient.dio!
+          .post(ApiConfig.refreshToken, data: {'refresh_token': refreshToken});
 
       if (response.statusCode == HttpStatus.ok) {
         final token = AccessToken.fromJson(response.data['data']);

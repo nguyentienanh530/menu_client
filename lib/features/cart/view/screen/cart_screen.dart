@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:menu_client/common/controller/base_controller.dart';
 import 'package:menu_client/core/app_asset.dart';
 import 'package:menu_client/core/app_colors.dart';
 import 'package:menu_client/core/app_const.dart';
@@ -9,6 +13,7 @@ import 'package:menu_client/core/extensions.dart';
 import 'package:menu_client/features/cart/controller/cart_controller.dart';
 import 'package:menu_client/features/order/controller/order_controller.dart';
 import 'package:menu_client/features/table/controller/table_controller.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../../common/widget/async_widget.dart';
 import '../../../../common/widget/empty_screen.dart';
@@ -73,7 +78,7 @@ class CartScreen extends StatelessWidget {
       backgroundColor: AppColors.transparent,
       foregroundColor: AppColors.white,
       centerTitle: true,
-      title: const Text('Giỏ hàng', style: kRegularWhiteTextStyle));
+      title: const Text('Giỏ hàng', style: kHeadingWhiteStyle));
 
   Widget _buildBody(BuildContext context, OrderModel orderModel) {
     return Column(
@@ -86,11 +91,11 @@ class CartScreen extends StatelessWidget {
             padding: const EdgeInsets.all(defaultPadding),
             child: Column(children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Text('Tổng tiền:'),
+                const Text('Tổng tiền:', style: kBodyStyle),
                 Text(
                     AppRes.currencyFormat(
                         double.parse(orderModel.totalPrice.toString())),
-                    style: kThinBlackTextStyle.copyWith(
+                    style: kBodyStyle.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.themeColor))
               ]),
@@ -105,7 +110,7 @@ class CartScreen extends StatelessWidget {
                         color: AppColors.themeColor,
                         borderRadius:
                             BorderRadius.circular(defaultBorderRadius)),
-                    child: const Text('Lên đơn', style: kThinWhiteTextStyle)),
+                    child: const Text('Lên đơn', style: kButtonWhiteStyle)),
               )
               // AnimatedButton(
               //     color: context.colorScheme.tertiaryContainer,
@@ -144,6 +149,13 @@ class CartScreen extends StatelessWidget {
       builder: (_) {
         return Obx(
           () {
+            if (orderController.apiStatus.value == ApiState.success) {
+              log('seccess');
+              cartController.channel!.sink
+                  .add(jsonEncode({'event': 'orders', 'payload': 0}));
+              cartController.channel!.sink
+                  .add(jsonEncode({'event': 'tables', 'payload': 0}));
+            }
             return AsyncWidget(
               apiState: orderController.apiStatus.value,
               progressStatusTitle: "Đang lên đơn...",

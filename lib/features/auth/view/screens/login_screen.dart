@@ -33,8 +33,10 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final TextEditingController _emailCtrl = TextEditingController();
-  final TextEditingController _passwordCtrl = TextEditingController();
+  final TextEditingController _emailCtrl =
+      TextEditingController(text: '0328023993');
+  final TextEditingController _passwordCtrl =
+      TextEditingController(text: 'Minhlong@123');
   final _formKey = GlobalKey<FormState>();
   final _oneUpperCase = ValueNotifier(false);
   final _oneLowerCase = ValueNotifier(false);
@@ -123,7 +125,7 @@ class _LoginViewState extends State<LoginView> {
                                   const Center(child: _Wellcome()),
                                   const SizedBox(height: defaultPadding * 2),
                                   _PhoneNumber(emailcontroller: _emailCtrl),
-                                  const SizedBox(height: defaultPadding),
+                                  const SizedBox(height: defaultPadding * 2),
                                   _buildPassword(),
                                   const SizedBox(height: defaultPadding),
                                   const Row(
@@ -158,7 +160,8 @@ class _LoginViewState extends State<LoginView> {
           return CommonTextField(
               maxLines: 1,
               controller: _passwordCtrl,
-              hintText: AppString.password,
+              // hintText: AppString.password,
+              labelText: AppString.password,
               validator: (password) => AppRes.validatePassword(password)
                   ? null
                   : 'Mật khẩu không hợp lệ',
@@ -248,8 +251,7 @@ class _LoginViewState extends State<LoginView> {
                           : AppColors.black.withOpacity(0.5)),
                   const SizedBox(width: 8),
                   Text(label,
-                      style: kThinBlackTextStyle.copyWith(
-                          fontSize: 12,
+                      style: kCaptionStyle.copyWith(
                           color: value
                               ? AppColors.islamicGreen
                               : AppColors.black.withOpacity(0.5)))
@@ -300,7 +302,7 @@ class _Wellcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(AppString.welcomeBack,
-        style: kBlackWhiteTextStyle.copyWith(
+        style: kHeadingStyle.copyWith(
             fontSize: 28,
             color: AppColors.themeColor,
             fontWeight: FontWeight.bold));
@@ -316,7 +318,8 @@ class _PhoneNumber extends StatelessWidget {
         controller: emailcontroller,
         keyboardType: TextInputType.phone,
         maxLines: 1,
-        hintText: AppString.phoneNumber,
+        // hintText: ,
+        labelText: AppString.phoneNumber,
         prefixIcon: Icon(Icons.phone_android_rounded,
             color: AppColors.black.withOpacity(0.5)),
         validator: (value) {
@@ -345,8 +348,7 @@ class _ButtonForgotPassword extends StatelessWidget {
     return GestureDetector(
         onTap: () => Get.to(() => const ForgotPasswordScreen()),
         child: Text(AppString.forgotPassword,
-            style: kThinBlackTextStyle.copyWith(
-                fontSize: 12, fontStyle: FontStyle.italic)));
+            style: kCaptionStyle.copyWith(fontStyle: FontStyle.italic)));
 
     // GestureDetector(
     //     onTap: () {},

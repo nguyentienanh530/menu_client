@@ -6,11 +6,10 @@ import 'common_item_food.dart';
 class ListItemFood extends StatelessWidget {
   final List<FoodModel>? list;
 
-  // final getContext = Get.context;
-
   const ListItemFood({super.key, required this.list});
 
-  Widget _buildListItemFood(List<FoodModel> food) {
+  @override
+  Widget build(BuildContext context) {
     return ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: list!.length,
@@ -19,10 +18,5 @@ class ListItemFood extends StatelessWidget {
             child: CommonItemFood(foodModel: list![index])),
         scrollDirection: Axis.horizontal,
         shrinkWrap: true);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _buildListItemFood(list ?? <FoodModel>[]);
   }
 }

@@ -17,8 +17,7 @@ class CartButton extends StatelessWidget {
                 const badges.BadgeStyle(badgeColor: AppColors.islamicGreen),
             position: badges.BadgePosition.topEnd(top: -14),
             badgeContent: Text(number,
-                style:
-                    kThinWhiteTextStyle.copyWith(fontWeight: FontWeight.bold)),
+                style: kBodyWhiteStyle.copyWith(fontWeight: FontWeight.bold)),
             child: const Icon(Icons.shopping_cart_rounded, size: 20)));
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -9,18 +10,14 @@ import '../../../common/controller/base_controller.dart';
 
 class UserController extends GetxController
     with StateMixin<UserModel>, BaseController {
-  final userApi = UserApi();
+  final _userApi = UserApi();
   var userModel = UserModel().obs;
-  var accessToken = ''.obs;
-  Rx<File> imageFile = File('').obs;
 
-  void setAccessToken(String token) {
-    accessToken.value = token;
-  }
+  Rx<File> imageFile = File('').obs;
 
   void getUser() async {
     change(null, status: RxStatus.loading());
-    Either<String, UserModel> failureOrSuccess = await userApi.getUser();
+    Either<String, UserModel> failureOrSuccess = await _userApi.getUser();
     failureOrSuccess.fold((String failure) {
       change(null, status: RxStatus.error(failure));
     }, (UserModel user) async {
@@ -33,7 +30,19 @@ class UserController extends GetxController
     });
   }
 
-  void uploadAvatar(File file) {
-    userApi.uploadAvatar(file);
+  Future<String> uploadAvatar(File file) async {
+    var image = '';
+    Either<String, String> failureOrSuccess = await _userApi.uploadAvatar(file);
+    failureOrSuccess.fold((String failure) {
+      log('uploadAvatar failure: $failure');
+      image = '';
+    }, (String imageUrl) {
+      image = imageUrl;
+    });
+    return image;
+  }
+
+  void updateUser({required UserModel userModel}) {
+    updateItem(_userApi.updateUser(userModel: userModel));
   }
 }

@@ -46,8 +46,8 @@ class CommonItemFood extends StatelessWidget {
                 topLeft: Radius.circular(defaultBorderRadius))),
         child: Center(
             child: Text("${food.discount}%",
-                style: kLightWhiteTextStyle.copyWith(
-                    fontWeight: FontWeight.bold))));
+                style: kBodyStyle.copyWith(
+                    color: AppColors.white, fontWeight: FontWeight.bold))));
   }
 
   Widget _buildTitle(BuildContext context, FoodModel food) {
@@ -58,7 +58,7 @@ class CommonItemFood extends StatelessWidget {
             fit: BoxFit.scaleDown,
             child: Text(food.name,
                 overflow: TextOverflow.ellipsis,
-                style: kRegularWhiteTextStyle)));
+                style: kSubHeadingStyle.copyWith(color: AppColors.white))));
   }
 
   Widget _buildPriceDiscount(BuildContext context, FoodModel food) {
@@ -71,7 +71,7 @@ class CommonItemFood extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 child: Text(
                     AppRes.currencyFormat(double.parse(food.price.toString())),
-                    style: kLightWhiteTextStyle))
+                    style: kBodyStyle.copyWith(color: AppColors.white)))
             : FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Row(children: [
@@ -80,7 +80,8 @@ class CommonItemFood extends StatelessWidget {
                       child: Text(
                           AppRes.currencyFormat(
                               double.parse(food.price.toString())),
-                          style: kLightWhiteTextStyle.copyWith(
+                          style: kBodyStyle.copyWith(
+                              color: AppColors.white.withOpacity(0.8),
                               decoration: TextDecoration.lineThrough,
                               decorationThickness: 3.0,
                               decorationColor: Colors.red,
@@ -91,34 +92,28 @@ class CommonItemFood extends StatelessWidget {
                       child: Text(
                           AppRes.currencyFormat(
                               double.parse(discountedPrice.toString())),
-                          style: kLightWhiteTextStyle))
+                          style: kBodyStyle.copyWith(color: AppColors.white)))
                 ])));
   }
 
   Widget _buildButtonCart(BuildContext context, FoodModel food) {
-    return GestureDetector(
-        onTap: () {
-          // Get.dialog(
-          //     barrierDismissible: false,
-          //     Dialog(
-          //         backgroundColor: AppColors.white,
-          //         surfaceTintColor: Colors.transparent,
-          //         child:
-          //             PopScope(child: OrderFoodBottomSheet(foodModel: food))));
-
-          Get.bottomSheet(OrderFoodBottomSheet(foodModel: food),
-              isScrollControlled: true, persistent: false);
-        },
-        child: Container(
-            height: double.infinity,
-            width: 30,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-                color: AppColors.themeColor,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(defaultBorderRadius),
-                    bottomRight: Radius.circular(defaultBorderRadius))),
-            child: const Icon(Icons.add, size: 20, color: AppColors.white)));
+    return LayoutBuilder(builder: (context, constraints) {
+      return GestureDetector(
+          onTap: () {
+            Get.bottomSheet(OrderFoodBottomSheet(foodModel: food),
+                isScrollControlled: true, persistent: false);
+          },
+          child: Container(
+              height: constraints.maxHeight,
+              width: constraints.maxHeight,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                  color: AppColors.themeColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(defaultBorderRadius),
+                      bottomRight: Radius.circular(defaultBorderRadius))),
+              child: const Icon(Icons.add, size: 20, color: AppColors.white)));
+    });
   }
 
   Widget _buildItem(BuildContext context, FoodModel foodModel) {

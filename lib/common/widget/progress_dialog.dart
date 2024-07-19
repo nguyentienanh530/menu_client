@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+// import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:menu_client/core/app_colors.dart';
+import 'package:menu_client/core/app_style.dart';
 
 class ProgressDialog extends StatelessWidget {
   const ProgressDialog({
@@ -19,7 +20,7 @@ class ProgressDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: AppColors.white,
       title: isProgressed
-          ? const Text("Vui lòng đợi...")
+          ? const Text("Vui lòng đợi...", style: kHeadingStyle)
           : const Icon(Icons.check_circle_outline_rounded,
               color: AppColors.themeColor, size: 100),
       content: Column(
@@ -28,7 +29,7 @@ class ProgressDialog extends StatelessWidget {
           Text(title),
           const SizedBox(height: 15),
           isProgressed
-              ? const SpinKitCircle(color: AppColors.themeColor, size: 30)
+              ? const CircularProgressIndicator(color: AppColors.themeColor)
               : const SizedBox(),
           const SizedBox(height: 15),
           SizedBox(
@@ -41,7 +42,7 @@ class ProgressDialog extends StatelessWidget {
                       foregroundColor: AppColors.white,
                     ),
                     onPressed: onPressed,
-                    child: const Text("Xác nhận"),
+                    child: const Text("Xác nhận", style: kButtonWhiteStyle),
                   ),
           )
         ],

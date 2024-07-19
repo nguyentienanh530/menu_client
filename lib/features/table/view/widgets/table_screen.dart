@@ -48,8 +48,7 @@ class _TableDialogState extends State<TableDialog> {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(defaultBorderRadius),
                   topRight: Radius.circular(defaultBorderRadius))),
-          child: Text('Danh sách bàn',
-              style: kMediumTextStyle.copyWith(color: AppColors.white)),
+          child: const Text('Danh sách bàn', style: kHeadingWhiteStyle),
         ),
         Expanded(child: _buildBody(context)),
         Card(
@@ -64,11 +63,11 @@ class _TableDialogState extends State<TableDialog> {
                   children: [
                     const Text(
                       "Bàn đang sử dụng: ",
-                      style: kBlackButtonTextStyle,
+                      style: kBodyStyle,
                     ),
                     Text(
                       tableCtrl.table.value.name,
-                      style: kThinWhiteTextStyle.copyWith(
+                      style: kBodyStyle.copyWith(
                           color: AppColors.themeColor,
                           fontWeight: FontWeight.bold),
                     ),
@@ -85,7 +84,7 @@ class _TableDialogState extends State<TableDialog> {
                   decoration: BoxDecoration(
                       color: AppColors.themeColor,
                       borderRadius: BorderRadius.circular(defaultBorderRadius)),
-                  child: const Text('Hủy', style: kThinWhiteTextStyle),
+                  child: const Text('Hủy', style: kButtonWhiteStyle),
                 ),
               ),
             ],
@@ -97,12 +96,11 @@ class _TableDialogState extends State<TableDialog> {
 
   Widget _buildBody(BuildContext context) {
     return tableCtrl.obx(
-      (state) => _buildLoadingSuccess(state ?? <TableModel>[]),
-      onLoading: const Loading(),
-      onEmpty: const EmptyScreen(),
-      onError: (error) => RetryDialog(
-          title: error ?? '', onRetryPressed: () => tableCtrl.getTables()),
-    );
+        (state) => _buildLoadingSuccess(state ?? <TableModel>[]),
+        onLoading: const Loading(),
+        onEmpty: const EmptyScreen(),
+        onError: (error) => RetryDialog(
+            title: error ?? '', onRetryPressed: () => tableCtrl.getTables()));
   }
 
   Widget _buildLoadingSuccess(List<TableModel> tables) {
@@ -162,11 +160,13 @@ class _TableDialogState extends State<TableDialog> {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _buildString(table.name, 18),
-                                  _buildString('Số ghế: ${table.seats} ', 12),
+                                  _buildString(
+                                      table.name, kSubHeadingWhiteStyle),
+                                  _buildString('Số ghế: ${table.seats} ',
+                                      kBodyWhiteStyle),
                                   _buildString(
                                       'Tình trạng: ${AppRes.tableStatus(table.isUse)}',
-                                      12)
+                                      kBodyWhiteStyle)
                                 ]),
                           )
                         ],
@@ -176,13 +176,7 @@ class _TableDialogState extends State<TableDialog> {
                 )));
   }
 
-  Widget _buildString(String value, double fontSize) => Expanded(
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            value,
-            style: kThinWhiteTextStyle.copyWith(fontSize: fontSize),
-          ),
-        ),
-      );
+  Widget _buildString(String value, TextStyle style) => Expanded(
+      child:
+          FittedBox(fit: BoxFit.scaleDown, child: Text(value, style: style)));
 }
